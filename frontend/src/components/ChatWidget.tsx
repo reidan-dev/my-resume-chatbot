@@ -10,8 +10,16 @@ import { RateLimitBadge } from './RateLimitBadge'
 
 const LIMIT = 5
 const BOT_NAME = import.meta.env.VITE_BOT_NAME ?? 'Folio'
-const BOT_INTRO = import.meta.env.VITE_BOT_INTRO ?? `Hi! Ask me anything about Dan's background, skills, and experience.`
+const BOT_INTRO = import.meta.env.VITE_BOT_INTRO ?? `Hey there! I'm Folio, Dan's AI portfolio assistant — powered by a RAG pipeline that grounds every answer directly in his resume and Q&A guide, so no guessing here. Ask me anything about his background, skills, or experience!`
 const LLM_MODEL = import.meta.env.VITE_LLM_MODEL ?? 'gpt-4o-mini'
+
+function renderIntro(text: string) {
+  return text.split(/(\bFolio\b|\bDan\b)/g).map((part, i) => {
+    if (part === 'Folio') return <strong key={i} className="font-semibold text-red-900">{part}</strong>
+    if (part === 'Dan')   return <strong key={i} className="font-semibold text-emerald-600">{part}</strong>
+    return part
+  })
+}
 
 interface Props {
   isOpen: boolean
@@ -135,7 +143,7 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick }: Props) {
               👓
             </div>
             <div className="max-w-[85%] px-3 py-2 rounded-2xl rounded-tl-sm bg-white border border-gray-200 text-gray-800 text-xs">
-              {BOT_INTRO}
+              {renderIntro(BOT_INTRO)}
             </div>
           </div>
 

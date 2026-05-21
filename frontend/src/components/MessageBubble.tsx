@@ -24,7 +24,9 @@ function TypingIndicator() {
 }
 
 function processContent(content: string): string {
-  return content.replace(/\bDan\b/g, '[Dan](#contact)')
+  return content
+    .replace(/\bDan\b/g, '[Dan](#contact)')
+    .replace(/\bFolio\b/g, '[Folio](#folio)')
 }
 
 export function MessageBubble({ message, onDanClick }: Props) {
@@ -93,6 +95,9 @@ export function MessageBubble({ message, onDanClick }: Props) {
                         {children}
                       </button>
                     )
+                  }
+                  if (href === '#folio') {
+                    return <strong className="font-semibold text-red-900">{children}</strong>
                   }
                   return <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
                 },
