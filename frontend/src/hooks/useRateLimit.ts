@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react'
 
 const STORAGE_KEY = 'resume_rl'
+const RESET_SECRET = import.meta.env.VITE_RESET_SECRET as string | undefined
 const LIMIT = 5
 const WINDOW_MS = 3 * 24 * 60 * 60 * 1000
 
@@ -11,7 +12,8 @@ interface RLState {
 
 function load(): RLState {
   try {
-    if (new URLSearchParams(window.location.search).has('reset')) {
+    const params = new URLSearchParams(window.location.search)
+    if (RESET_SECRET && params.get('reset') === RESET_SECRET) {
       localStorage.removeItem(STORAGE_KEY)
       window.history.replaceState(null, '', window.location.pathname)
     }
