@@ -11,6 +11,10 @@ interface RLState {
 
 function load(): RLState {
   try {
+    if (new URLSearchParams(window.location.search).has('reset')) {
+      localStorage.removeItem(STORAGE_KEY)
+      window.history.replaceState(null, '', window.location.pathname)
+    }
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return { count: 0, resetAt: Date.now() + WINDOW_MS }
     const s = JSON.parse(raw) as RLState
