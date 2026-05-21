@@ -34,7 +34,15 @@ rag_chain = RAGChain()
 
 @app.get("/health")
 async def health():
-    return {"status": "ok"}
+    model_map = {
+        "openai": settings.openai_model,
+        "claude": settings.claude_model,
+        "ollama": settings.ollama_model,
+    }
+    return {
+        "status": "ok",
+        "model": model_map.get(settings.llm_provider, settings.llm_provider),
+    }
 
 
 @app.get("/rate-limit")

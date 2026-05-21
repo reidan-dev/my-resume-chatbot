@@ -11,7 +11,6 @@ import { RateLimitBadge } from './RateLimitBadge'
 const LIMIT = 5
 const BOT_NAME = import.meta.env.VITE_BOT_NAME ?? 'Folio'
 const BOT_INTRO = import.meta.env.VITE_BOT_INTRO ?? `Hey there! I'm Folio, Dan's AI portfolio assistant — powered by a RAG pipeline that grounds every answer directly in his resume and Q&A guide, so no guessing here. Ask me anything about his background, skills, or experience!`
-const LLM_MODEL = import.meta.env.VITE_LLM_MODEL ?? 'gpt-4o-mini'
 
 function renderIntro(text: string) {
   return text.split(/(\bFolio\b|\bDan\b)/g).map((part, i) => {
@@ -54,7 +53,7 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick }: Props) {
 
   function submit() {
     const text = input.trim()
-    if (!text || isStreaming || isExhausted || health === 'offline') return
+    if (!text || isStreaming || isExhausted || health.status === 'offline') return
     setInput('')
     isAtBottomRef.current = true
     sendMessage(text)
@@ -105,8 +104,8 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick }: Props) {
             <span className="text-base">👓</span>
             <span className="font-semibold text-gray-900 text-sm">{BOT_NAME}</span>
             <div className={`w-1.5 h-1.5 rounded-full ${
-              health === 'online' ? 'bg-emerald-500' :
-              health === 'offline' ? 'bg-red-400' :
+              health.status === 'online' ? 'bg-emerald-500' :
+              health.status === 'offline' ? 'bg-red-400' :
               'bg-gray-300 animate-pulse'
             }`} />
             <RateLimitBadge remaining={remaining} limit={LIMIT} />
@@ -182,13 +181,13 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick }: Props) {
               />
               <button
                 onClick={submit}
-                disabled={!input.trim() || isStreaming || health === 'offline'}
+                disabled={!input.trim() || isStreaming || health.status === 'offline'}
                 className="shrink-0 w-8 h-8 flex items-center justify-center rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 <Send size={13} />
               </button>
             </div>
-            <p className="mt-1.5 text-center text-[10px] text-gray-300">{LLM_MODEL}</p>
+            <p className="mt-1.5 text-center text-[10px] text-gray-300">{health.model}</p>
           </div>
         )}
       </div>

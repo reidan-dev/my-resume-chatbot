@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { ExternalLink, Mail, MapPin, Phone } from 'lucide-react'
 
 const TECH_TERMS = [
@@ -113,6 +114,53 @@ const projects = [
   },
 ]
 
+function AnimatedDan() {
+  const [phase, setPhase] = useState<'idle' | 'drawing' | 'lit' | 'erasing'>('idle')
+
+  useEffect(() => {
+    let t: ReturnType<typeof setTimeout>
+
+    function run() {
+      t = setTimeout(() => {
+        setPhase('drawing')
+        t = setTimeout(() => {
+          setPhase('lit')
+          t = setTimeout(() => {
+            setPhase('erasing')
+            t = setTimeout(() => {
+              setPhase('idle')
+              run()
+            }, 650)
+          }, 5000)
+        }, 750)
+      }, 5000 + Math.random() * 5000)
+    }
+
+    run()
+    return () => clearTimeout(t)
+  }, [])
+
+  return (
+    <span
+      style={{
+        backgroundImage: 'linear-gradient(#059669, #059669)',
+        backgroundPosition: '0% 100%',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: (phase === 'drawing' || phase === 'lit') ? '100% 3px' : '0% 3px',
+        transition:
+          phase === 'drawing' ? 'background-size 0.75s ease' :
+          phase === 'lit'     ? 'color 0.4s ease' :
+          phase === 'erasing' ? 'background-size 0.65s ease, color 0.4s ease' :
+          'none',
+        color: phase === 'lit' ? '#059669' : '',
+        paddingBottom: '2px',
+      }}
+    >
+      Dan
+    </span>
+  )
+}
+
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mb-8">
@@ -129,7 +177,9 @@ export function ResumePage() {
     <div className="max-w-2xl mx-auto px-6 py-10">
       {/* Header */}
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Reiniel Dan A. Pablo</h1>
+        <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
+          Reiniel <AnimatedDan /> A. Pablo
+        </h1>
         <p className="mt-1 text-base font-medium text-emerald-600">
           Software Developer · Data Analyst · AI Practitioner
         </p>

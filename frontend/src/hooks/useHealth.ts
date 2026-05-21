@@ -4,8 +4,13 @@ const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000'
 
 export type HealthStatus = 'checking' | 'online' | 'offline'
 
-export function useHealth(): HealthStatus {
-  const [status, setStatus] = useState<HealthStatus>('checking')
+export interface HealthResult {
+  status: HealthStatus
+  model: string
+}
+
+export function useHealth(): HealthResult {
+  const [result, setResult] = useState<HealthResult>({ status: 'checking', model: '…' })
 
   useEffect(() => {
     async function check() {
@@ -13,9 +18,14 @@ export function useHealth(): HealthStatus {
         const res = await fetch(`${API_URL}/health`, {
           signal: AbortSignal.timeout(5000),
         })
-        setStatus(res.ok ? 'online' : 'offline')
+        if (res.ok) {
+          const data = await res.json()
+          setResult({ status: 'online', model: data.model ?? 'unknown' })
+        } else {
+          setResult((prev) => ({ ...prev, status: 'offline' }))
+        }
       } catch {
-        setStatus('offline')
+        setResult((prev) => ({ ...prev, status: 'offline' }))
       }
     }
 
@@ -24,5 +34,5 @@ export function useHealth(): HealthStatus {
     return () => clearInterval(id)
   }, [])
 
-  return status
+  return result
 }
