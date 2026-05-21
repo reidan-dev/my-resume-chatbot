@@ -53,7 +53,9 @@ const experience = [
     period: 'Sep 2022 – Apr 2026',
     duration: '3 yrs 7 mos',
     bullets: [
-      'Engineered and scaled custom internal backends; maintained 60+ Python packages across Bitbucket and GitHub.',
+      'Maintained and extended 60+ proprietary Python packages: internal algorithmic tools used by GIS designers and network consultants to plan and design fibre optic network infrastructure, from small-scale local deployments to national-level rollouts.',
+      'Core work: adding new features, keeping packages current with framework/library advances, performance optimization, and resolving issues reported by GIS designers and consultants.',
+      'Maintained clean REST API contracts between backend packages and frontends, ensuring GIS design tools stayed reliably connected across the full stack.',
       'Configured Jenkins pipelines for cron-based job management across complex multi-repo packages.',
       'Deployed critical infrastructure hotfixes under tight production constraints; optimized webhook pipelines.',
       'Pioneered AI automation workflows using Claude Code and OpenAI Codex to eliminate repetitive developer tasks.',
