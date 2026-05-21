@@ -68,7 +68,7 @@ const experience = [
       'Technical lead for a national-scale data project ingesting 100k+ real-time rows daily from a national service actively used by millions of Filipinos.',
       'Cleaned, aggregated, and surfaced actionable metrics from raw JSON/XML telemetry using Python, Presto SQL, PostgreSQL, Apache Zeppelin, and Apache Spark.',
       'Built Apache Superset dashboards presenting complex data insights in a way accessible to non-technical clients and stakeholders.',
-      'Led implementation of customer persona classification — segmenting daily service users to enable targeted service improvements, smarter resource allocation, and data-driven business decisions.',
+      'Contributed to customer persona classification — segmenting daily service users to enable targeted service improvements, smarter resource allocation, and data-driven business decisions.',
       'Contributed to traffic management analytics to monitor and optimize national service load patterns.',
     ],
   },

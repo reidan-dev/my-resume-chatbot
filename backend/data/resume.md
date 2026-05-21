@@ -65,7 +65,7 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 - Served as the Data Analyst technical lead on a national-scale data project processing 100k+ rows of real-time data daily from one of the Philippines' national services actively used by millions of citizens.
 - Ingested, cleaned, and aggregated raw JSON/XML telemetry streams using Python, Presto SQL, PostgreSQL, Apache Zeppelin, and Apache Spark — transforming high-volume operational data into reliable, usable metrics.
 - Built analytical dashboards in Apache Superset that presented complex data insights in a format accessible to non-technical clients and stakeholders, bridging the gap between raw data and business decision-making.
-- Led implementation of customer persona classification across the national service's daily user base — segmenting users by behavioral patterns to enable targeted service improvements, smarter resource allocation, identification of high-value and at-risk segments, and data-driven product decisions that would otherwise have been based on aggregate numbers alone.
+- Contributed to customer persona classification across the national service's daily user base — segmenting users by behavioral patterns to enable targeted service improvements, smarter resource allocation, identification of high-value and at-risk segments, and data-driven product decisions that would otherwise have been based on aggregate numbers alone.
 - Contributed to traffic management analytics — monitoring and analyzing national service load patterns to support capacity planning and service optimization.
 - Managed project documentation records and delegated complex reporting tasks across the analytics team.
 

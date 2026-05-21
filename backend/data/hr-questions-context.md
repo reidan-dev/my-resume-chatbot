@@ -35,71 +35,11 @@ I'm a Software Developer and Data Analyst with about 7 years of professional exp
 
 ### "Walk me through your resume."
 
-I graduated in 2017 with a BS in Electronics and Communications Engineering, which gave me a strong foundation in systems thinking and scripting — I was writing Python from the start. Right after graduating I taught General Mathematics and General Science at AMA Computer College across 8 sections of Senior High School students — about 160–200 students simultaneously. That experience, more than anything, built my people management instincts and my ability to communicate the same concept at different levels of abstraction. After AMA I passed the PRC board examinations for Electronics Engineering in April 2018, then moved into IC design at Synkom where I automated hardware log parsing with Python and Bash.
+I graduated in 2017 with a BS in Electronics and Communications Engineering, which gave me a strong foundation in systems thinking and scripting — I was writing Python from the start. My first role was as an academic instructor at AMA, which I took to bridge into tech, followed by a stint as an IC Design Engineer at Synkom where I automated hardware log parsing with Python and Bash. The gap between those roles was when I took time to review for and pass the Professional Regulation Commission board examinations for Electronics Engineering, which I cleared in April 2018.
 
-From there I moved fully into software: I spent about 3 years at Denso Techno Philippines as a Software Engineer building full-stack enterprise systems connected to production factories in Japan. The systems I built replaced manual machine checks — factory equipment sent status and telemetry to APIs I designed, and I built the full stack to visualize that data for operators in real time. I practiced strict TDD throughout, achieving 98–100% QA clearance across all integration contracts.
+From there I moved fully into software: I spent about 3 years at Denso Techno Philippines as a Software Engineer building full-stack enterprise systems with Django, FastAPI, React, and Vue, and practicing strict TDD — achieving 98-100% QA clearance across all integration contracts. I left Denso after my contract expired, wanting to pursue a role with more exposure to data science and analytics.
 
-After Denso I joined Amihan Global Strategies as a Data Analyst technical lead, working on a national-scale data project — processing 100k+ rows of real-time data daily from one of the Philippines' national services. I built pipelines, dashboards, led customer persona classification work, and contributed to traffic management analytics. I also briefly taught programming and project management at STI College part-time while transitioning into Sharesource, where I was contracted to Biarri Networks in Australia. There I maintained 60+ proprietary Python packages and backend systems for 3 years and 7 months. My role ended in April 2026 due to a mass layoff, so I'm now actively looking for my next opportunity.
-
----
-
-### "Can you show me your portfolio?" / "What projects have you worked on?" / "Do you have a GitHub with your work?"
-
-Across all my roles — Biarri Networks, Denso Techno, and Amihan — the work I delivered involved end-to-end development: I built the frontend, designed and implemented the APIs, and owned the backend. That meant full ownership of features from UI to database, not just a slice. The challenge is that virtually everything I built in those roles is proprietary — internal tooling, client-facing data pipelines, enterprise systems. I can't share the code or the products publicly.
-
-What I can do is walk through any of those projects in depth during a conversation: the architecture decisions, the tradeoffs, the scale, the problems I ran into. I'm happy to discuss them in person or on a call — the constraint is confidentiality, not depth of knowledge.
-
-For publicly shareable work, the projects I can point to are:
-
-- **This resume chatbot (Folio)** — a RAG-based AI portfolio assistant built with FastAPI, LangChain, ChromaDB, React, and the OpenAI API. Full-stack, end-to-end, deployed on Railway + Vercel. I designed and built the entire thing.
-- **Check-App** — a clinical decision support chatbot built during the Eskwelabs Data Science Bootcamp. NLP pipeline (BeautifulSoup, SpaCy, Gensim LDA, Logistic Regression) over 7,300+ clinical records. Awarded Best in Project Management and Best Project.
-- **Eevee Virtual Pet** — a macOS desktop app (SwiftUI/AppKit) with 9 Eeveelutions, personality-driven wandering, and overlay/contained modes. A personal project built for fun and to explore Swift.
-
-These are the projects I can show directly. Everything else I've built professionally, I'll discuss — just not share the repo.
-
----
-
-### "Tell me more about your work at Amihan." / "What did you do at Amihan Global Strategies?"
-
-At Amihan I worked as a Data Analyst technical lead on a national-scale data project. The data came from one of the Philippines' national services — something actively used daily by millions of citizens — and we were processing 100k+ rows of real-time data every day.
-
-My job was to take that raw operational data and make it useful. That meant building ETL pipelines using Python, Presto SQL, PostgreSQL, Apache Zeppelin, and Apache Spark to ingest, clean, and aggregate the telemetry. Then I built dashboards in Apache Superset to surface the insights in a way that non-technical clients and stakeholders could actually understand and act on — not just numbers on a screen, but structured visual narratives around what the data was saying.
-
-Two specific initiatives I led stood out. First, customer persona classification: we segmented the national service's daily user base by behavioral patterns. The business value of this was significant — instead of making operational decisions based on aggregate numbers alone, the service could now identify high-value segments, at-risk users, and distinct behavioral clusters. That translates directly into smarter resource allocation, targeted service improvements, and data-driven product decisions. Second, traffic management analytics — monitoring load patterns across the national service to support capacity planning and service optimization.
-
-The role also sharpened my ability to translate data into business language. A lot of the stakeholders I was presenting to weren't technical, so I had to learn quickly how to anchor conversations around what the data means for the business — not the pipeline underneath it.
-
----
-
-### "Tell me more about your work at Denso." / "What did you build at Denso Techno?"
-
-At Denso Techno Philippines I built full-stack enterprise web applications for Denso's production facilities in Japan. The core problem we were solving: factory operators had to physically walk the production floor to check on machines — their status, conditions, throughput. That's slow, error-prone, and doesn't scale across a large facility.
-
-The solution was factory automation software. The machines themselves were already capable of reporting their state — status, alerts, operational metrics — via APIs. My job was to build the systems that consumed those feeds and made them visually useful. I owned the full stack: Django, Flask, and FastAPI on the backend to handle the API layer and data processing; React, Vue.js, Node.js, and Bootstrap on the frontend to give operators a real-time, visual dashboard of the entire production line. Instead of walking the floor, an operator could see the live state of every machine in the line from a single screen.
-
-I practiced strict TDD throughout — Pytest on the backend, Jest on the frontend — and maintained a 98–100% QA clearance rate across all integration contracts. The work was high-stakes: these systems were connected to live production lines, so bugs and downtime had real operational consequences.
-
----
-
-### "Tell me more about your teaching at STI." / "What did you teach at STI College?"
-
-At STI I taught two very different cohorts concurrently, which made the role more interesting than a typical instructor role.
-
-For IT students, I taught full-stack web development — covering the backend through to the frontend. The concrete goal I set for them: every student ships their own personal website by the end of the semester. I structured the course around that output, not just the curriculum. Every student hit that goal.
-
-For Business Administration students, I taught project management. The goal I set for them: successfully complete a full project lifecycle as if working with a real product owner. I acted as the product owner and client — I set the milestones, defined what "done" looked like, and evaluated whether they delivered. They managed the documentation, tracked progress, and drove the project to completion. That goal was also achieved.
-
-But the experiment I'm most proud of was cross-pollinating the two classes. I had the BA students manage the IT students' capstone project development — simulating how a product manager or project owner would work with a development team in the real world. The BA students handled stakeholder communication, project documentation, milestone tracking, and scope management. The IT students handled implementation and reported progress upward. The whole setup was designed to give both groups an early taste of how software actually gets built in industry — not the theoretical version they'd read in a textbook, but the actual dynamic between a manager and a developer. Both sides succeeded, and several students specifically told me it changed how they thought about their future careers.
-
----
-
-### "Tell me more about your teaching at AMA." / "What did you teach at AMA Computer College?"
-
-At AMA I taught General Mathematics and General Science to Senior High School students across 8 sections — roughly 160–200 students under simultaneous management. This was right after I graduated, before I moved into engineering.
-
-What I carry from that experience isn't the subject matter — it's the management and communication muscle it built. Running 8 sections at once forced me to develop scheduling discipline, people management instincts, and the ability to read a room and adapt quickly. Every section had a different dynamic; what worked with one group didn't necessarily work with another. I learned fast how to calibrate — adjusting pacing, explanation style, and energy depending on who I was in front of.
-
-That translates directly into how I work today: I can explain the same technical concept to a senior engineer, a junior developer, and a non-technical stakeholder in three different ways, and I learned how to do that by standing in front of 25 students at a time who had completely different learning styles and patience levels.
+After a short period upskilling and searching for the right fit, I joined Amihan Global Strategies as a Data Analyst technical lead, where I shifted focus toward data pipelines and dashboards using Presto SQL, Apache Spark, and Superset. I also briefly taught programming at STI College part-time while starting my role at Sharesource in September 2022, where I was contracted to Biarri Networks in Australia building and maintaining custom backend infrastructure in Python for 3 years and 7 months. My role ended in April 2026 due to a mass layoff, so I'm now actively looking for my next opportunity.
 
 ---
 
