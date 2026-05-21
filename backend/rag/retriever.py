@@ -16,6 +16,7 @@ def get_retriever() -> BaseRetriever:
                 embeddings=embeddings,
                 collection_name="resume",
                 connection=settings.database_url,
+                async_mode=True,
             )
         else:
             import chromadb
