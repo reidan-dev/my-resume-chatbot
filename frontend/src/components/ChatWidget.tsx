@@ -43,9 +43,9 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick }: Props) {
   }
 
   useEffect(() => {
-    if (!isAtBottomRef.current) return
+    if (!isOpen || !isAtBottomRef.current) return
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
+  }, [messages, isOpen])
 
   useEffect(() => {
     if (isOpen) setTimeout(() => inputRef.current?.focus(), 100)

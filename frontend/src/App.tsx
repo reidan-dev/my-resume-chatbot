@@ -33,19 +33,21 @@ export default function App() {
     <div className="min-h-screen bg-gray-50">
       {/* Tab navigation */}
       <nav className="sticky top-0 z-20 bg-white border-b border-gray-200 print:hidden">
-        <div className="max-w-2xl mx-auto px-6 flex items-center">
-          <div className="flex gap-6 flex-1">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 flex items-center">
+          <div className="flex gap-4 sm:gap-6 flex-1">
             {(['resume', 'about'] as const).map((page) => (
               <button
                 key={page}
                 onClick={() => setActivePage(page)}
-                className={`py-3 text-sm font-medium border-b-2 transition-colors ${
+                className={`py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                   activePage === page
                     ? 'border-emerald-500 text-emerald-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700'
                 }`}
               >
-                {page === 'resume' ? 'Resume' : 'About this App'}
+                {page === 'resume' ? 'Resume' : (
+                  <><span className="sm:hidden">About</span><span className="hidden sm:inline">About this App</span></>
+                )}
               </button>
             ))}
           </div>
@@ -72,7 +74,7 @@ export default function App() {
       {contactOpen && <ContactModal onClose={() => setContactOpen(false)} />}
 
       {!chatOpen && (
-        <div className="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-2 print:hidden">
+        <div className="fixed right-6 z-30 flex flex-col items-end gap-2 print:hidden" style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>
           <div
             className={`
               bg-white rounded-2xl rounded-br-sm shadow-lg px-4 py-2.5 text-sm text-gray-700
