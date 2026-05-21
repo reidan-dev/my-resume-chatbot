@@ -65,9 +65,11 @@ const experience = [
     period: 'Aug 2022 – Feb 2023',
     duration: '6 mos',
     bullets: [
-      'Technical lead for data analytics: built dashboards in Apache Superset, managed project docs.',
-      'Processed large-scale JSON/XML telemetry using Python, Presto SQL, and PostgreSQL.',
-      'Built production data pipelines using Apache Zeppelin and Apache Spark.',
+      'Technical lead for a national-scale data project ingesting 100k+ real-time rows daily from a national service actively used by millions of Filipinos.',
+      'Cleaned, aggregated, and surfaced actionable metrics from raw JSON/XML telemetry using Python, Presto SQL, PostgreSQL, Apache Zeppelin, and Apache Spark.',
+      'Built Apache Superset dashboards presenting complex data insights in a way accessible to non-technical clients and stakeholders.',
+      'Led implementation of customer persona classification — segmenting daily service users to enable targeted service improvements, smarter resource allocation, and data-driven business decisions.',
+      'Contributed to traffic management analytics to monitor and optimize national service load patterns.',
     ],
   },
   {
@@ -76,7 +78,8 @@ const experience = [
     period: 'Aug 2019 – Feb 2022',
     duration: '2 yrs 6 mos',
     bullets: [
-      'Built full-stack enterprise systems: Python (Django, FastAPI) for APIs; React, Vue.js for frontends.',
+      'Built full-stack enterprise web applications connected to production factories in Japan — replacing manual machine checks with real-time dashboards showing live production line flow and machine conditions.',
+      'Machines on the factory floor sent status and telemetry to APIs; built the full stack (Django/FastAPI backends, React/Vue.js frontends) to ingest, process, and visualize that data for operators.',
       'Deployed microservices with Docker on AWS (S3, Lambda, EC2) using Terraform.',
       'Achieved 98–100% QA clearance across all integration contracts via strict TDD with Pytest and Jest.',
     ],
@@ -87,8 +90,9 @@ const experience = [
     period: 'Feb 2023 – Jul 2023',
     duration: '5 mos',
     bullets: [
-      'Delivered programming lectures to 15-student cohorts, covering full-stack JS and Python frameworks.',
-      'Guided students through capstone completions using Agile Scrum and Waterfall workflows.',
+      'Taught IT students full-stack web development (backend to frontend) with the goal of each student shipping a personal website by end of semester — achieved.',
+      'Taught project management to Business Administration students; cross-pollinated both courses by having biz ad students manage IT students\' capstone projects — simulating real product owner / developer dynamics.',
+      'Both class goals met: IT students shipped, biz ad students completed full project documentation hitting all milestones as if submitting to a real product owner.',
     ],
   },
   {
@@ -99,6 +103,16 @@ const experience = [
     bullets: [
       'Wrote automated data parsing scripts in Python, TCL, and Bash to clean hardware verification logs.',
       'Designed hardware layout specifications and schematics based on circuit theory.',
+    ],
+  },
+  {
+    title: 'Academic Instructor',
+    company: 'AMA Computer College – Angeles City',
+    period: 'Jun 2017 – Aug 2017',
+    duration: '3 mos',
+    bullets: [
+      'Taught General Mathematics and General Science across 8 sections of 20–25 Senior High School students.',
+      'Managing 160+ students simultaneously across multiple sections developed strong people management, scheduling, and classroom leadership skills that carry directly into engineering team dynamics.',
     ],
   },
 ]

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { MessageSquare } from 'lucide-react'
+
+const OPEN_TO_WORK = import.meta.env.VITE_OPEN_TO_WORK === 'true'
 import { ResumePage } from './pages/ResumePage'
 import { AboutPage } from './pages/AboutPage'
 import { ChatWidget } from './components/ChatWidget'
@@ -31,20 +33,28 @@ export default function App() {
     <div className="min-h-screen bg-gray-50">
       {/* Tab navigation */}
       <nav className="sticky top-0 z-20 bg-white border-b border-gray-200 print:hidden">
-        <div className="max-w-2xl mx-auto px-6 flex gap-6">
-          {(['resume', 'about'] as const).map((page) => (
-            <button
-              key={page}
-              onClick={() => setActivePage(page)}
-              className={`py-3 text-sm font-medium border-b-2 transition-colors ${
-                activePage === page
-                  ? 'border-emerald-500 text-emerald-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              {page === 'resume' ? 'Resume' : 'About this App'}
-            </button>
-          ))}
+        <div className="max-w-2xl mx-auto px-6 flex items-center">
+          <div className="flex gap-6 flex-1">
+            {(['resume', 'about'] as const).map((page) => (
+              <button
+                key={page}
+                onClick={() => setActivePage(page)}
+                className={`py-3 text-sm font-medium border-b-2 transition-colors ${
+                  activePage === page
+                    ? 'border-emerald-500 text-emerald-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                {page === 'resume' ? 'Resume' : 'About this App'}
+              </button>
+            ))}
+          </div>
+          {OPEN_TO_WORK && (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-medium shrink-0">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+              Open to work
+            </span>
+          )}
         </div>
       </nav>
 

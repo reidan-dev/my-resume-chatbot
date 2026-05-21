@@ -40,39 +40,44 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 
 **September 2022 – April 2026 | 3 years 7 months | Metro Manila, PH / Remote**
 
-- Engineered and scaled custom internal backends used by consulting design units; deployed robust REST APIs and managed automated multi-repository scripts within active Agile Scrum environments.
-- Maintained 60+ repositories of exclusive proprietary Python packages and integration libraries across Bitbucket and GitHub, enabling continuous data synchronization between stakeholders and downstream tools.
-- Configured Jenkins pipelines for comprehensive job management, managing cron rules and automated scheduled workflows for complex packages and multiple code repositories.
-- Executed high-ticket requirement delivery under tight production constraints, deploying critical infrastructure hotfixes and optimizing webhook execution pipelines to protect system availability metrics.
-- Tracked and processed feature tasks using Git, GitHub workflows, Jira, and extensive Confluence project documentation to maintain structured development history.
-- Pioneered AI automation workflows using Claude Code and OpenAI Codex to programmatically generate boilerplate endpoint routes, accelerate integration testing scripts, and eliminate manual developer workflows.
+- Engineered and scaled custom internal backends used by Biarri's consulting design units — teams of engineers and analysts who relied on these systems daily to run their work. Built and maintained robust REST APIs and automated multi-repository scripts within Agile Scrum environments.
+- Sole maintainer of 60+ proprietary Python packages and integration libraries across Bitbucket and GitHub. These packages handled continuous data synchronization between stakeholders, internal tools, and downstream systems — keeping everything in sync across a complex, multi-repo architecture. Keeping 60+ repos operational, coherent, and continuously delivering is a level of operational complexity that's hard to appreciate until you've lived it.
+- Configured and maintained Jenkins pipelines for cron-based job management across complex, interdependent package repositories — automating scheduled workflows that ran reliably across production environments.
+- Deployed critical infrastructure hotfixes under tight production constraints, often with little runway. Optimized webhook execution pipelines to protect system availability and ensure data delivery commitments to consulting clients were met.
+- When production incidents occurred, triaged failures by analyzing Jenkins logs, tracing execution chains, and identifying root causes — then communicated scope and fix timelines to project managers so consulting teams could act accordingly.
+- Pioneered AI automation workflows using Claude Code and OpenAI Codex — generating boilerplate endpoint scaffolding, accelerating integration test authoring, and eliminating repetitive developer tasks. Became the team's go-to for AI tooling experimentation, which sparked broader conversations about systematizing developer workflows.
+- Maintained thorough documentation in Confluence and tracked feature delivery via Jira throughout.
+- Role ended April 2026 due to a company-wide mass layoff — not performance-related.
 
 ### Part-Time College Instructor | STI College – Angeles City
 
 **February 2023 – July 2023 | 5 months | Angeles City, PH**
 
-- Delivered full programming lectures to 15-student cohorts, providing actionable technical examples mapping full-stack JavaScript architectures to Python data handling frameworks.
-- Guided student groups through capstone completions, reviewing syntax architectures and teaching delivery workflows spanning the Waterfall model and Agile Scrum environments.
-- Evaluated student coding submissions, administering comprehensive documentation guidelines and demonstrating practical debugging processes.
+- Taught IT college students full-stack web development — covering backend to frontend — with the ultimate goal of every student publishing their own personal website by the end of the semester. That goal was achieved.
+- Taught project management to Business Administration students, with the goal of successfully completing a full project lifecycle as if working with a real product owner/client. I set the milestones and acted as the product owner; they managed the documentation and project delivery. That goal was also achieved.
+- Created a cross-discipline experiment: had the Business Administration students manage the IT students' capstone project development — replicating real-world product owner / developer dynamics. BA students handled project documentation, milestone tracking, and stakeholder communication; IT students handled implementation. This gave both groups an early, practical glimpse into how developers and managers actually collaborate in industry.
+- The experiment succeeded on both sides: IT students shipped working projects; BA students completed documentation and hit every milestone as if delivering to an actual client.
 
 ### Data Visualization Consultant / Data Analyst | Amihan Global Strategies
 
 **August 2022 – February 2023 | 6 months | Metro Manila, PH**
 
-- Served as the Data Analyst technical lead, delegating complex reporting tasks, managing project documentation records, and engineering analytical dashboards inside Apache Superset.
-- Utilized Python scripts alongside Presto SQL and PostgreSQL queries to integrate REST APIs, ingest massive raw JSON/XML telemetry arrays, and manipulate data streams.
-- Formulated summary production pipelines leveraging Apache Zeppelin notebooks and large-scale Apache Spark distributed cluster computing configurations.
-- Assembled custom interactive layout visual structures applying embedded Markdown styles, HTML elements, and CSS classes.
+- Served as the Data Analyst technical lead on a national-scale data project processing 100k+ rows of real-time data daily from one of the Philippines' national services actively used by millions of citizens.
+- Ingested, cleaned, and aggregated raw JSON/XML telemetry streams using Python, Presto SQL, PostgreSQL, Apache Zeppelin, and Apache Spark — transforming high-volume operational data into reliable, usable metrics.
+- Built analytical dashboards in Apache Superset that presented complex data insights in a format accessible to non-technical clients and stakeholders, bridging the gap between raw data and business decision-making.
+- Led implementation of customer persona classification across the national service's daily user base — segmenting users by behavioral patterns to enable targeted service improvements, smarter resource allocation, identification of high-value and at-risk segments, and data-driven product decisions that would otherwise have been based on aggregate numbers alone.
+- Contributed to traffic management analytics — monitoring and analyzing national service load patterns to support capacity planning and service optimization.
+- Managed project documentation records and delegated complex reporting tasks across the analytics team.
 
 ### Software Engineer | Denso Techno Philippines Inc.
 
 **August 2019 – February 2022 | 2 years 6 months | Metro Manila, PH**
 
-- Constructed full-stack enterprise solutions from scratch using Python (Django, Flask, FastAPI) for highly scalable REST APIs and JavaScript (React, Node.js, Vue.js, Bootstrap) for frontends.
-- Provisioned secure microservices topologies using Docker containers deployed across fundamental AWS resources (S3, Lambda, EC2) and integrated third-party data streams using automated Terraform templates.
-- Practiced strict Test-Driven Development (TDD), implementing comprehensive automated software validations using Pytest and Jest to achieve a verified 98-100% QA clearance rate on all integration contracts.
-- Formulated verification suites, authored technical testing specifications, and maintained strict code version control utilizing GitLab workflows inside Agile Scrum sprints.
-- Designed and refined highly aesthetic, responsive user interfaces perfectly corresponding to client specifications and layout frameworks.
+- Built full-stack enterprise web applications connected to production factories in Japan. Instead of operators manually walking the factory floor to check machine status and conditions, machines sent telemetry and status data to APIs; the systems I built consumed those feeds and presented them visually — giving operators a real-time view of the entire production line flow and machine health from a single interface.
+- Owned the full stack for these systems: Python (Django, Flask, FastAPI) for the backend APIs; JavaScript (React, Node.js, Vue.js, Bootstrap) for the operator-facing frontends.
+- Provisioned secure microservices topologies using Docker containers deployed across AWS resources (S3, Lambda, EC2) and managed infrastructure with Terraform.
+- Practiced strict Test-Driven Development (TDD) using Pytest and Jest, achieving a verified 98–100% QA clearance rate across all integration contracts.
+- Authored technical testing specifications, maintained code version control via GitLab, and worked within Agile Scrum sprints.
 
 ### IC Design Engineer | Synkom IC Technology Inc.
 
@@ -86,8 +91,9 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 
 **June 2017 – August 2017 | 3 months | Angeles City, PH**
 
-- Instructed beginner and advanced Mathematics modules to blocks of 30 Senior High School students, incorporating Python algorithms to illustrate mathematical modeling.
-- Delivered lectures and moderated structured classroom discussions designed to stimulate logical reasoning, critical thinking, and code-adjacent logic.
+- Taught General Mathematics and General Science across 8 sections of 20–25 Senior High School students — roughly 160–200 students under simultaneous management.
+- Handling 8 sections at once required strong organizational discipline, people management, and the ability to adapt communication style and pace to diverse learning groups — skills that translate directly into managing cross-functional teams and communicating with stakeholders at different technical levels.
+- The experience built genuine empathy for varied learning paces and problem-solving approaches, which informs how I collaborate with junior developers and explain technical concepts to non-technical stakeholders today.
 
 ---
 
