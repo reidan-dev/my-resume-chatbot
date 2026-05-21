@@ -30,7 +30,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Tab navigation */}
-      <nav className="sticky top-0 z-20 bg-white border-b border-gray-200">
+      <nav className="sticky top-0 z-20 bg-white border-b border-gray-200 print:hidden">
         <div className="max-w-2xl mx-auto px-6 flex gap-6">
           {(['resume', 'about'] as const).map((page) => (
             <button
@@ -50,17 +50,19 @@ export default function App() {
 
       {activePage === 'resume' ? <ResumePage /> : <AboutPage />}
 
-      <ChatWidget
-        isOpen={chatOpen}
-        onClose={() => setChatOpen(false)}
-        rateLimit={rateLimit}
-        onDanClick={() => setContactOpen(true)}
-      />
+      <div className="print:hidden">
+        <ChatWidget
+          isOpen={chatOpen}
+          onClose={() => setChatOpen(false)}
+          rateLimit={rateLimit}
+          onDanClick={() => setContactOpen(true)}
+        />
+      </div>
 
       {contactOpen && <ContactModal onClose={() => setContactOpen(false)} />}
 
       {!chatOpen && (
-        <div className="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-2">
+        <div className="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-2 print:hidden">
           <div
             className={`
               bg-white rounded-2xl rounded-br-sm shadow-lg px-4 py-2.5 text-sm text-gray-700

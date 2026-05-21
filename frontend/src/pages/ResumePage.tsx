@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ExternalLink, Mail, MapPin, Phone } from 'lucide-react'
+import { ExternalLink, Mail, MapPin, Phone, Printer } from 'lucide-react'
 
 const TECH_TERMS = [
   // multi-word terms first (longest match wins)
@@ -37,6 +37,7 @@ function HighlightedText({ text }: { text: string }) {
 
 const GITHUB = import.meta.env.VITE_CONTACT_GITHUB ?? 'https://github.com/reidan22'
 const EMAIL = import.meta.env.VITE_CONTACT_EMAIL ?? 'reinieldan@gmail.com'
+const OPEN_TO_WORK = import.meta.env.VITE_OPEN_TO_WORK === 'true'
 
 const skills = {
   'Backend Development': 'Python, Django, Flask, FastAPI, Node.js, REST APIs, GraphQL, Microservices, TDD, Pytest, Jest',
@@ -176,13 +177,30 @@ export function ResumePage() {
   return (
     <div className="max-w-2xl mx-auto px-6 py-10">
       {/* Header */}
-      <header className="mb-8">
+      <header className="mb-8 relative">
+        <button
+          onClick={() => window.print()}
+          className="absolute top-0 right-0 print:hidden flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <Printer size={13} />
+          Print / Save PDF
+        </button>
+
         <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
           Reiniel <AnimatedDan /> A. Pablo
         </h1>
         <p className="mt-1 text-base font-medium text-emerald-600">
           Software Developer · Data Analyst · AI Practitioner
         </p>
+
+        {OPEN_TO_WORK && (
+          <div className="mt-2">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+              Open to work
+            </span>
+          </div>
+        )}
 
         <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-500">
           <a href={`mailto:${EMAIL}`} className="flex items-center gap-1.5 hover:text-emerald-600 transition-colors">

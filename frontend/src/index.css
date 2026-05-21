@@ -10,3 +10,19 @@
     font-family: 'Inter', system-ui, sans-serif;
   }
 }
+
+@media print {
+  body {
+    background: white;
+  }
+
+  /* keep section headings readable on B&W printers */
+  .text-emerald-600 {
+    color: #374151 !important;
+  }
+
+  /* avoid breaking a job entry across pages */
+  .space-y-6 > div {
+    break-inside: avoid;
+  }
+}
