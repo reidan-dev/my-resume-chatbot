@@ -105,18 +105,19 @@ OPENAI_API_KEY=sk-...
 
 ### 2.2 Run the ingest
 
+From the project root:
+
 ```bash
-cd backend
-uv run python -m rag.ingest
+./0__run_ingest.sh
 ```
 
 Expected output:
 ```
 Ingesting into pgvector...
-  data/resume.md: 12 chunks
-  data/hr-questions-context.md: 28 chunks
-Embedding and storing 40 chunks...
-Done. 40 chunks ingested into pgvector.
+  data/resume.md: 16 chunks
+  data/hr-questions-context.md: 47 chunks
+Embedding and storing 63 chunks...
+Done. 63 chunks ingested into pgvector.
 ```
 
 ### 2.3 Verify in Supabase
@@ -174,6 +175,11 @@ Click **Add Variable** for each one below. The table shows exactly what to type 
 | `BACKEND_CORS_ORIGINS` | `https://your-app.vercel.app` | **Placeholder for now** — update after Step 4 |
 | `SESSION_MEMORY_TURNS` | `6` | |
 | `RETRIEVAL_TOP_K` | `4` | |
+| `BOT_NAME` | `Folio` | Display name shown in the chat header |
+| `SMTP_HOST` | e.g. `smtp.gmail.com` | For the contact form email sender |
+| `SMTP_PORT` | `587` | |
+| `SMTP_USER` | your Gmail address | Sender account |
+| `SMTP_PASSWORD` | your app password | Gmail → Security → App Passwords |
 
 ### 3.4 Trigger a deploy
 
@@ -231,6 +237,8 @@ Add each one:
 | `VITE_CONTACT_LINKEDIN` | `https://www.linkedin.com/in/reiniel-dan-pablo` | Your LinkedIn |
 | `VITE_CONTACT_GITHUB` | `https://github.com/reidan-dev` | Your GitHub |
 | `VITE_OWNER_NAME` | `Reiniel Dan Pablo` | Your name |
+| `VITE_BOT_NAME` | `Folio` | Chat widget header name |
+| `VITE_BOT_INTRO` | `Hi! Ask me anything about Dan's background, skills, and experience.` | Opening message in the chat |
 
 ### 4.3 Deploy
 
@@ -257,8 +265,8 @@ The backend currently has a placeholder for `BACKEND_CORS_ORIGINS`. Update it no
 ## Step 5 — Verify everything works end-to-end
 
 1. Open your Vercel URL in a browser
-2. The resume page should load with your name and experience
-3. Click **Ask about Dan** to open the chat
+2. The resume page should load — two tabs at the top: **Resume** and **About this App**
+3. The **Folio** chat widget opens automatically in the bottom-right corner
 4. Type: `What is Dan's strongest programming language?`
 5. You should see a streaming response appear within a few seconds
 
@@ -269,13 +277,13 @@ If the chat responds correctly, your deployment is complete. ✓
 ## Summary of what you deployed
 
 ```
-Browser → https://your-app.vercel.app        (Vercel — static React app)
-             ↓ API calls
+Browser → https://your-app.vercel.app        (Vercel — static React + Vite app)
+             ↓ API calls (SSE streaming)
          https://your-app.up.railway.app      (Railway — FastAPI backend)
              ↓ vector search
-         Supabase pgvector                    (resume embeddings)
+         Supabase pgvector                    (resume + HR Q&A embeddings)
              ↓ LLM call
-         Anthropic Claude API                 (generates the answer)
+         OpenAI API (gpt-4o-mini)             (generates the streamed answer)
 ```
 
 ---
@@ -286,9 +294,8 @@ When you edit `backend/data/resume.md` or `backend/data/hr-questions-context.md`
 
 ```bash
 # 1. Re-ingest to update the Supabase vectors
-cd backend
 # Confirm backend/.env has VECTOR_DB=pgvector and DATABASE_URL pointing to Supabase
-uv run python -m rag.ingest
+./0__run_ingest.sh
 
 # 2. Push code changes so Railway redeploys with the latest files
 git add backend/data/

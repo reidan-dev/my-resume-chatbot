@@ -1,6 +1,8 @@
 # Resume Chatbot
 
-A personal portfolio site with an embedded AI chatbot. Recruiters and HR professionals can ask natural language questions about Dan's background and experience. Answers are grounded in the resume via a RAG pipeline.
+A personal portfolio site with an embedded AI chatbot named **Folio**. Recruiters and HR professionals can ask natural language questions about Dan's background and experience. Answers are grounded in the resume via a RAG pipeline.
+
+The site has two tabs — **Resume** (the interactive CV) and **About this App** (stack, architecture, data flow). Folio opens automatically on page load.
 
 **5 free questions per 3-day window per IP.** After the limit, a contact card appears.
 
@@ -10,16 +12,16 @@ A personal portfolio site with an embedded AI chatbot. Recruiters and HR profess
 
 | Layer | Local Dev | Production |
 |-------|-----------|------------|
-| Frontend | React + Vite + Tailwind | Vercel / Netlify |
-| Backend | FastAPI (Python 3.11) | Render / Railway |
-| LLM | Ollama (llama3) | Claude API |
-| Embeddings | nomic-embed-text (Ollama) | OpenAI embeddings |
-| Vector DB | ChromaDB (Docker) | Pinecone |
-| Rate limit | In-memory | Redis |
+| Frontend | React + Vite + Tailwind | Vercel |
+| Backend | FastAPI (Python 3.13) | Railway |
+| LLM | Ollama (llama3.2) | OpenAI gpt-4o-mini |
+| Embeddings | nomic-embed-text (Ollama) | OpenAI text-embedding-3-small |
+| Vector DB | ChromaDB (Docker) | Supabase pgvector |
+| Rate limit | In-memory | In-memory |
 
 ---
 
-## First-time Setup
+## Quick Start
 
 ### 1. Start infrastructure (Ollama + ChromaDB)
 
@@ -27,10 +29,10 @@ A personal portfolio site with an embedded AI chatbot. Recruiters and HR profess
 docker compose up -d
 ```
 
-### 2. Pull required models (first run only, ~4 GB)
+### 2. Pull required models (first run only, ~2 GB)
 
 ```bash
-docker exec ollama ollama pull llama3
+docker exec ollama ollama pull llama3.2
 docker exec ollama ollama pull nomic-embed-text
 ```
 
@@ -38,20 +40,19 @@ docker exec ollama ollama pull nomic-embed-text
 
 ```bash
 cd backend
-cp .env.example .env        # already copied — edit values if needed
-uv sync                     # install all deps
-uv run python -m rag.ingest # embed resume into ChromaDB
-uv run uvicorn main:app --reload --port 8000
+cp .env.example .env   # edit contact info and review defaults
+uv sync                # install dependencies
 ```
 
-### 4. Frontend (new terminal)
+### 4. Ingest, backend, and frontend — use the root scripts
 
 ```bash
-cd frontend
-cp .env.example .env.local  # already copied
-npm install
-npm run dev                 # opens http://localhost:5173
+./0__run_ingest.sh     # embed resume into ChromaDB
+./1__run_backend.sh    # start FastAPI on port 8000
+./2__run_frontend.sh   # start Vite on port 5173 (new terminal)
 ```
+
+Open [http://localhost:5173](http://localhost:5173).
 
 ---
 
@@ -63,9 +64,8 @@ Source documents live in `references/` — edit them there, then copy to `backen
 # After editing references/hr-questions-context.md:
 cp references/hr-questions-context.md backend/data/hr-questions-context.md
 
-# After editing backend/data/resume.md directly, or re-copying from references/:
-cd backend
-uv run python -m rag.ingest
+# Re-ingest to update the vector DB:
+./0__run_ingest.sh
 ```
 
 | File | Purpose |
@@ -78,22 +78,40 @@ uv run python -m rag.ingest
 
 ---
 
-## Switching to Claude API
+## Switching LLM Provider
 
-Edit `backend/.env`:
+Edit `backend/.env` and restart the backend:
 
 ```bash
+# OpenAI (same key as embeddings)
+LLM_PROVIDER=openai
+OPENAI_MODEL=gpt-4o-mini
+OPENAI_API_KEY=sk-...
+
+# Claude
 LLM_PROVIDER=claude
 CLAUDE_API_KEY=sk-ant-...
 CLAUDE_MODEL=claude-sonnet-4-6
 ```
 
-Then restart the backend.
+---
+
+## Security
+
+Three layers protect against API cost abuse — see [API_SECURITY.md](API_SECURITY.md) for full details.
+
+| Layer | Protection |
+|-------|-----------|
+| Input guard | Max message length + prompt injection detection |
+| Per-IP rate limit | Burst (3/min) + window (5/3 days) |
+| Global daily cap | Hard stop at 100 questions/day across all users |
+
+**Set a hard spending limit in your OpenAI dashboard** (Billing → Limits → Hard limit: $5/month) as the ultimate backstop.
 
 ---
 
 ## Production Deployment
 
-- **Backend → Render / Railway / Fly.io**: set all env vars from `.env.example`, switch `LLM_PROVIDER=claude`, `VECTOR_DB=pinecone`, add `REDIS_URL`
-- **Frontend → Vercel / Netlify**: set `VITE_API_URL=https://your-backend.domain`, set all `VITE_CONTACT_*` vars
-- Run `uv run python -m rag.ingest` once pointed at the prod Pinecone index after first deploy
+See [DEPLOYMENT.md](DEPLOYMENT.md) for the full step-by-step guide.
+
+**Stack:** Vercel (frontend) · Railway (backend) · Supabase pgvector (vectors) · OpenAI API (LLM + embeddings)

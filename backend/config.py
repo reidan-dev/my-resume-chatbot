@@ -38,6 +38,15 @@ class Settings(BaseSettings):
     # LLM output cap
     llm_max_tokens: int = 500
 
+    # Bot
+    bot_name: str = "Folio"
+
+    # SMTP (for contact form)
+    smtp_host: str = "smtp.gmail.com"
+    smtp_port: int = 587
+    smtp_user: str = ""
+    smtp_password: str = ""
+
     # Contact
     contact_name: str = "Dan Pablo"
     contact_email: str = "reinieldan@gmail.com"

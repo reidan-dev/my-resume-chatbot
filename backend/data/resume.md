@@ -38,7 +38,7 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 
 ### Software Developer – Backend | Sharesource → Biarri Networks (AUS)
 
-**September 2022 – Present | Metro Manila, PH / Remote**
+**September 2022 – April 2026 | 3 years 7 months | Metro Manila, PH / Remote**
 
 - Engineered and scaled custom internal backends used by consulting design units; deployed robust REST APIs and managed automated multi-repository scripts within active Agile Scrum environments.
 - Maintained 60+ repositories of exclusive proprietary Python packages and integration libraries across Bitbucket and GitHub, enabling continuous data synchronization between stakeholders and downstream tools.
@@ -49,7 +49,7 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 
 ### Part-Time College Instructor | STI College – Angeles City
 
-**February 2023 – July 2023 | Angeles City, PH**
+**February 2023 – July 2023 | 5 months | Angeles City, PH**
 
 - Delivered full programming lectures to 15-student cohorts, providing actionable technical examples mapping full-stack JavaScript architectures to Python data handling frameworks.
 - Guided student groups through capstone completions, reviewing syntax architectures and teaching delivery workflows spanning the Waterfall model and Agile Scrum environments.
@@ -57,7 +57,7 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 
 ### Data Visualization Consultant / Data Analyst | Amihan Global Strategies
 
-**August 2022 – February 2023 | Metro Manila, PH**
+**August 2022 – February 2023 | 6 months | Metro Manila, PH**
 
 - Served as the Data Analyst technical lead, delegating complex reporting tasks, managing project documentation records, and engineering analytical dashboards inside Apache Superset.
 - Utilized Python scripts alongside Presto SQL and PostgreSQL queries to integrate REST APIs, ingest massive raw JSON/XML telemetry arrays, and manipulate data streams.
@@ -66,7 +66,7 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 
 ### Software Engineer | Denso Techno Philippines Inc.
 
-**August 2019 – February 2022 | Metro Manila, PH**
+**August 2019 – February 2022 | 2 years 6 months | Metro Manila, PH**
 
 - Constructed full-stack enterprise solutions from scratch using Python (Django, Flask, FastAPI) for highly scalable REST APIs and JavaScript (React, Node.js, Vue.js, Bootstrap) for frontends.
 - Provisioned secure microservices topologies using Docker containers deployed across fundamental AWS resources (S3, Lambda, EC2) and integrated third-party data streams using automated Terraform templates.
@@ -76,7 +76,7 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 
 ### IC Design Engineer | Synkom IC Technology Inc.
 
-**October 2018 – April 2019 | Metro Manila, PH**
+**October 2018 – April 2019 | 6 months | Metro Manila, PH**
 
 - Formulated detailed hardware layout specifications, design schematics, and structural assembly instructions based on electronics engineering and electrical circuit logic theory.
 - Wrote automated data parsing scripts using Python, TCL, and Bash to clean and ingest raw hardware verification telemetry logs.
@@ -84,7 +84,7 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 
 ### Academic Instructor | AMA Computer College – Angeles City
 
-**June 2017 – August 2017 | Angeles City, PH**
+**June 2017 – August 2017 | 3 months | Angeles City, PH**
 
 - Instructed beginner and advanced Mathematics modules to blocks of 30 Senior High School students, incorporating Python algorithms to illustrate mathematical modeling.
 - Delivered lectures and moderated structured classroom discussions designed to stimulate logical reasoning, critical thinking, and code-adjacent logic.

@@ -1,5 +1,39 @@
 import { ExternalLink, Mail, MapPin, Phone } from 'lucide-react'
 
+const TECH_TERMS = [
+  // multi-word terms first (longest match wins)
+  'Claude Code', 'OpenAI Codex', 'Presto SQL', 'Gensim LDA', 'Logistic Regression',
+  'Apache Superset', 'Apache Spark', 'Apache Zeppelin',
+  'Agile Scrum', 'REST APIs', 'REST API',
+  'BeautifulSoup', 'SciSpaCy', 'Selenium',
+  'Node.js', 'Vue.js', 'FastAPI', 'Django', 'Flask', 'Bootstrap', 'SpaCy',
+  'TypeScript', 'JavaScript', 'PostgreSQL', 'Bitbucket', 'GitHub',
+  'Jenkins', 'Terraform', 'Docker', 'GraphQL', 'Microservices',
+  'React', 'Python', 'Pytest', 'Jest', 'TDD', 'Jira', 'Confluence', 'Waterfall',
+  'AWS', 'HTML5', 'CSS3', 'SQL', 'TCL', 'Bash', 'Git',
+  'F1-score', '94%', '98–100%',
+]
+
+const _termSet = new Set(TECH_TERMS)
+const _highlightPattern = new RegExp(
+  `(${[...TECH_TERMS].sort((a, b) => b.length - a.length)
+    .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .join('|')})`
+)
+
+function HighlightedText({ text }: { text: string }) {
+  const parts = text.split(_highlightPattern)
+  return (
+    <>
+      {parts.map((part, i) =>
+        _termSet.has(part)
+          ? <strong key={i} className="font-semibold text-gray-800">{part}</strong>
+          : <span key={i}>{part}</span>
+      )}
+    </>
+  )
+}
+
 const GITHUB = import.meta.env.VITE_CONTACT_GITHUB ?? 'https://github.com/reidan22'
 const EMAIL = import.meta.env.VITE_CONTACT_EMAIL ?? 'reinieldan@gmail.com'
 
@@ -14,7 +48,8 @@ const experience = [
   {
     title: 'Software Developer – Backend',
     company: 'Sharesource → Biarri Networks (AUS)',
-    period: 'Sep 2022 – Present',
+    period: 'Sep 2022 – Apr 2026',
+    duration: '3 yrs 7 mos',
     bullets: [
       'Engineered and scaled custom internal backends; maintained 60+ Python packages across Bitbucket and GitHub.',
       'Configured Jenkins pipelines for cron-based job management across complex multi-repo packages.',
@@ -26,6 +61,7 @@ const experience = [
     title: 'Data Visualization Consultant / Data Analyst',
     company: 'Amihan Global Strategies',
     period: 'Aug 2022 – Feb 2023',
+    duration: '6 mos',
     bullets: [
       'Technical lead for data analytics: built dashboards in Apache Superset, managed project docs.',
       'Processed large-scale JSON/XML telemetry using Python, Presto SQL, and PostgreSQL.',
@@ -36,6 +72,7 @@ const experience = [
     title: 'Software Engineer',
     company: 'Denso Techno Philippines Inc.',
     period: 'Aug 2019 – Feb 2022',
+    duration: '2 yrs 6 mos',
     bullets: [
       'Built full-stack enterprise systems: Python (Django, FastAPI) for APIs; React, Vue.js for frontends.',
       'Deployed microservices with Docker on AWS (S3, Lambda, EC2) using Terraform.',
@@ -46,6 +83,7 @@ const experience = [
     title: 'Part-Time College Instructor',
     company: 'STI College – Angeles City',
     period: 'Feb 2023 – Jul 2023',
+    duration: '5 mos',
     bullets: [
       'Delivered programming lectures to 15-student cohorts, covering full-stack JS and Python frameworks.',
       'Guided students through capstone completions using Agile Scrum and Waterfall workflows.',
@@ -55,6 +93,7 @@ const experience = [
     title: 'IC Design Engineer',
     company: 'Synkom IC Technology Inc.',
     period: 'Oct 2018 – Apr 2019',
+    duration: '6 mos',
     bullets: [
       'Wrote automated data parsing scripts in Python, TCL, and Bash to clean hardware verification logs.',
       'Designed hardware layout specifications and schematics based on circuit theory.',
@@ -128,18 +167,22 @@ export function ResumePage() {
         <div className="space-y-6">
           {experience.map((job) => (
             <div key={job.title + job.company}>
-              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-0.5">
                 <div>
-                  <span className="font-semibold text-gray-900 text-sm">{job.title}</span>
-                  <span className="text-gray-500 text-sm"> · {job.company}</span>
+                  <div className="font-semibold text-gray-900 text-sm">{job.title}</div>
+                  <div className="text-gray-500 text-xs mt-0.5">{job.company}</div>
                 </div>
-                <span className="text-xs text-gray-400 shrink-0">{job.period}</span>
+                <span className="text-xs text-gray-400 shrink-0 mt-0.5">
+                  {job.period}
+                  <span className="text-gray-300"> · </span>
+                  {job.duration}
+                </span>
               </div>
               <ul className="mt-2 space-y-1">
                 {job.bullets.map((b) => (
                   <li key={b} className="text-sm text-gray-600 flex gap-2">
                     <span className="text-gray-300 shrink-0 mt-0.5">—</span>
-                    <span>{b}</span>
+                    <span><HighlightedText text={b} /></span>
                   </li>
                 ))}
               </ul>
@@ -160,7 +203,7 @@ export function ResumePage() {
               {p.bullets.map((b) => (
                 <li key={b} className="text-sm text-gray-600 flex gap-2">
                   <span className="text-gray-300 shrink-0 mt-0.5">—</span>
-                  <span>{b}</span>
+                  <span><HighlightedText text={b} /></span>
                 </li>
               ))}
             </ul>
@@ -170,12 +213,12 @@ export function ResumePage() {
 
       {/* Education */}
       <Section title="Education">
-        <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-0.5">
           <div>
-            <span className="font-semibold text-gray-900 text-sm">BS Electronics and Communications Engineering</span>
-            <span className="text-gray-500 text-sm"> · AMA Computer College</span>
+            <div className="font-semibold text-gray-900 text-sm">BS Electronics and Communications Engineering</div>
+            <div className="text-gray-500 text-xs mt-0.5">AMA Computer College</div>
           </div>
-          <span className="text-xs text-gray-400 shrink-0">Graduated Apr 2017</span>
+          <span className="text-xs text-gray-400 shrink-0 mt-0.5">Graduated Apr 2017</span>
         </div>
         <ul className="mt-2 space-y-1">
           <li className="text-sm text-gray-600 flex gap-2">

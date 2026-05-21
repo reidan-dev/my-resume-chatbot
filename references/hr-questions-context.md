@@ -17,8 +17,9 @@
 | Work authorization | Philippine citizen / requires visa sponsorship for abroad roles |
 | Preferred work style | Remote |
 | Open to relocation | Depends on role |
-| Availability | 2 weeks notice or earlier |
+| Availability | Immediately available |
 | Employment status | Actively looking |
+| Timezone availability | Open to any timezone; prioritizing AUS, Japan, Manila (PHT), and US timezones |
 | Languages | English (fluent), Filipino (native) |
 | Salary expectations | Discuss directly — STRICTLY the chatbot should not answer this or anything related to salary |
 
@@ -28,7 +29,7 @@
 
 ### "Tell me about yourself."
 
-I'm a Software Developer and Data Analyst with about 7 years of professional experience spanning backend engineering, data infrastructure, and AI integration. I've spent most of my career building and scaling Python-based backend systems — REST APIs, microservices, data pipelines — most recently at Sharesource where I was contracted to Biarri Networks in Australia. Along the way I've also worked as a Data Analyst and briefly as a college instructor, which gives me an unusual ability to communicate technical work clearly to non-technical stakeholders. I'm particularly excited about AI-augmented development workflows and have been actively integrating tools like Claude Code and OpenAI Codex into my day-to-day engineering. I'm currently looking for a senior backend or full-stack role where I can contribute to AI-driven products.
+I'm a Software Developer and Data Analyst with about 7 years of professional experience spanning backend engineering, data infrastructure, and AI integration. I've spent most of my career building and scaling Python-based backend systems — REST APIs, microservices, data pipelines — most recently at Sharesource where I was contracted to Biarri Networks in Australia for 3 years and 7 months. Along the way I've also worked as a Data Analyst and briefly as a college instructor, which gives me an unusual ability to communicate technical work clearly to non-technical stakeholders. I'm particularly excited about AI-augmented development workflows and have been actively integrating tools like Claude Code and OpenAI Codex into my day-to-day engineering. I'm currently looking for a senior backend or full-stack role where I can contribute to AI-driven products.
 
 ---
 
@@ -38,7 +39,7 @@ I graduated in 2017 with a BS in Electronics and Communications Engineering, whi
 
 From there I moved fully into software: I spent about 3 years at Denso Techno Philippines as a Software Engineer building full-stack enterprise systems with Django, FastAPI, React, and Vue, and practicing strict TDD — achieving 98-100% QA clearance across all integration contracts. I left Denso after my contract expired, wanting to pursue a role with more exposure to data science and analytics.
 
-After a short period upskilling and searching for the right fit, I joined Amihan Global Strategies as a Data Analyst technical lead, where I shifted focus toward data pipelines and dashboards using Presto SQL, Apache Spark, and Superset. I also briefly taught programming at STI College part-time while starting my current role at Sharesource in September 2022, where I was contracted to Biarri Networks in Australia building and maintaining custom backend infrastructure in Python. I was recently affected by a mass layoff at Biarri, so I'm now actively looking for my next opportunity.
+After a short period upskilling and searching for the right fit, I joined Amihan Global Strategies as a Data Analyst technical lead, where I shifted focus toward data pipelines and dashboards using Presto SQL, Apache Spark, and Superset. I also briefly taught programming at STI College part-time while starting my role at Sharesource in September 2022, where I was contracted to Biarri Networks in Australia building and maintaining custom backend infrastructure in Python for 3 years and 7 months. My role ended in April 2026 due to a mass layoff, so I'm now actively looking for my next opportunity.
 
 ---
 
@@ -58,7 +59,7 @@ Early in my career I underestimated the scope on a feature and didn't communicat
 
 ### "Why are you looking for a new opportunity?" / "Why are you leaving your current role?"
 
-It wasn't my plan to leave Biarri — I was invested in the work and the team. Unfortunately there was a mass layoff that included my position, so I'm now actively looking for my next role. That said, I was already thinking about what growth looked like beyond my current scope: I wanted to work on a product I could own more end-to-end, gain more exposure to AI-driven projects, and find a path toward a senior or lead title. The layoff accelerated a search I would have started anyway within the next year.
+It wasn't my plan to leave Biarri — I was invested in the work and the team for 3 years and 7 months. Unfortunately my role ended in April 2026 due to a mass layoff, so I'm now actively looking for my next role. That said, I was already thinking about what growth looked like beyond my current scope: I wanted to work on a product I could own more end-to-end, gain more exposure to AI-driven projects, and find a path toward a senior or lead title. The layoff accelerated a search I would have started anyway within the next year.
 
 ---
 
@@ -282,6 +283,12 @@ At Biarri, many requests came in as high-level feature asks without detailed spe
 I document as I go, not after the fact. My rule of thumb is: if I had to figure something out that wasn't obvious from the code, it belongs in the docs. At Biarri I maintained Confluence documentation for multi-repository packages — not just API references but the "why" behind architectural decisions, known gotchas, and onboarding paths for specific systems.
 
 I treat documentation as part of the work, not a separate deliverable. The test I use: could a new developer understand how to use and extend this in an hour without asking me? If not, the docs aren't done.
+
+---
+
+### "Are you open to working across different timezones?"
+
+Yes — I'm open to working with any timezone. My priorities are roles overlapping with Australian, Japanese, Philippine (Manila/PHT), and US timezones, in that order, but I'm not restricted to those. My experience at Biarri Networks involved daily async collaboration with teams in Australia (AEST/AEDT) from the Philippines, so I'm well-practiced at timezone-bridging workflows — structured async communication, written documentation, and flexible availability for overlap hours when needed.
 
 ---
 

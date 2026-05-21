@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from 'react'
 import { streamChat, resetChat } from '../lib/api'
-import { useRateLimit } from './useRateLimit'
+import type { useRateLimit } from './useRateLimit'
 
 export interface Message {
   id: string
@@ -11,12 +11,14 @@ export interface Message {
   error?: boolean
 }
 
-export function useChat() {
+type RateLimitAPI = ReturnType<typeof useRateLimit>
+
+export function useChat(rl: RateLimitAPI) {
   const [messages, setMessages] = useState<Message[]>([])
   const [isStreaming, setIsStreaming] = useState(false)
   const sessionId = useRef(crypto.randomUUID())
   const abortRef = useRef<(() => void) | null>(null)
-  const { syncFromHeaders, increment, isExhausted, remaining, resetAt } = useRateLimit()
+  const { syncFromHeaders, increment, isExhausted, remaining, resetAt } = rl
 
   const sendMessage = useCallback(
     (text: string) => {

@@ -1,4 +1,4 @@
-from langchain.schema import BaseRetriever
+from langchain_core.retrievers import BaseRetriever
 from llm.provider import get_embeddings
 from config import settings
 

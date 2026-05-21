@@ -6,7 +6,7 @@ To update content: edit the source files in references/, copy to backend/data/, 
 import os
 import chromadb
 from langchain_text_splitters import MarkdownHeaderTextSplitter
-from langchain.schema import Document
+from langchain_core.documents import Document
 from langchain_chroma import Chroma
 from llm.provider import get_embeddings
 from config import settings

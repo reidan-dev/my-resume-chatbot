@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const QUESTIONS = [
   "Tell me about Dan's professional background.",
   "What is Dan's strongest programming language?",
@@ -13,21 +15,17 @@ interface Props {
 }
 
 export function SuggestedQuestions({ onSelect, disabled }: Props) {
+  const [question] = useState(() => QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)])
+
   return (
-    <div className="space-y-2">
-      <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">Suggested questions</p>
-      <div className="flex flex-wrap gap-2">
-        {QUESTIONS.map((q) => (
-          <button
-            key={q}
-            onClick={() => onSelect(q)}
-            disabled={disabled}
-            className="text-xs px-3 py-1.5 rounded-full border border-gray-200 text-gray-600 hover:border-emerald-400 hover:text-emerald-700 hover:bg-emerald-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-          >
-            {q}
-          </button>
-        ))}
-      </div>
+    <div className="mt-1">
+      <button
+        onClick={() => onSelect(question)}
+        disabled={disabled}
+        className="text-xs px-3 py-1.5 rounded-full border border-gray-200 text-gray-600 hover:border-emerald-400 hover:text-emerald-700 hover:bg-emerald-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+      >
+        {question}
+      </button>
     </div>
   )
 }

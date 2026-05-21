@@ -1,9 +1,19 @@
+import os
 from typing import AsyncIterator
-from langchain.schema import HumanMessage, AIMessage, SystemMessage
+from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 from rag.retriever import get_retriever
 from llm.provider import get_llm
 from llm.prompts import SYSTEM_PROMPT_TEMPLATE
 from config import settings
+
+
+def _load_personality() -> str:
+    path = os.path.join(os.path.dirname(__file__), '..', 'data', 'personality.md')
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            return f.read()
+    except FileNotFoundError:
+        return ""
 
 
 class RAGChain:
@@ -12,6 +22,7 @@ class RAGChain:
         self._retriever = None
         self.histories: dict[str, list] = {}
         self.last_sources: dict[str, list[str]] = {}
+        self._personality = _load_personality()
 
     @property
     def llm(self):
@@ -48,8 +59,10 @@ class RAGChain:
         ))
 
         prompt = SYSTEM_PROMPT_TEMPLATE.format(
+            bot_name=settings.bot_name,
             owner_name=settings.contact_name,
             contact_email=settings.contact_email,
+            personality=self._personality,
             context=context,
             history=self._format_history(session_id),
         )

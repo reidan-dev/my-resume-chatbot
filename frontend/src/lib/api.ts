@@ -1,5 +1,21 @@
 const BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8000'
 
+export async function sendContactForm(data: {
+  name: string
+  email: string
+  message: string
+}): Promise<void> {
+  const res = await fetch(`${BASE}/contact`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.detail ?? 'Failed to send message.')
+  }
+}
+
 export async function checkRateLimit(): Promise<{
   remaining: number
   limit: number

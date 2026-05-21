@@ -22,43 +22,60 @@ You need two `.env` files: one for the backend, one for the frontend. Both are a
 
 ### Backend: `backend/.env`
 
-This file was auto-created from `backend/.env.example`. Open it and review:
+Copy from the example if it doesn't exist yet:
+
+```bash
+cp backend/.env.example backend/.env
+```
+
+Open it and review:
 
 ```bash
 # ── LLM ──────────────────────────────────────────────────────────────
 LLM_PROVIDER=ollama              # keep as "ollama" for local dev
-OLLAMA_MODEL=llama3              # the model Docker will pull
+OLLAMA_MODEL=llama3.2            # 3B model, fits in ~2 GB RAM
 OLLAMA_BASE_URL=http://localhost:11434
-CLAUDE_API_KEY=                  # leave blank for local dev
-CLAUDE_MODEL=claude-sonnet-4-6   # only used when LLM_PROVIDER=claude
+OPENAI_MODEL=gpt-4o-mini         # only used when LLM_PROVIDER=openai
+CLAUDE_API_KEY=                  # only used when LLM_PROVIDER=claude
+CLAUDE_MODEL=claude-sonnet-4-6
 
 # ── Embeddings ────────────────────────────────────────────────────────
 EMBED_PROVIDER=ollama            # keep as "ollama" for local dev
-EMBED_MODEL=nomic-embed-text     # the embedding model Docker will pull
-OPENAI_API_KEY=                  # leave blank for local dev
+EMBED_MODEL=nomic-embed-text
+OPENAI_API_KEY=                  # only needed when EMBED_PROVIDER=openai
 
 # ── Vector DB ─────────────────────────────────────────────────────────
 VECTOR_DB=chroma                 # keep as "chroma" for local dev
 CHROMA_HOST=localhost            # DO NOT change — matches Docker
 CHROMA_PORT=8001                 # DO NOT change — matches docker-compose.yml
-PINECONE_API_KEY=                # leave blank for local dev
-PINECONE_INDEX=resume
+DATABASE_URL=                    # only needed for pgvector (production)
 
-# ── Rate limiting ──────────────────────────────────────────────────────
+# ── Rate limiting & security ───────────────────────────────────────────
 RATE_LIMIT_QUESTIONS=5           # questions per window per IP
 RATE_LIMIT_WINDOW_DAYS=3
+BURST_LIMIT=3                    # max questions per IP per minute
+GLOBAL_DAILY_LIMIT=100           # max total questions per day
+MAX_MESSAGE_LENGTH=300           # max characters per message
+LLM_MAX_TOKENS=500               # max tokens per LLM response
 REDIS_URL=                       # leave blank → uses in-memory (fine for dev)
 
 # ── Contact info ───────────────────────────────────────────────────────
-CONTACT_NAME=Reiniel Dan Pablo   # ← your name
-CONTACT_EMAIL=reinieldan@gmail.com         # ← your email
-CONTACT_LINKEDIN=https://www.linkedin.com/in/reiniel-dan-pablo  # ← your LinkedIn
-CONTACT_GITHUB=https://github.com/reidan-dev                    # ← your GitHub
+CONTACT_NAME=Reiniel Dan Pablo
+CONTACT_EMAIL=reinieldan@gmail.com
+CONTACT_LINKEDIN=https://www.linkedin.com/in/reiniel-dan-pablo
+CONTACT_GITHUB=https://github.com/reidan-dev
 
 # ── App ────────────────────────────────────────────────────────────────
 BACKEND_CORS_ORIGINS=http://localhost:5173  # DO NOT change for local dev
 SESSION_MEMORY_TURNS=6
 RETRIEVAL_TOP_K=4
+BOT_NAME=Folio
+
+# ── Contact form (SMTP) ────────────────────────────────────────────────
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=                   # your Gmail address
+SMTP_PASSWORD=               # Gmail app password (Settings → Security → App Passwords)
 ```
 
 **What you actually need to edit:**
@@ -69,7 +86,13 @@ RETRIEVAL_TOP_K=4
 
 ### Frontend: `frontend/.env.local`
 
-This file was auto-created from `frontend/.env.example`. Open it and review:
+Copy from the example if it doesn't exist yet:
+
+```bash
+cp frontend/.env.example frontend/.env.local
+```
+
+Open it and review:
 
 ```bash
 VITE_API_URL=http://localhost:8000    # DO NOT change for local dev
@@ -78,10 +101,13 @@ VITE_CONTACT_EMAIL=reinieldan@gmail.com
 VITE_CONTACT_LINKEDIN=https://www.linkedin.com/in/reiniel-dan-pablo
 VITE_CONTACT_GITHUB=https://github.com/reidan-dev
 VITE_OWNER_NAME=Reiniel Dan Pablo
+VITE_BOT_NAME=Folio
+VITE_BOT_INTRO=Hi! Ask me anything about Dan's background, skills, and experience.
 ```
 
 **What you actually need to edit:**
 - Same contact fields — keep them in sync with `backend/.env`
+- `VITE_BOT_NAME` / `VITE_BOT_INTRO` — customize the chat widget name and opening message
 - `VITE_API_URL` stays as `http://localhost:8000` for local dev
 
 ---
@@ -108,14 +134,15 @@ docker compose ps
 
 ## Step 3 — Pull the AI models (first time only)
 
-This is a one-time download (~4 GB total). Run both:
+This is a one-time download (~2 GB total). Run both:
 
 ```bash
-docker exec ollama ollama pull llama3
+docker exec ollama ollama pull llama3.2
 docker exec ollama ollama pull nomic-embed-text
 ```
 
-> `llama3` is the chat model. `nomic-embed-text` converts text into vectors for search.
+> `llama3.2` is the 3B chat model (~2 GB, fits in most machines).
+> `nomic-embed-text` converts text into vectors for search.
 > This only needs to run once — Docker volumes persist the data.
 
 ---
@@ -127,71 +154,23 @@ cd backend
 uv sync
 ```
 
-`uv sync` reads `pyproject.toml` + `uv.lock` and installs everything into a local `.venv`. You never need to activate it — `uv run` handles that automatically.
+`uv sync` reads `pyproject.toml` + `uv.lock` and installs everything into a local `.venv`. You never need to activate it manually — `uv run` handles that automatically.
 
 ---
 
-## Step 5 — Ingest the resume into ChromaDB
+## Step 5 — Ingest, backend, frontend — use the root scripts
 
-The ingest script reads from `backend/data/resume.md` and `backend/data/hr-questions-context.md` and embeds them into ChromaDB.
-
-> **Source files vs working copies**
->
-> | Location | Role |
-> |----------|------|
-> | `references/hr-questions-context.md` | Source — edit here |
-> | `references/Reiniel_Pablo_Software_Developer.pdf` | Original resume PDF |
-> | `references/resume-chatbot-spec.md` | Project specification |
-> | `backend/data/resume.md` | Working copy — what the chatbot reads |
-> | `backend/data/hr-questions-context.md` | Working copy — what the chatbot reads |
->
-> If you've edited anything in `references/`, copy it to `backend/data/` first:
-> ```bash
-> cp references/hr-questions-context.md backend/data/hr-questions-context.md
-> ```
-
-Then run the ingest:
+Three shell scripts at the project root handle the most common commands. Run them from the project root:
 
 ```bash
-cd backend
-uv run python -m rag.ingest
+./0__run_ingest.sh     # embed resume into ChromaDB (run once, then after any content edits)
+./1__run_backend.sh    # start FastAPI on http://localhost:8000
+./2__run_frontend.sh   # start Vite on http://localhost:5173 (open a new terminal)
 ```
 
-You should see output like:
-```
-Connecting to ChromaDB...
-  data/resume.md: 12 chunks
-  data/hr-questions-context.md: 28 chunks
-Embedding and storing 40 chunks...
-Done. 40 chunks ingested into ChromaDB.
-```
+Verify the backend is up: [http://localhost:8000/health](http://localhost:8000/health) → `{"status": "ok"}`
 
----
-
-## Step 6 — Start the backend
-
-```bash
-cd backend
-uv run uvicorn main:app --reload --port 8000
-```
-
-Verify it's running by opening: [http://localhost:8000/health](http://localhost:8000/health)
-
-You should see: `{"status": "ok"}`
-
----
-
-## Step 7 — Start the frontend
-
-Open a new terminal:
-
-```bash
-cd frontend
-npm install    # only needed the first time
-npm run dev
-```
-
-Open [http://localhost:5173](http://localhost:5173) — the resume page and chat widget should load.
+Open the app: [http://localhost:5173](http://localhost:5173)
 
 ---
 
@@ -200,46 +179,55 @@ Open [http://localhost:5173](http://localhost:5173) — the resume page and chat
 | Terminal | Command | Purpose |
 |----------|---------|---------|
 | 1 | `docker compose up -d` (root) | Ollama + ChromaDB |
-| 2 | `uv run uvicorn main:app --reload --port 8000` (backend/) | FastAPI |
-| 3 | `npm run dev` (frontend/) | React app |
+| 2 | `./1__run_backend.sh` (root) | FastAPI on port 8000 |
+| 3 | `./2__run_frontend.sh` (root) | React app on port 5173 |
 
 ---
 
-## Re-ingesting after edits
+## Re-ingesting after content edits
 
-1. Edit the source file in `references/`
-2. Copy it to `backend/data/`:
+1. Edit the source file in `references/` (HR context) or directly in `backend/data/` (resume)
+2. If you edited in `references/`, copy to the working location:
    ```bash
    cp references/hr-questions-context.md backend/data/hr-questions-context.md
-   # or edit backend/data/resume.md directly
    ```
 3. Re-ingest:
    ```bash
-   cd backend
-   uv run python -m rag.ingest
+   ./0__run_ingest.sh
    ```
-4. Restart the backend (Ctrl+C → re-run uvicorn) so the new embeddings are picked up.
+4. Restart the backend (Ctrl+C in terminal 2 → re-run `./1__run_backend.sh`)
 
 ---
 
-## Switching to Claude API (optional)
+## Switching to OpenAI or Claude (optional)
 
-To use Claude instead of Ollama, edit `backend/.env`:
+To use OpenAI gpt-4o-mini instead of Ollama, edit `backend/.env`:
+
+```bash
+LLM_PROVIDER=openai
+OPENAI_MODEL=gpt-4o-mini
+OPENAI_API_KEY=sk-...
+
+EMBED_PROVIDER=openai
+EMBED_MODEL=text-embedding-3-small
+```
+
+To use Claude instead:
 
 ```bash
 LLM_PROVIDER=claude
-CLAUDE_API_KEY=sk-ant-...          # your Anthropic API key
-CLAUDE_MODEL=claude-sonnet-4-6     # or claude-opus-4-7 for higher quality
+CLAUDE_API_KEY=sk-ant-...
+CLAUDE_MODEL=claude-sonnet-4-6
 ```
 
-Then restart the backend. You don't need Ollama or Docker running when using Claude.
+Then restart the backend. When using OpenAI or Claude you don't need Ollama running — you can skip `docker compose up` if ChromaDB is also not needed (i.e. using pgvector instead).
 
 ---
 
 ## Stopping everything
 
 ```bash
-docker compose down    # stops and removes containers (data is preserved in volumes)
+docker compose down    # stops containers (data is preserved in volumes)
 ```
 
 To also delete the stored model data and vector DB (full reset):

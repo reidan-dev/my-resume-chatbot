@@ -15,3 +15,9 @@ class RateLimitStatus(BaseModel):
     remaining: int
     limit: int
     reset_at: Optional[str] = None
+
+
+class ContactRequest(BaseModel):
+    name: str
+    email: str
+    message: str

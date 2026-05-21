@@ -1,13 +1,21 @@
 import json
+import logging
 from fastapi import FastAPI, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from sse_starlette.sse import EventSourceResponse
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 from config import settings
 from middleware.rate_limiter import rate_limit, get_status, _get_ip
 from middleware.input_guard import validate_message
 from middleware.global_cap import global_daily_cap, get_daily_status
-from models.schemas import ChatRequest, ResetRequest
+from models.schemas import ChatRequest, ResetRequest, ContactRequest
 from rag.chain import RAGChain
 
 app = FastAPI(title="Resume Chatbot API", version="1.0.0")
@@ -53,6 +61,7 @@ async def chat(
             yield json.dumps({"type": "sources", "sources": sources})
             yield json.dumps({"type": "rate_limit", **rl})
         except Exception as e:
+            logger.exception("Error during chat stream")
             yield json.dumps({"type": "error", "message": str(e)})
         finally:
             yield "[DONE]"
@@ -68,6 +77,35 @@ async def chat(
 async def reset_chat(body: ResetRequest):
     rag_chain.clear_history(body.session_id)
     return {"status": "ok"}
+
+
+@app.post("/contact")
+async def contact(body: ContactRequest):
+    if not settings.smtp_user or not settings.smtp_password:
+        raise HTTPException(
+            status_code=503,
+            detail="Contact form not configured. Email Dan directly at reinieldan@gmail.com",
+        )
+    try:
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = f"Portfolio Contact: {body.name}"
+        msg["From"] = settings.smtp_user
+        msg["To"] = settings.contact_email
+        msg["Reply-To"] = body.email
+        body_text = (
+            f"Name: {body.name}\n"
+            f"Email: {body.email}\n\n"
+            f"{body.message}"
+        )
+        msg.attach(MIMEText(body_text, "plain"))
+        with smtplib.SMTP(settings.smtp_host, settings.smtp_port) as server:
+            server.starttls()
+            server.login(settings.smtp_user, settings.smtp_password)
+            server.send_message(msg)
+        return {"status": "sent"}
+    except Exception:
+        logger.exception("Failed to send contact email")
+        raise HTTPException(status_code=500, detail="Failed to send email. Please try again.")
 
 
 @app.post("/ingest")
