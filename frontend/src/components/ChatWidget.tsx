@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, type KeyboardEvent } from 'react'
 import { X, Send, RotateCcw, Minus } from 'lucide-react'
 import { useChat } from '../hooks/useChat'
+import { useHealth } from '../hooks/useHealth'
 import type { useRateLimit } from '../hooks/useRateLimit'
 import { MessageBubble } from './MessageBubble'
 import { ContactCard } from './ContactCard'
@@ -10,6 +11,7 @@ import { RateLimitBadge } from './RateLimitBadge'
 const LIMIT = 5
 const BOT_NAME = import.meta.env.VITE_BOT_NAME ?? 'Folio'
 const BOT_INTRO = import.meta.env.VITE_BOT_INTRO ?? `Hi! Ask me anything about Dan's background, skills, and experience.`
+const LLM_MODEL = import.meta.env.VITE_LLM_MODEL ?? 'gpt-4o-mini'
 
 interface Props {
   isOpen: boolean
@@ -20,6 +22,7 @@ interface Props {
 
 export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick }: Props) {
   const { messages, sendMessage, isStreaming, isExhausted, remaining, resetAt, reset } = useChat(rateLimit)
+  const health = useHealth()
   const [input, setInput] = useState('')
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -43,7 +46,7 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick }: Props) {
 
   function submit() {
     const text = input.trim()
-    if (!text || isStreaming || isExhausted) return
+    if (!text || isStreaming || isExhausted || health === 'offline') return
     setInput('')
     isAtBottomRef.current = true
     sendMessage(text)
@@ -90,7 +93,11 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick }: Props) {
           <div className="flex items-center gap-1.5">
             <span className="text-base">👓</span>
             <span className="font-semibold text-gray-900 text-sm">{BOT_NAME}</span>
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            <div className={`w-1.5 h-1.5 rounded-full ${
+              health === 'online' ? 'bg-emerald-500' :
+              health === 'offline' ? 'bg-red-400' :
+              'bg-gray-300 animate-pulse'
+            }`} />
             <RateLimitBadge remaining={remaining} limit={LIMIT} />
           </div>
           <div className="flex items-center gap-0.5">
@@ -149,7 +156,7 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick }: Props) {
 
         {/* Input */}
         {!isExhausted && (
-          <div className="px-3 py-2.5 border-t border-gray-100 shrink-0 pb-[calc(0.625rem+env(safe-area-inset-bottom))]">
+          <div className="px-3 pt-2.5 border-t border-gray-100 shrink-0 pb-[calc(0.375rem+env(safe-area-inset-bottom))]">
             <div className="flex items-end gap-1.5">
               <textarea
                 ref={inputRef}
@@ -164,12 +171,13 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick }: Props) {
               />
               <button
                 onClick={submit}
-                disabled={!input.trim() || isStreaming}
+                disabled={!input.trim() || isStreaming || health === 'offline'}
                 className="shrink-0 w-8 h-8 flex items-center justify-center rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 <Send size={13} />
               </button>
             </div>
+            <p className="mt-1.5 text-center text-[10px] text-gray-300">{LLM_MODEL}</p>
           </div>
         )}
       </div>

@@ -14,13 +14,46 @@ Create accounts on all four services first, then collect the values below. You'l
 |---|------|----------------|---------------------|
 | 1 | OpenAI API key | [platform.openai.com](https://platform.openai.com) → API Keys → Create Key | `sk-...` |
 | 2 | Supabase DB password | Set by you when creating the Supabase project | your chosen password |
-| 3 | Supabase connection string | Supabase dashboard (Step 1.3 below) | `postgresql+psycopg://...` |
-| 4 | Railway backend URL | Railway dashboard (Step 3.4 below) | `https://....up.railway.app` |
-| 5 | Vercel frontend URL | Vercel dashboard (Step 4.3 below) | `https://....vercel.app` |
+| 3 | Supabase connection string | Supabase dashboard (Step 3.3 below) | `postgresql+psycopg://...` |
+| 4 | Railway backend URL | Railway dashboard (Step 5.5 below) | `https://....up.railway.app` |
+| 5 | Vercel frontend URL | Vercel dashboard (Step 6.3 below) | `https://....vercel.app` |
 
 ---
 
-## Step 0 — Push your code to GitHub
+## Step 0 — Test OpenAI locally before deploying
+
+Before touching any cloud services, verify that the OpenAI integration works on your machine. This catches API key issues and model errors before you deploy.
+
+### 0.1 Switch backend/.env to OpenAI
+
+Open `backend/.env` and update these lines:
+
+```bash
+LLM_PROVIDER=openai
+OPENAI_API_KEY=sk-...        # your key from platform.openai.com
+EMBED_PROVIDER=openai
+EMBED_MODEL=text-embedding-3-small
+
+VECTOR_DB=chroma             # keep chroma for now — no Supabase needed yet
+```
+
+### 0.2 Re-ingest and run
+
+```bash
+./0__run_ingest.sh     # re-embeds docs using OpenAI embeddings
+./1__run_backend.sh    # start FastAPI
+./2__run_frontend.sh   # start Vite (new terminal)
+```
+
+### 0.3 Verify
+
+Open [http://localhost:5173](http://localhost:5173) and ask Folio a question. If you get a streaming response, OpenAI is working correctly. ✓
+
+If you see an error, check the backend terminal logs — it's almost always a wrong or missing `OPENAI_API_KEY`.
+
+---
+
+## Step 2 — Push your code to GitHub
 
 Both Vercel and Railway deploy directly from a GitHub repo.
 
@@ -38,7 +71,7 @@ If you haven't created a GitHub repo yet:
 
 ---
 
-## Step 1 — Supabase (vector database)
+## Step 3 — Supabase (vector database)
 
 ### 1.1 Create a project
 
@@ -85,7 +118,7 @@ postgresql+psycopg://postgres:[YOUR-PASSWORD]@db.abcdefghijkl.supabase.co:5432/p
 
 ---
 
-## Step 2 — Ingest the resume into Supabase (run locally, once)
+## Step 4 — Ingest the resume into Supabase (run locally, once)
 
 This embeds your resume into the Supabase database so the chatbot can search it. You run this from your machine — not on any server.
 
@@ -130,7 +163,7 @@ If the table exists with rows, the ingest worked. ✓
 
 ---
 
-## Step 3 — Railway (backend)
+## Step 5 — Railway (backend)
 
 ### 3.1 Create a project
 
@@ -156,11 +189,11 @@ Click **Add Variable** for each one below. The table shows exactly what to type 
 |------|-------|-------|
 | `LLM_PROVIDER` | `openai` | |
 | `OPENAI_MODEL` | `gpt-4o-mini` | Keep as-is |
-| `OPENAI_API_KEY` | `sk-...` | From Step 0 — used for both chat and embeddings |
+| `OPENAI_API_KEY` | `sk-...` | From Step 1 prerequisites — used for both chat and embeddings |
 | `EMBED_PROVIDER` | `openai` | |
 | `EMBED_MODEL` | `text-embedding-3-small` | Keep as-is |
 | `VECTOR_DB` | `pgvector` | |
-| `DATABASE_URL` | `postgresql+psycopg://postgres:...` | Full string from Step 1.3 |
+| `DATABASE_URL` | `postgresql+psycopg://postgres:...` | Full string from Step 3.3 |
 | `RATE_LIMIT_QUESTIONS` | `5` | Layer 2: questions per IP per window |
 | `RATE_LIMIT_WINDOW_DAYS` | `3` | |
 | `BURST_LIMIT` | `3` | Layer 2: questions per IP per minute |
@@ -172,7 +205,7 @@ Click **Add Variable** for each one below. The table shows exactly what to type 
 | `CONTACT_EMAIL` | `reinieldan@gmail.com` | Your email |
 | `CONTACT_LINKEDIN` | `https://www.linkedin.com/in/reiniel-dan-pablo` | Your LinkedIn |
 | `CONTACT_GITHUB` | `https://github.com/reidan-dev` | Your GitHub |
-| `BACKEND_CORS_ORIGINS` | `https://your-app.vercel.app` | **Placeholder for now** — update after Step 4 |
+| `BACKEND_CORS_ORIGINS` | `https://your-app.vercel.app` | **Placeholder for now** — update after Step 6 |
 | `SESSION_MEMORY_TURNS` | `6` | |
 | `RETRIEVAL_TOP_K` | `4` | |
 | `BOT_NAME` | `Folio` | Display name shown in the chat header |
@@ -194,7 +227,7 @@ When it shows a green **Active** badge, the backend is live.
 3. Click **Generate Domain**
 4. Copy the URL — it looks like `https://my-resume-chatbot-production.up.railway.app`
 
-**Save this URL** — you'll need it in Step 4.
+**Save this URL** — you'll need it in Step 6.
 
 ### 3.6 Verify the backend is working
 
@@ -213,7 +246,7 @@ If you see an error, check the **Deployments → Logs** tab in Railway for detai
 
 ---
 
-## Step 4 — Vercel (frontend)
+## Step 6 — Vercel (frontend)
 
 ### 4.1 Import the project
 
@@ -232,7 +265,7 @@ Add each one:
 
 | Name | Value | Notes |
 |------|-------|-------|
-| `VITE_API_URL` | `https://my-resume-chatbot-production.up.railway.app` | Your Railway URL from Step 3.5 — **no trailing slash** |
+| `VITE_API_URL` | `https://my-resume-chatbot-production.up.railway.app` | Your Railway URL from Step 5.5 — **no trailing slash** |
 | `VITE_CONTACT_EMAIL` | `reinieldan@gmail.com` | Your email |
 | `VITE_CONTACT_LINKEDIN` | `https://www.linkedin.com/in/reiniel-dan-pablo` | Your LinkedIn |
 | `VITE_CONTACT_GITHUB` | `https://github.com/reidan-dev` | Your GitHub |
@@ -262,7 +295,7 @@ The backend currently has a placeholder for `BACKEND_CORS_ORIGINS`. Update it no
 
 ---
 
-## Step 5 — Verify everything works end-to-end
+## Step 7 — Verify everything works end-to-end
 
 1. Open your Vercel URL in a browser
 2. The resume page should load — two tabs at the top: **Resume** and **About this App**
@@ -322,10 +355,10 @@ git push
 
 | Problem | Cause | Fix |
 |---------|-------|-----|
-| Chat shows no response / blank | Resume not ingested into Supabase | Re-run Step 2 |
+| Chat shows no response / blank | Resume not ingested into Supabase | Re-run Step 4 |
 | `CORS error` in browser console | `BACKEND_CORS_ORIGINS` wrong | Update it in Railway to match your exact Vercel URL |
 | `connection refused` or DB error | Wrong `DATABASE_URL` prefix | Must start with `postgresql+psycopg://` not `postgresql://` |
 | Railway build fails with `uv.lock` error | Lockfile out of sync | Run `cd backend && uv sync` locally and push the updated `uv.lock` |
 | Vercel build fails | Wrong root directory | Go to Vercel → Project Settings → General → Root Directory → set to `frontend` |
-| Railway `health` endpoint returns 500 | Missing env var | Check Railway logs, compare Variables against Step 3.3 table |
+| Railway `health` endpoint returns 500 | Missing env var | Check Railway logs, compare Variables against Step 5.3 table |
 | Chat works locally but not in prod | `VITE_API_URL` pointing to localhost | Update in Vercel environment variables to your Railway URL |

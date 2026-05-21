@@ -18,7 +18,7 @@ export function useChat(rl: RateLimitAPI) {
   const [isStreaming, setIsStreaming] = useState(false)
   const sessionId = useRef(crypto.randomUUID())
   const abortRef = useRef<(() => void) | null>(null)
-  const { syncFromHeaders, increment, isExhausted, remaining, resetAt } = rl
+  const { syncFromHeaders, isExhausted, remaining, resetAt } = rl
 
   const sendMessage = useCallback(
     (text: string) => {
@@ -32,7 +32,6 @@ export function useChat(rl: RateLimitAPI) {
         { id: assistantId, role: 'assistant', content: '', streaming: true },
       ])
       setIsStreaming(true)
-      increment()
 
       const abort = streamChat(
         text,
@@ -78,7 +77,7 @@ export function useChat(rl: RateLimitAPI) {
 
       abortRef.current = abort
     },
-    [isStreaming, isExhausted, increment, syncFromHeaders],
+    [isStreaming, isExhausted, syncFromHeaders],
   )
 
   const reset = useCallback(() => {
