@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ExternalLink, Mail, MapPin, Phone, Printer } from 'lucide-react'
+import { ExternalLink, Mail, MapPin, Phone } from 'lucide-react'
 
 const TECH_TERMS = [
   // multi-word terms first (longest match wins)
@@ -194,19 +194,9 @@ export function ResumePage() {
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       {/* Header */}
       <header className="mb-8">
-        <div className="flex items-start justify-between gap-4">
-          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
-            Reiniel <AnimatedDan /> A. Pablo
-          </h1>
-          <button
-            onClick={() => window.print()}
-            className="print:hidden shrink-0 flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 transition-colors mt-1"
-          >
-            <Printer size={13} />
-            <span className="hidden sm:inline">Print / Save PDF</span>
-            <span className="sm:hidden">Print</span>
-          </button>
-        </div>
+        <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
+          Reiniel <AnimatedDan /> A. Pablo
+        </h1>
         <p className="mt-1 text-base font-medium text-emerald-600">
           <span className="block sm:inline">Software Developer</span>
           <span className="hidden sm:inline"> · </span>

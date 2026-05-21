@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { MessageSquare, Share2, Check } from 'lucide-react'
+import { MessageSquare, Share2, Check, Printer } from 'lucide-react'
 
 const OPEN_TO_WORK = import.meta.env.VITE_OPEN_TO_WORK === 'true'
 import { ResumePage } from './pages/ResumePage'
@@ -76,6 +76,13 @@ export default function App() {
               className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
             >
               {copied ? <Check size={15} className="text-emerald-500" /> : <Share2 size={15} />}
+            </button>
+            <button
+              onClick={() => window.print()}
+              title="Print / Save PDF"
+              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors print:hidden"
+            >
+              <Printer size={15} />
             </button>
           </div>
         </div>
