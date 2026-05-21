@@ -2,7 +2,7 @@
 
 A personal portfolio site with an embedded AI chatbot named **Folio**. Recruiters and HR professionals can ask natural language questions about Dan's background and experience. Answers are grounded in the resume via a RAG pipeline.
 
-The site has two tabs — **Resume** (the interactive CV) and **About this App** (stack, architecture, data flow). Folio opens automatically on page load.
+The site has two tabs — **Resume** (the interactive CV) and **About this App** (stack, architecture, data flow). Folio starts minimized; open it via the **Chat with Folio** button in the bottom-right corner.
 
 **5 free questions per 3-day window per IP.** After the limit, a contact card appears.
 
@@ -105,6 +105,7 @@ Three layers protect against API cost abuse — see [API_SECURITY.md](API_SECURI
 | Input guard | Max message length + prompt injection detection |
 | Per-IP rate limit | Burst (3/min) + window (5/3 days) |
 | Global daily cap | Hard stop at 100 questions/day across all users |
+| Contact form guard | IP rate limit (3/hr) + honeypot + field validation + spam keyword filter |
 
 **Set a hard spending limit in your OpenAI dashboard** (Billing → Limits → Hard limit: $5/month) as the ultimate backstop.
 

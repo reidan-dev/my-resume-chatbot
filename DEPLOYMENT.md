@@ -239,7 +239,7 @@ https://my-resume-chatbot-production.up.railway.app/health
 
 You should see:
 ```json
-{"status": "ok"}
+{"status": "ok", "model": "gpt-4o-mini"}
 ```
 
 If you see an error, check the **Deployments → Logs** tab in Railway for details.
@@ -271,7 +271,8 @@ Add each one:
 | `VITE_CONTACT_GITHUB` | `https://github.com/reidan-dev` | Your GitHub |
 | `VITE_OWNER_NAME` | `Reiniel Dan Pablo` | Your name |
 | `VITE_BOT_NAME` | `Folio` | Chat widget header name |
-| `VITE_BOT_INTRO` | `Hi! Ask me anything about Dan's background, skills, and experience.` | Opening message in the chat |
+| `VITE_BOT_INTRO` | `Hey there! I'm Folio, Dan's AI portfolio assistant — powered by a RAG pipeline that grounds every answer directly in his resume and Q&A guide, so no guessing here. Ask me anything about his background, skills, or experience!` | Opening message in the chat |
+| `VITE_OPEN_TO_WORK` | `true` or `false` | Shows/hides the "Open to work" badge in the nav and resume header |
 
 ### 4.3 Deploy
 

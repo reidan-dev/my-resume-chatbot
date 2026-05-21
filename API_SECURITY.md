@@ -67,6 +67,22 @@ At 100 questions/day with `gpt-4o-mini`, the maximum possible daily API cost is 
 
 **Note:** The global counter is in-memory and resets on process restart. Railway redeploys reset it. The OpenAI dashboard hard limit is the true backstop for this edge case.
 
+---
+
+## Contact Form Protection (`middleware/contact_guard.py`)
+
+The `/contact` endpoint has its own independent protection stack, separate from the chat layers:
+
+| Protection | Detail |
+|-----------|--------|
+| **IP rate limit** | Max 3 submissions per IP per hour. Returns `HTTP 429` when exceeded. |
+| **Honeypot field** | A hidden `website` field is included in the form. Bots fill it; humans never see it. Any non-empty value returns `HTTP 400` silently. |
+| **Field length validation** | Name: 2–100 chars. Email: 5–254 chars. Message: 10–2000 chars. Returns `HTTP 422` on violation. |
+| **URL count cap** | Messages containing more than 2 URLs are rejected. Classic spam signal. |
+| **Spam keyword filter** | Rejects messages containing known spam terms: `casino`, `crypto`, `bitcoin`, `seo service`, `backlink`, `buy followers`, `earn money`, and others. Returns `HTTP 422`. |
+
+These run in order before any email is sent. A rejected submission costs nothing.
+
 ### LLM Response Cap
 
 `LLM_MAX_TOKENS` (default: 500) is set on every LLM call. This caps the length of each response and bounds the output cost per request regardless of what the LLM would otherwise generate.

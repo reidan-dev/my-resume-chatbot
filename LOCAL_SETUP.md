@@ -102,12 +102,16 @@ VITE_CONTACT_LINKEDIN=https://www.linkedin.com/in/reiniel-dan-pablo
 VITE_CONTACT_GITHUB=https://github.com/reidan-dev
 VITE_OWNER_NAME=Reiniel Dan Pablo
 VITE_BOT_NAME=Folio
-VITE_BOT_INTRO=Hi! Ask me anything about Dan's background, skills, and experience.
+VITE_BOT_INTRO=Hey there! I'm Folio, Dan's AI portfolio assistant — powered by a RAG pipeline that grounds every answer directly in his resume and Q&A guide, so no guessing here. Ask me anything about his background, skills, or experience!
+
+# Set to "true" to show the "Open to work" badge in the nav and resume header
+VITE_OPEN_TO_WORK=false
 ```
 
 **What you actually need to edit:**
 - Same contact fields — keep them in sync with `backend/.env`
 - `VITE_BOT_NAME` / `VITE_BOT_INTRO` — customize the chat widget name and opening message
+- `VITE_OPEN_TO_WORK` — set to `true` to show the "Open to work" badge in the nav and resume header
 - `VITE_API_URL` stays as `http://localhost:8000` for local dev
 
 ---
