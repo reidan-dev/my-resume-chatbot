@@ -209,7 +209,11 @@ export function ResumePage() {
           </button>
         </div>
         <p className="mt-1 text-base font-medium text-emerald-600">
-          Software Developer · Data Analyst · AI Practitioner
+          <span className="block sm:inline">Software Developer</span>
+          <span className="hidden sm:inline"> · </span>
+          <span className="block sm:inline">Data Analyst</span>
+          <span className="hidden sm:inline"> · </span>
+          <span className="block sm:inline">AI Practitioner</span>
         </p>
 
         {OPEN_TO_WORK && (

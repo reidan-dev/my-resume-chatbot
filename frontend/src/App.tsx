@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { MessageSquare } from 'lucide-react'
+import { MessageSquare, Share2, Check } from 'lucide-react'
 
 const OPEN_TO_WORK = import.meta.env.VITE_OPEN_TO_WORK === 'true'
 import { ResumePage } from './pages/ResumePage'
@@ -16,7 +16,19 @@ export default function App() {
   const [chatOpen, setChatOpen] = useState(false)
   const [contactOpen, setContactOpen] = useState(false)
   const [showGreeting, setShowGreeting] = useState(false)
+  const [copied, setCopied] = useState(false)
   const rateLimit = useRateLimit()
+
+  async function handleShare() {
+    const url = window.location.origin
+    if (navigator.share) {
+      try { await navigator.share({ title: "Dan Pablo's Portfolio", url }) } catch {}
+    } else {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    }
+  }
 
   useEffect(() => {
     const t1 = setTimeout(() => setShowGreeting(true), 800)
@@ -51,12 +63,21 @@ export default function App() {
               </button>
             ))}
           </div>
-          {OPEN_TO_WORK && (
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-medium shrink-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-              Open to work
-            </span>
-          )}
+          <div className="flex items-center gap-2 shrink-0">
+            {OPEN_TO_WORK && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                Open to work
+              </span>
+            )}
+            <button
+              onClick={handleShare}
+              title={copied ? 'Copied!' : 'Share'}
+              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+            >
+              {copied ? <Check size={15} className="text-emerald-500" /> : <Share2 size={15} />}
+            </button>
+          </div>
         </div>
       </nav>
 
