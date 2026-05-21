@@ -11,7 +11,7 @@ const BOT_NAME = import.meta.env.VITE_BOT_NAME ?? 'Folio'
 
 export default function App() {
   const [activePage, setActivePage] = useState<'resume' | 'about'>('resume')
-  const [chatOpen, setChatOpen] = useState(true)
+  const [chatOpen, setChatOpen] = useState(false)
   const [contactOpen, setContactOpen] = useState(false)
   const [showGreeting, setShowGreeting] = useState(false)
   const rateLimit = useRateLimit()
@@ -60,7 +60,7 @@ export default function App() {
       {contactOpen && <ContactModal onClose={() => setContactOpen(false)} />}
 
       {!chatOpen && (
-        <div className="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-2 will-change-transform">
+        <div className="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-2">
           <div
             className={`
               bg-white rounded-2xl rounded-br-sm shadow-lg px-4 py-2.5 text-sm text-gray-700
@@ -76,7 +76,7 @@ export default function App() {
             className="flex items-center gap-2 px-4 py-3 rounded-2xl bg-emerald-600 text-white shadow-lg hover:bg-emerald-700 active:scale-95 transition-all"
           >
             <MessageSquare size={16} />
-            <span className="text-sm font-medium">{BOT_NAME}</span>
+            <span className="text-sm font-medium">Chat with {BOT_NAME}</span>
             {rateLimit.remaining < LIMIT && (
               <span className="text-xs bg-white/20 px-1.5 py-0.5 rounded-full">
                 {rateLimit.remaining} left

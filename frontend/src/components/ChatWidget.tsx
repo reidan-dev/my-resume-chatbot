@@ -85,15 +85,18 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick }: Props) {
           fixed z-50 flex flex-col bg-white shadow-2xl will-change-transform
           transition-all duration-300 ease-out
 
-          /* Mobile: bottom sheet */
+          /* Mobile: bottom sheet — slides up/down */
           inset-x-0 bottom-0 rounded-t-2xl max-h-[85dvh]
           ${isOpen ? 'translate-y-0' : 'translate-y-full'}
 
-          /* Desktop: floating messenger-style box */
+          /* Desktop: floating box — fades + scales in/out */
           md:inset-x-auto md:bottom-20 md:right-6 md:top-auto
           md:w-[320px] md:h-[460px] md:rounded-2xl md:border md:border-gray-200
           md:translate-y-0
-          ${!isOpen ? 'md:hidden' : 'md:flex md:flex-col'}
+          ${isOpen
+            ? 'md:opacity-100 md:scale-100 md:pointer-events-auto'
+            : 'md:opacity-0 md:scale-95 md:translate-y-3 md:pointer-events-none'
+          }
         `}
       >
         {/* Header */}
