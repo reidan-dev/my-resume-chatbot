@@ -1,0 +1,30 @@
+# Environment files — never commit real secrets
+.env
+.env.local
+.env.*.local
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.Python
+
+# Node
+node_modules/
+
+# Build output
+frontend/dist/
+
+# Vector DB data
+backend/chroma_data/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store

@@ -417,3 +417,4 @@ And my teaching background isn't just a resume line — it means I write clearly
 - Specific details about why you left a job (beyond what's in this file)
 - Reference contact details
 - Anything that could be used for discrimination
+- Anything unrelated to me or my work experience, or my professionalism
