@@ -35,7 +35,7 @@ function HighlightedText({ text }: { text: string }) {
   )
 }
 
-const GITHUB = import.meta.env.VITE_CONTACT_GITHUB ?? 'https://github.com/reidan22'
+const GITHUB = import.meta.env.VITE_CONTACT_GITHUB ?? 'https://github.com/reidan-dev'
 const EMAIL = import.meta.env.VITE_CONTACT_EMAIL ?? 'reinieldan@gmail.com'
 const OPEN_TO_WORK = import.meta.env.VITE_OPEN_TO_WORK === 'true'
 
@@ -223,7 +223,7 @@ export function ResumePage() {
             <Mail size={13} /> {EMAIL}
           </a>
           <a href={GITHUB} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 hover:text-emerald-600 transition-colors">
-            <ExternalLink size={13} /> github.com/reidan22
+            <ExternalLink size={13} /> {GITHUB.replace('https://', '')}
           </a>
           <span className="flex items-center gap-1.5">
             <MapPin size={13} /> Pampanga, PH
