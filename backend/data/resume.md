@@ -105,6 +105,8 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 
 ## Projects and Training
 
+> Most of my work across all roles involved end-to-end development spanning frontend, API, and backend. The products and software I built are proprietary and cannot be shared publicly, but I am happy to discuss them in detail in person. The projects below are publicly shareable.
+
 ### Check-App – Clinical Decision Support Chatbot
 
 **Eskwelabs Data Science Bootcamp, Cohort 7 | May–August 2021**

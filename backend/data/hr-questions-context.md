@@ -43,6 +43,22 @@ After a short period upskilling and searching for the right fit, I joined Amihan
 
 ---
 
+### "Can you show me your portfolio?" / "What projects have you worked on?" / "Do you have a GitHub with your work?"
+
+Across all my roles — Biarri Networks, Denso Techno, and Amihan — the work I delivered involved end-to-end development: I built the frontend, designed and implemented the APIs, and owned the backend. That meant full ownership of features from UI to database, not just a slice. The challenge is that virtually everything I built in those roles is proprietary — internal tooling, client-facing data pipelines, enterprise systems. I can't share the code or the products publicly.
+
+What I can do is walk through any of those projects in depth during a conversation: the architecture decisions, the tradeoffs, the scale, the problems I ran into. I'm happy to discuss them in person or on a call — the constraint is confidentiality, not depth of knowledge.
+
+For publicly shareable work, the projects I can point to are:
+
+- **This resume chatbot (Folio)** — a RAG-based AI portfolio assistant built with FastAPI, LangChain, ChromaDB, React, and the OpenAI API. Full-stack, end-to-end, deployed on Railway + Vercel. I designed and built the entire thing.
+- **Check-App** — a clinical decision support chatbot built during the Eskwelabs Data Science Bootcamp. NLP pipeline (BeautifulSoup, SpaCy, Gensim LDA, Logistic Regression) over 7,300+ clinical records. Awarded Best in Project Management and Best Project.
+- **Eevee Virtual Pet** — a macOS desktop app (SwiftUI/AppKit) with 9 Eeveelutions, personality-driven wandering, and overlay/contained modes. A personal project built for fun and to explore Swift.
+
+These are the projects I can show directly. Everything else I've built professionally, I'll discuss — just not share the repo.
+
+---
+
 ### "What's your proudest career achievement?"
 
 At Eskwelabs' Data Science Bootcamp, my team built Check-App: a clinical decision support chatbot on Messenger that triaged symptom input and routed patients to the right medical specialist. I led the project management side while also engineering the NLP pipeline — scraping 7,300+ clinical records with BeautifulSoup and Selenium, training a Logistic Regression model via SpaCy and Gensim LDA, and achieving a 94% F1-score. We were awarded Best in Project Management and Best Project for that sprint. I'm especially proud of it because the technologies involved were entirely new to me going in — I had to learn and apply them under a tight deadline.

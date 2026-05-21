@@ -261,6 +261,11 @@ export function ResumePage() {
 
       {/* Projects */}
       <Section title="Projects & Training">
+        <p className="text-sm text-gray-500 mb-4">
+          Most of my work across all roles involved end-to-end development — frontend, API, and backend — but the products and software I built are proprietary and not publicly shareable.{' '}
+          <span className="text-gray-600">I'm happy to walk through them in detail in person.</span>{' '}
+          The projects below are ones I can share openly.
+        </p>
         {projects.map((p) => (
           <div key={p.name}>
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
