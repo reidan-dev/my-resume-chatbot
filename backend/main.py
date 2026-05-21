@@ -1,6 +1,6 @@
 import json
 import logging
-from fastapi import FastAPI, Depends, Request
+from fastapi import FastAPI, Depends, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sse_starlette.sse import EventSourceResponse
 
@@ -15,6 +15,7 @@ from config import settings
 from middleware.rate_limiter import rate_limit, get_status, _get_ip
 from middleware.input_guard import validate_message
 from middleware.global_cap import global_daily_cap, get_daily_status
+from middleware.contact_guard import contact_rate_limit, validate_contact_body
 from models.schemas import ChatRequest, ResetRequest, ContactRequest
 from rag.chain import RAGChain
 
@@ -88,7 +89,8 @@ async def reset_chat(body: ResetRequest):
 
 
 @app.post("/contact")
-async def contact(body: ContactRequest):
+async def contact(body: ContactRequest, _rl: None = Depends(contact_rate_limit)):
+    validate_contact_body(body.honeypot, body.name, body.email, body.message)
     if not settings.smtp_user or not settings.smtp_password:
         raise HTTPException(
             status_code=503,

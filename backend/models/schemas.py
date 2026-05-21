@@ -21,3 +21,4 @@ class ContactRequest(BaseModel):
     name: str
     email: str
     message: str
+    honeypot: str = ""  # must stay empty — bots fill it, humans never see it

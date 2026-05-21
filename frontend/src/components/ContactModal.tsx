@@ -12,6 +12,7 @@ export function ContactModal({ onClose }: Props) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
+  const [honeypot, setHoneypot] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
@@ -19,7 +20,7 @@ export function ContactModal({ onClose }: Props) {
     e.preventDefault()
     setStatus('loading')
     try {
-      await sendContactForm({ name, email, message })
+      await sendContactForm({ name, email, message, honeypot })
       setStatus('success')
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : 'Something went wrong.')
@@ -60,6 +61,17 @@ export function ContactModal({ onClose }: Props) {
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Honeypot — hidden from humans, bots fill it */}
+              <input
+                type="text"
+                name="website"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                style={{ display: 'none' }}
+              />
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">Name</label>
                 <input

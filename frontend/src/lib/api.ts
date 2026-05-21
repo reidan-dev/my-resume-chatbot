@@ -4,6 +4,7 @@ export async function sendContactForm(data: {
   name: string
   email: string
   message: string
+  honeypot: string
 }): Promise<void> {
   const res = await fetch(`${BASE}/contact`, {
     method: 'POST',
