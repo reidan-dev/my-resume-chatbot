@@ -9,6 +9,7 @@ export interface Message {
   sources?: string[]
   streaming?: boolean
   error?: boolean
+  createdAt: number
 }
 
 type RateLimitAPI = ReturnType<typeof useRateLimit>
@@ -26,10 +27,11 @@ export function useChat(rl: RateLimitAPI) {
 
       const assistantId = crypto.randomUUID()
 
+      const now = Date.now()
       setMessages((prev) => [
         ...prev,
-        { id: crypto.randomUUID(), role: 'user', content: text },
-        { id: assistantId, role: 'assistant', content: '', streaming: true },
+        { id: crypto.randomUUID(), role: 'user', content: text, createdAt: now },
+        { id: assistantId, role: 'assistant', content: '', streaming: true, createdAt: now },
       ])
       setIsStreaming(true)
 

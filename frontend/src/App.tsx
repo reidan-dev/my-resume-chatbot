@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
-import { MessageSquare, Share2, Check, Printer } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { MessageSquare, Share2, Check, Printer, ArrowUp } from 'lucide-react'
+import confetti from 'canvas-confetti'
 
 const OPEN_TO_WORK = import.meta.env.VITE_OPEN_TO_WORK === 'true'
 import { ResumePage } from './pages/ResumePage'
@@ -17,12 +18,15 @@ export default function App() {
   const [contactOpen, setContactOpen] = useState(false)
   const [showGreeting, setShowGreeting] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const [showScrollTop, setShowScrollTop] = useState(false)
+  const confettiFiredRef = useRef(false)
   const rateLimit = useRateLimit()
 
   async function handleShare() {
     const url = window.location.origin
     if (navigator.share) {
-      try { await navigator.share({ title: "Dan Pablo's Portfolio", url }) } catch {}
+      try { await navigator.share({ title: "Dan Pablo's Resume", url }) } catch {}
     } else {
       await navigator.clipboard.writeText(url)
       setCopied(true)
@@ -36,6 +40,44 @@ export default function App() {
     return () => { clearTimeout(t1); clearTimeout(t2) }
   }, [])
 
+  useEffect(() => {
+    function onScroll() {
+      const scrolled = window.scrollY
+      const total = document.body.scrollHeight - window.innerHeight
+      setScrollProgress(total > 0 ? scrolled / total : 0)
+      setShowScrollTop(scrolled > 300)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (
+        e.key === '/' &&
+        !chatOpen &&
+        document.activeElement?.tagName !== 'INPUT' &&
+        document.activeElement?.tagName !== 'TEXTAREA'
+      ) {
+        e.preventDefault()
+        openChat()
+      }
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [chatOpen])
+
+  function fireConfetti() {
+    if (confettiFiredRef.current) return
+    confettiFiredRef.current = true
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.8 },
+      colors: ['#059669', '#10b981', '#34d399', '#6ee7b7', '#ffffff'],
+    })
+  }
+
   function openChat() {
     setShowGreeting(false)
     setChatOpen(true)
@@ -44,7 +86,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Tab navigation */}
-      <nav className="sticky top-0 z-20 bg-white border-b border-gray-200 print:hidden">
+      <nav className="sticky top-0 z-20 bg-white border-b border-gray-200 print:hidden relative overflow-hidden">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 flex items-center">
           <div className="flex gap-4 sm:gap-6 flex-1">
             {(['resume', 'about'] as const).map((page) => (
@@ -84,9 +126,16 @@ export default function App() {
             </button>
           </div>
         </div>
+        {/* Scroll progress bar */}
+        <div
+          className="absolute bottom-0 left-0 h-[2px] bg-emerald-500 transition-[width] duration-75 ease-out"
+          style={{ width: `${scrollProgress * 100}%` }}
+        />
       </nav>
 
-      {activePage === 'resume' ? <ResumePage /> : <AboutPage />}
+      <div key={activePage} className="animate-fade-in-up">
+        {activePage === 'resume' ? <ResumePage /> : <AboutPage />}
+      </div>
 
       <div className="print:hidden">
         <ChatWidget
@@ -94,10 +143,23 @@ export default function App() {
           onClose={() => setChatOpen(false)}
           rateLimit={rateLimit}
           onDanClick={() => setContactOpen(true)}
+          onFirstMessage={fireConfetti}
         />
       </div>
 
       {contactOpen && <ContactModal onClose={() => setContactOpen(false)} />}
+
+      {/* Scroll to top button */}
+      {showScrollTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          title="Back to top"
+          className="fixed left-4 z-30 w-9 h-9 flex items-center justify-center rounded-full bg-white border border-gray-200 shadow-md text-gray-400 hover:text-gray-600 hover:shadow-lg transition-all animate-fade-in print:hidden"
+          style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}
+        >
+          <ArrowUp size={15} />
+        </button>
+      )}
 
       {!chatOpen && (
         <div className="fixed right-6 z-30 flex flex-col items-end gap-2 print:hidden" style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>

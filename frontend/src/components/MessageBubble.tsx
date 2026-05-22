@@ -11,16 +11,23 @@ interface Props {
 
 function TypingIndicator() {
   return (
-    <div className="flex items-end gap-1 h-4">
-      {[0, 1, 2].map((i) => (
-        <span
-          key={i}
-          className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce"
-          style={{ animationDelay: `${i * 0.15}s`, animationDuration: '0.7s' }}
-        />
-      ))}
+    <div className="flex items-center gap-2">
+      <div className="flex items-end gap-1 h-4">
+        {[0, 1, 2].map((i) => (
+          <span
+            key={i}
+            className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce"
+            style={{ animationDelay: `${i * 0.15}s`, animationDuration: '0.7s' }}
+          />
+        ))}
+      </div>
+      <span className="text-xs text-gray-400 italic">Folio is thinking…</span>
     </div>
   )
+}
+
+function formatTime(ts: number): string {
+  return new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 }
 
 function processContent(content: string): string {
@@ -41,10 +48,11 @@ export function MessageBubble({ message, onDanClick }: Props) {
 
   if (isUser) {
     return (
-      <div className="flex justify-end">
+      <div className="flex flex-col items-end gap-0.5">
         <div className="max-w-[80%] px-3 py-2 rounded-2xl rounded-tr-sm bg-emerald-600 text-white text-xs">
           {message.content}
         </div>
+        <span className="text-[10px] text-gray-400 pr-1">{formatTime(message.createdAt)}</span>
       </div>
     )
   }
@@ -66,7 +74,7 @@ export function MessageBubble({ message, onDanClick }: Props) {
             <button
               onClick={copyToClipboard}
               title="Copy response"
-              className="absolute top-1.5 right-1.5 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-md text-gray-300 hover:text-gray-500 hover:bg-gray-100"
+              className="absolute top-1.5 right-1.5 opacity-60 sm:opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-md text-gray-300 hover:text-gray-500 hover:bg-gray-100"
             >
               {copied ? <Check size={11} className="text-emerald-500" /> : <Copy size={11} />}
             </button>
@@ -109,6 +117,9 @@ export function MessageBubble({ message, onDanClick }: Props) {
         </div>
         {message.sources && message.sources.length > 0 && !message.streaming && (
           <SourceBadge sources={message.sources} />
+        )}
+        {!message.streaming && (
+          <span className="text-[10px] text-gray-400 pl-1">{formatTime(message.createdAt)}</span>
         )}
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { ExternalLink, Mail, MapPin, Phone } from 'lucide-react'
+import { ExternalLink, Mail, MapPin, Phone, ChevronDown } from 'lucide-react'
+import { useInView } from '../hooks/useInView'
 
 const TECH_TERMS = [
   // multi-word terms first (longest match wins)
@@ -38,11 +39,11 @@ function HighlightedText({ text }: { text: string }) {
 const GITHUB = import.meta.env.VITE_CONTACT_GITHUB ?? 'https://github.com/reidan-dev'
 const EMAIL = import.meta.env.VITE_CONTACT_EMAIL ?? 'reinieldan@gmail.com'
 
-const skills = {
-  'Backend Development': 'Python, Django, Flask, FastAPI, Node.js, REST APIs, GraphQL, Microservices, TDD, Pytest, Jest',
-  'Frontend & Web': 'JavaScript, React, Vue.js, Bootstrap, HTML5, CSS3',
-  'Data & Infrastructure': 'Presto SQL, PostgreSQL, Apache Superset, Apache Spark, AWS (S3, Lambda, EC2), Terraform, Jenkins, Docker',
-  'Tools & Methods': 'Git, Jira, Confluence, Claude Code, OpenAI Codex, Agile Scrum, Waterfall',
+const skills: Record<string, string[]> = {
+  'Backend Development': ['Python', 'Django', 'Flask', 'FastAPI', 'Node.js', 'REST APIs', 'GraphQL', 'Microservices', 'TDD', 'Pytest', 'Jest'],
+  'Frontend & Web': ['JavaScript', 'React', 'Vue.js', 'Bootstrap', 'HTML5', 'CSS3'],
+  'Data & Infrastructure': ['Presto SQL', 'PostgreSQL', 'Apache Superset', 'Apache Spark', 'AWS (S3/Lambda/EC2)', 'Terraform', 'Jenkins', 'Docker'],
+  'Tools & Methods': ['Git', 'Jira', 'Confluence', 'Claude Code', 'OpenAI Codex', 'Agile Scrum', 'Waterfall'],
 }
 
 const experience = [
@@ -121,6 +122,15 @@ const experience = [
 
 const projects = [
   {
+    name: 'AI Resume Site with RAG Chatbot (this site)',
+    period: 'Personal Project, 2025',
+    bullets: [
+      'Built a full-stack AI resume site with an embedded RAG chatbot named Folio — production-deployed, not a demo.',
+      'Stack: FastAPI + LangChain RAG pipeline, OpenAI gpt-4o-mini, Supabase pgvector, React + TypeScript + Vite + Tailwind CSS.',
+      'Deployed on Railway (backend, Dockerized) and Vercel (frontend); SSE token streaming, Supabase chat logging, 4-layer API security.',
+    ],
+  },
+  {
     name: 'Check-App — Clinical Decision Support Chatbot',
     period: 'Eskwelabs Bootcamp, 2021',
     bullets: [
@@ -179,21 +189,36 @@ function AnimatedDan() {
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  const { ref, inView } = useInView(0.05)
   return (
-    <section className="mb-8">
+    <div
+      ref={ref}
+      className={`mb-8 transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+    >
       <h2 className="text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-3 pb-2 border-b border-gray-200">
         {title}
       </h2>
       {children}
-    </section>
+    </div>
   )
 }
 
 export function ResumePage() {
+  const [collapsed, setCollapsed] = useState<Set<number>>(new Set())
+
+  function toggleJob(i: number) {
+    setCollapsed((prev) => {
+      const next = new Set(prev)
+      if (next.has(i)) next.delete(i)
+      else next.add(i)
+      return next
+    })
+  }
+
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       {/* Header */}
-      <header className="mb-8">
+      <header className="mb-8 animate-fade-in-up">
         <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
           Reiniel <AnimatedDan /> A. Pablo
         </h1>
@@ -223,11 +248,20 @@ export function ResumePage() {
 
       {/* Skills */}
       <Section title="Skills">
-        <div className="space-y-2">
+        <div className="space-y-3">
           {Object.entries(skills).map(([category, items]) => (
-            <div key={category} className="flex flex-col sm:flex-row sm:gap-3 text-sm">
-              <span className="font-medium text-gray-700 sm:w-44 shrink-0">{category}</span>
-              <span className="text-gray-500">{items}</span>
+            <div key={category}>
+              <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">{category}</span>
+              <div className="mt-1.5 flex flex-wrap gap-1.5">
+                {items.map((skill) => (
+                  <span
+                    key={skill}
+                    className="px-2 py-0.5 rounded-full bg-gray-100 border border-gray-200 text-xs text-gray-600 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-700 transition-colors cursor-default"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
             </div>
           ))}
         </div>
@@ -235,30 +269,58 @@ export function ResumePage() {
 
       {/* Experience */}
       <Section title="Experience">
-        <div className="space-y-6">
-          {experience.map((job) => (
-            <div key={job.title + job.company}>
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-0.5">
-                <div>
-                  <div className="font-semibold text-gray-900 text-sm">{job.title}</div>
-                  <div className="text-gray-500 text-xs mt-0.5">{job.company}</div>
+        <div>
+          {experience.map((job, i) => {
+            const isCollapsed = collapsed.has(i)
+            const isLast = i === experience.length - 1
+            return (
+              <div key={job.title + job.company} className="flex gap-3">
+                {/* Timeline column: dot + line share same center */}
+                <div className="flex flex-col items-center shrink-0 print:hidden">
+                  <div className="w-2 h-2 mt-[5px] rounded-full bg-emerald-500 border-2 border-white ring-1 ring-emerald-200 shrink-0" />
+                  {!isLast && <div className="w-px flex-1 bg-gray-200 mt-1" />}
                 </div>
-                <span className="text-xs text-gray-400 shrink-0 mt-0.5">
-                  {job.period}
-                  <span className="text-gray-300"> · </span>
-                  {job.duration}
-                </span>
+
+                {/* Content */}
+                <div className={`flex-1 ${!isLast ? 'pb-6' : ''}`}>
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-0.5">
+                    <div className="flex items-start gap-1.5">
+                      <button
+                        onClick={() => toggleJob(i)}
+                        title={isCollapsed ? 'Expand' : 'Collapse'}
+                        className="mt-0.5 p-0.5 rounded text-gray-300 hover:text-gray-500 transition-colors shrink-0 print:hidden"
+                      >
+                        <ChevronDown
+                          size={13}
+                          className={`transition-transform duration-200 ${isCollapsed ? '-rotate-90' : ''}`}
+                        />
+                      </button>
+                      <div>
+                        <div className="font-semibold text-gray-900 text-sm">{job.title}</div>
+                        <div className="text-gray-500 text-xs mt-0.5">{job.company}</div>
+                      </div>
+                    </div>
+                    <span className="text-xs text-gray-400 shrink-0 mt-0.5 pl-5 sm:pl-0">
+                      {job.period}
+                      <span className="text-gray-300"> · </span>
+                      {job.duration}
+                    </span>
+                  </div>
+
+                  {!isCollapsed && (
+                    <ul className="mt-2 space-y-1 pl-5">
+                      {job.bullets.map((b) => (
+                        <li key={b} className="text-sm text-gray-600 flex gap-2">
+                          <span className="text-gray-300 shrink-0 mt-0.5">—</span>
+                          <span><HighlightedText text={b} /></span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
-              <ul className="mt-2 space-y-1">
-                {job.bullets.map((b) => (
-                  <li key={b} className="text-sm text-gray-600 flex gap-2">
-                    <span className="text-gray-300 shrink-0 mt-0.5">—</span>
-                    <span><HighlightedText text={b} /></span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </Section>
 
@@ -269,22 +331,24 @@ export function ResumePage() {
           <span className="text-gray-600">I'm happy to walk through them in detail in person.</span>{' '}
           The projects below are ones I can share openly.
         </p>
-        {projects.map((p) => (
-          <div key={p.name}>
-            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
-              <span className="font-semibold text-gray-900 text-sm">{p.name}</span>
-              <span className="text-xs text-gray-400 shrink-0">{p.period}</span>
+        <div className="space-y-4">
+          {projects.map((p) => (
+            <div key={p.name}>
+              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
+                <span className="font-semibold text-gray-900 text-sm">{p.name}</span>
+                <span className="text-xs text-gray-400 shrink-0">{p.period}</span>
+              </div>
+              <ul className="mt-2 space-y-1">
+                {p.bullets.map((b) => (
+                  <li key={b} className="text-sm text-gray-600 flex gap-2">
+                    <span className="text-gray-300 shrink-0 mt-0.5">—</span>
+                    <span><HighlightedText text={b} /></span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul className="mt-2 space-y-1">
-              {p.bullets.map((b) => (
-                <li key={b} className="text-sm text-gray-600 flex gap-2">
-                  <span className="text-gray-300 shrink-0 mt-0.5">—</span>
-                  <span><HighlightedText text={b} /></span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+          ))}
+        </div>
       </Section>
 
       {/* Education */}
@@ -307,6 +371,8 @@ export function ResumePage() {
           </li>
         </ul>
       </Section>
+
+      <p className="text-xs text-gray-400 text-center mt-2 pb-2 print:hidden">Last updated May 2026</p>
     </div>
   )
 }

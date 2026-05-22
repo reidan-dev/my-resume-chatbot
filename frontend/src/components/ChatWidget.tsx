@@ -25,9 +25,10 @@ interface Props {
   onClose: () => void
   rateLimit: ReturnType<typeof useRateLimit>
   onDanClick: () => void
+  onFirstMessage?: () => void
 }
 
-export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick }: Props) {
+export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMessage }: Props) {
   const { messages, sendMessage, isStreaming, isExhausted, remaining, resetAt, reset } = useChat(rateLimit)
   const health = useHealth()
   const [input, setInput] = useState('')
@@ -54,9 +55,11 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick }: Props) {
   function submit() {
     const text = input.trim()
     if (!text || isStreaming || isExhausted || health.status === 'offline') return
+    const isFirst = messages.length === 0
     setInput('')
     isAtBottomRef.current = true
     sendMessage(text)
+    if (isFirst) onFirstMessage?.()
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
