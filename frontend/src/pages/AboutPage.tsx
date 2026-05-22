@@ -93,7 +93,6 @@ const features = [
   'Conversation logging — every Q&A pair is stored in Supabase for owner review. Disclosed in the chat footer.',
   'Mobile-first responsive design — bottom sheet on mobile (slides up with safe-area support), floating widget on desktop.',
   'Nav actions — Open to work badge, share (Web Share API with clipboard fallback), and print icon always visible at the top.',
-  'Rate limit reset URL — navigate to /?reset=<secret> to clear the browser-side counter; secret is set via an environment variable.',
 ]
 
 export function AboutPage() {
