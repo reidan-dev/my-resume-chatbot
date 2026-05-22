@@ -5,6 +5,7 @@ from rag.retriever import get_retriever
 from llm.provider import get_llm
 from llm.prompts import SYSTEM_PROMPT_TEMPLATE
 from config import settings
+from services.chat_logger import log_chat
 
 
 def _load_personality() -> str:
@@ -75,6 +76,9 @@ class RAGChain:
             if token:
                 full_response += token
                 yield token
+
+        if full_response:
+            log_chat(session_id, query, full_response)
 
         history = self.histories.setdefault(session_id, [])
         history.append(HumanMessage(content=query))
