@@ -12,11 +12,11 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 const stack = [
   {
     layer: 'Frontend',
-    items: 'React 18 · TypeScript · Vite · Tailwind CSS v3 · Lucide React · ReactMarkdown',
+    items: 'React 18 · TypeScript · Vite · Tailwind CSS v3 · Lucide React',
   },
   {
     layer: 'Backend',
-    items: 'Python 3.11 · FastAPI · LangChain · Server-Sent Events (SSE streaming)',
+    items: 'Python 3.13 · FastAPI · LangChain · Server-Sent Events (SSE streaming) · uv',
   },
   {
     layer: 'AI / LLM',
@@ -27,19 +27,23 @@ const stack = [
     items: 'ChromaDB (local dev) · Supabase pgvector (production)',
   },
   {
+    layer: 'Database',
+    items: 'Supabase (PostgreSQL) — pgvector for embeddings, chat_logs for conversation history',
+  },
+  {
     layer: 'Deployment',
-    items: 'Vercel (frontend) · Railway (backend) · Supabase (hosted DB)',
+    items: 'Vercel (frontend) · Railway (backend, Dockerized) · Supabase (hosted DB)',
   },
   {
     layer: 'Security',
-    items: '3-layer rate limiting · Input injection guard · Global daily API cap',
+    items: '4-layer protection — input guard · per-IP rate limiting · global daily cap · contact form guard',
   },
 ]
 
 const dataFlow = [
   {
     step: '1 — Ingest (run once)',
-    desc: 'Resume and HR Q&A guide markdown files are loaded, chunked by LangChain\'s RecursiveCharacterTextSplitter, then embedded via text-embedding-3-small and stored in ChromaDB (local) or Supabase pgvector (production). Run via the ingest script at the root.',
+    desc: 'Resume and HR Q&A guide markdown files are loaded, chunked by LangChain\'s RecursiveCharacterTextSplitter, embedded via text-embedding-3-small, and stored in ChromaDB (local) or Supabase pgvector (production). Re-run any time the source files change.',
   },
   {
     step: '2 — Retrieval',
@@ -47,44 +51,56 @@ const dataFlow = [
   },
   {
     step: '3 — Generation',
-    desc: 'Retrieved chunks, the full chat history, and a configurable system prompt (loaded from personality.md) are assembled and sent to gpt-4o-mini. The LLM streams tokens back to FastAPI via the OpenAI async streaming API.',
+    desc: 'Retrieved chunks, the full chat history, and a system prompt (loaded from personality.md) are assembled and sent to gpt-4o-mini. The LLM streams tokens back to FastAPI via the OpenAI async streaming API.',
   },
   {
     step: '4 — Streaming to client',
-    desc: 'FastAPI forwards each token as a Server-Sent Event (SSE). The React frontend reads the stream incrementally, rendering markdown in real-time with a typing indicator. Source chunk metadata is displayed in a collapsible RAG trail below each response.',
+    desc: 'FastAPI forwards each token as a Server-Sent Event (SSE). The React frontend reads the stream incrementally, rendering text in real-time. Source chunk metadata (which section of the resume was used) is shown below each response.',
+  },
+  {
+    step: '5 — Conversation logging',
+    desc: 'After each completed response, the question and answer are written asynchronously to a chat_logs table in Supabase. This is fire-and-forget — it never delays the response. Users are disclosed via the chat footer.',
   },
 ]
 
 const security = [
   {
     layer: 'Layer 1 — Input Guard',
-    desc: 'Incoming messages are scanned for known prompt injection patterns ("ignore previous instructions", "jailbreak", "reveal system prompt", etc.) before reaching the LLM. Invalid requests are rejected with HTTP 400.',
+    desc: 'Incoming messages are validated for length (max 300 characters) and scanned for known prompt injection patterns ("ignore previous instructions", "jailbreak", "reveal system prompt", etc.) before reaching the LLM. Violations return HTTP 400 immediately.',
   },
   {
     layer: 'Layer 2 — Per-IP Rate Limiting',
-    desc: 'A sliding window rate limiter tracks requests per IP. A burst check (max 3 requests/minute) catches rapid-fire abuse. Exceeding limits returns HTTP 429. On Railway, the trusted IP is read from the last X-Forwarded-For hop to prevent spoofing.',
+    desc: 'A sliding window rate limiter tracks requests per IP with two sub-limits: burst (max 3/minute) to stop rapid-fire bots, and window (max 5 per 3-day period) for sustained abuse. The trusted IP is read from the last X-Forwarded-For hop to prevent spoofing.',
   },
   {
     layer: 'Layer 3 — Global Daily Cap',
-    desc: 'A thread-safe in-memory counter tracks total API calls across all users. Once the daily limit is hit, all chat requests return HTTP 503 until midnight reset. This is the hard backstop against cost overruns.',
+    desc: 'A shared in-memory counter tracks total API calls across all users. Once the daily limit (100 questions) is reached, all chat requests return HTTP 503 until midnight UTC. Catches VPN rotation and distributed bot attacks that bypass per-IP limits.',
+  },
+  {
+    layer: 'Layer 4 — Contact Form Guard',
+    desc: 'The contact form has its own independent protection: IP rate limit (3 submissions/hour), a hidden honeypot field that bots fill, field length validation, URL count cap (blocks link-spam), and a keyword filter for known spam terms.',
   },
 ]
 
 const features = [
   'RAG-grounded responses — answers are strictly derived from the indexed resume and Q&A guide; the LLM is instructed not to invent facts outside the provided context.',
   'Real-time streaming — tokens stream as they are generated via SSE, with an animated typing indicator while the model is working.',
-  'Collapsible RAG trail — each AI response shows which document chunks were retrieved, collapsed by default to keep the UI clean.',
-  'Configurable bot personality — Folio\'s name, tone, and emphasis points are defined in personality.md and injected at startup, making the chatbot easy to repersonalize without touching code.',
+  'Source badges — each AI response shows which section of the resume was retrieved as context.',
+  'Configurable bot personality — Folio\'s name, tone, and intro message are set via environment variables, making the chatbot easy to repersonalize without touching code.',
   '"Dan" is interactive — every mention of "Dan" in an AI response is a clickable link that opens a contact modal with a direct email form.',
-  'Strict third-person enforcement — the system prompt explicitly forbids first-person language; the bot always refers to Dan in third person regardless of how questions are phrased.',
-  'Startup suggestion — one random suggested question is shown on open to prompt engagement without cluttering the UI.',
+  'Conversation memory — the last 6 turns of chat history are included in every prompt so Folio can answer follow-up questions in context.',
+  'Contact form with spam protection — honeypot, IP rate limit, field validation, URL cap, and keyword filter before any email is sent.',
+  'Conversation logging — every Q&A pair is stored in Supabase for owner review. Disclosed in the chat footer.',
+  'Mobile-first responsive design — bottom sheet on mobile (slides up with safe-area support), floating widget on desktop.',
+  'Nav actions — Open to work badge, share (Web Share API with clipboard fallback), and print icon always visible at the top.',
+  'Rate limit reset URL — navigate to /?reset=<secret> to clear the browser-side counter; secret is set via an environment variable.',
 ]
 
 export function AboutPage() {
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 tracking-tight">About this App</h1>
+        <h1 className="text-3xl font-bold text-gray-900 tracking-tight">About</h1>
         <p className="mt-2 text-sm text-gray-500 leading-relaxed">
           This portfolio site is a full-stack AI application — not just a static resume.{' '}
           <strong className="text-gray-700">Folio</strong> is a Retrieval-Augmented Generation (RAG) chatbot
@@ -136,7 +152,6 @@ export function AboutPage() {
           ))}
         </ul>
       </Section>
-
     </div>
   )
 }

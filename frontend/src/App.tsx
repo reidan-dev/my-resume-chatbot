@@ -57,9 +57,7 @@ export default function App() {
                     : 'border-transparent text-gray-500 hover:text-gray-700'
                 }`}
               >
-                {page === 'resume' ? 'Resume' : (
-                  <><span className="sm:hidden">About</span><span className="hidden sm:inline">About this App</span></>
-                )}
+                {page === 'resume' ? 'Resume' : 'About'}
               </button>
             ))}
           </div>
