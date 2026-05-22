@@ -13,7 +13,7 @@ This is the most important protection. It lives outside your code entirely, so i
 3. Recommended starting value: **$5/month**
 4. Optionally set a **Soft limit** (e.g. $2) to receive an email warning before the hard stop kicks in
 
-> At normal portfolio traffic (100–300 visitors), you will never come close to $5. This limit is purely a safety net for abuse or mistakes.
+> At normal resume site traffic (100–300 visitors), you will never come close to $5. This limit is purely a safety net for abuse or mistakes.
 
 ---
 

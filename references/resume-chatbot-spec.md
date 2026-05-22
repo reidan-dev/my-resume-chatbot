@@ -6,7 +6,7 @@ What was built, how it works, and how the pieces fit together.
 
 ## What It Is
 
-A personal portfolio site with an embedded AI chatbot named **Folio**. Recruiters and HR professionals can ask natural language questions about Dan's background and experience. Answers are grounded in the resume via a RAG pipeline — the LLM never guesses outside what's in the documents.
+A personal resume site with an embedded AI chatbot named **Folio**. Recruiters and HR professionals can ask natural language questions about Dan's background and experience. Answers are grounded in the resume via a RAG pipeline — the LLM never guesses outside what's in the documents.
 
 Visitors get **5 free questions per 3-day window** (tracked per IP on the backend, mirrored in localStorage on the frontend). After the limit is reached, a contact card appears. The limit resets automatically — no account or login required.
 

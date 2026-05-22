@@ -87,7 +87,7 @@ Python is my strongest language by a wide margin: I've been writing it professio
 
 ### "How do you stay current with new technologies?"
 
-I stay current mainly through building things rather than just reading about them. For example, I integrated Claude Code and OpenAI Codex into my actual workflow at Biarri: not just experimenting: which gave me a fast and practical ramp on AI-augmented development. I recently shipped a full-stack AI portfolio site with an embedded RAG chatbot (LangChain, FastAPI, React, OpenAI gpt-4o-mini, Supabase pgvector, deployed on Railway and Vercel) and a macOS virtual pet desktop app in SwiftUI/AppKit, and I've been experimenting with multi-agent AI workflows. Beyond that, I follow Hacker News regularly, take targeted online courses when I need structured depth on something new, and I lean on the actual documentation and source code more than tutorials when I need to learn something precisely.
+I stay current mainly through building things rather than just reading about them. For example, I integrated Claude Code and OpenAI Codex into my actual workflow at Biarri: not just experimenting: which gave me a fast and practical ramp on AI-augmented development. I recently shipped a full-stack AI resume site with an embedded RAG chatbot (LangChain, FastAPI, React, OpenAI gpt-4o-mini, Supabase pgvector, deployed on Railway and Vercel) and a macOS virtual pet desktop app in SwiftUI/AppKit, and I've been experimenting with multi-agent AI workflows. Beyond that, I follow Hacker News regularly, take targeted online courses when I need structured depth on something new, and I lean on the actual documentation and source code more than tutorials when I need to learn something precisely.
 
 ---
 
@@ -125,7 +125,7 @@ I look for correctness and logical soundness first, then note optimization oppor
 
 I have hands-on experience at multiple levels. On the ML side: at Eskwelabs I engineered a full NLP pipeline: web scraping, text preprocessing with SpaCy/SciSpaCy, unsupervised topic modeling via Gensim LDA, and a Logistic Regression classifier achieving 94% F1-score on 7,300+ clinical records.
 
-On the LLM/AI tooling side: at Biarri I used Claude Code and OpenAI Codex in production-adjacent workflows: generating boilerplate endpoint scaffolding, accelerating integration test authoring, and eliminating repetitive developer tasks. I've since built further in this space: a full-stack AI portfolio site with an embedded RAG chatbot (LangChain, FastAPI, React, OpenAI gpt-4o-mini, Supabase pgvector) deployed on Railway and Vercel, and experiments with multi-agent orchestration. My goal is to move from integrating AI into workflows to architecting AI-driven systems end-to-end.
+On the LLM/AI tooling side: at Biarri I used Claude Code and OpenAI Codex in production-adjacent workflows: generating boilerplate endpoint scaffolding, accelerating integration test authoring, and eliminating repetitive developer tasks. I've since built further in this space: a full-stack AI resume site with an embedded RAG chatbot (LangChain, FastAPI, React, OpenAI gpt-4o-mini, Supabase pgvector) deployed on Railway and Vercel, and experiments with multi-agent orchestration. My goal is to move from integrating AI into workflows to architecting AI-driven systems end-to-end.
 
 ---
 
@@ -410,7 +410,7 @@ And my teaching background isn't just a resume line: it means I write clearly, d
 - Data + backend range: rare to find both Spark/SQL data pipeline work and REST API/microservices engineering in one person
 - Teaching background: signals communication skills and ability to explain technical work clearly to any audience
 - ECE background gives a hardware-to-software systems perspective: lower-level thinking on concurrency, performance, and reliability that most application developers lack
-- Side projects: AI portfolio site with embedded RAG chatbot (LangChain, FastAPI, React, OpenAI gpt-4o-mini, Supabase pgvector, deployed on Railway and Vercel); Eevee virtual pet macOS desktop app (SwiftUI/AppKit); multi-agent AI workflow experiments: all showing initiative and continuous self-directed learning beyond the 9-to-5
+- Side projects: AI resume site with embedded RAG chatbot (LangChain, FastAPI, React, OpenAI gpt-4o-mini, Supabase pgvector, deployed on Railway and Vercel); Eevee virtual pet macOS desktop app (SwiftUI/AppKit); multi-agent AI workflow experiments: all showing initiative and continuous self-directed learning beyond the 9-to-5
 - Core values: quality and correctness first, but ship working software over perfect software; clear written communication is a professional responsibility; curiosity-driven learning: build things to actually understand them
 
 ---

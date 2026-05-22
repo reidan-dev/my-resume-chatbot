@@ -1,6 +1,6 @@
 # Resume Chatbot
 
-A personal portfolio site with an embedded AI chatbot named **Folio**. Recruiters and HR professionals can ask natural language questions about Dan's background and experience. Answers are grounded in the resume via a RAG pipeline.
+A personal resume site with an embedded AI chatbot named **Folio**. Recruiters and HR professionals can ask natural language questions about Dan's background and experience. Answers are grounded in the resume via a RAG pipeline.
 
 The site has two tabs — **Resume** (the interactive CV) and **About this App** (stack, architecture, data flow). Folio starts minimized; open it via the **Chat with Folio** button in the bottom-right corner.
 

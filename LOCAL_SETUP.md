@@ -102,7 +102,7 @@ VITE_CONTACT_LINKEDIN=https://www.linkedin.com/in/reiniel-dan-pablo
 VITE_CONTACT_GITHUB=https://github.com/reidan-dev
 VITE_OWNER_NAME=Reiniel Dan Pablo
 VITE_BOT_NAME=Folio
-VITE_BOT_INTRO=Hey there! I'm Folio, Dan's AI portfolio assistant — powered by a RAG pipeline that grounds every answer directly in his resume and Q&A guide, so no guessing here. Ask me anything about his background, skills, or experience!
+VITE_BOT_INTRO=Hey there! I'm Folio, Dan's AI resume assistant — powered by a RAG pipeline that grounds every answer directly in his resume and Q&A guide, so no guessing here. Ask me anything about his background, skills, or experience!
 
 # Set to "true" to show the "Open to work" badge in the nav
 VITE_OPEN_TO_WORK=false
