@@ -9,6 +9,10 @@
     @apply bg-gray-50 text-gray-900 antialiased;
     font-family: 'Inter', system-ui, sans-serif;
   }
+  .dark body {
+    background-color: #111827;
+    color: #f3f4f6;
+  }
 }
 
 @media print {

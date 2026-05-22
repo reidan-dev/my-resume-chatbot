@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { MessageSquare, Share2, Check, Printer, ArrowUp } from 'lucide-react'
+import { MessageSquare, Share2, Check, Printer, ArrowUp, Moon, Sun } from 'lucide-react'
 import confetti from 'canvas-confetti'
 
 const OPEN_TO_WORK = import.meta.env.VITE_OPEN_TO_WORK === 'true'
@@ -8,6 +8,7 @@ import { AboutPage } from './pages/AboutPage'
 import { ChatWidget } from './components/ChatWidget'
 import { ContactModal } from './components/ContactModal'
 import { useRateLimit } from './hooks/useRateLimit'
+import { useDarkMode } from './hooks/useDarkMode'
 
 const LIMIT = 5
 const BOT_NAME = import.meta.env.VITE_BOT_NAME ?? 'Folio'
@@ -21,6 +22,7 @@ export default function App() {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [showScrollTop, setShowScrollTop] = useState(false)
   const confettiFiredRef = useRef(false)
+  const { dark, toggle: toggleDark } = useDarkMode()
   const rateLimit = useRateLimit()
 
   async function handleShare() {
@@ -84,9 +86,9 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Tab navigation */}
-      <nav className="sticky top-0 z-20 bg-white border-b border-gray-200 print:hidden relative overflow-hidden">
+      <nav className="sticky top-0 z-20 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 print:hidden relative overflow-hidden">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 flex items-center">
           <div className="flex gap-4 sm:gap-6 flex-1">
             {(['resume', 'about'] as const).map((page) => (
@@ -96,16 +98,16 @@ export default function App() {
                 className={`py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                   activePage === page
                     ? 'border-emerald-500 text-emerald-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
                 }`}
               >
                 {page === 'resume' ? 'Resume' : 'About'}
               </button>
             ))}
           </div>
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1 shrink-0">
             {OPEN_TO_WORK && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-medium">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400 text-xs font-medium">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
                 Open to work
               </span>
@@ -113,16 +115,23 @@ export default function App() {
             <button
               onClick={handleShare}
               title={copied ? 'Copied!' : 'Share'}
-              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               {copied ? <Check size={15} className="text-emerald-500" /> : <Share2 size={15} />}
             </button>
             <button
               onClick={() => window.print()}
               title="Print / Save PDF"
-              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors print:hidden"
+              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors print:hidden"
             >
               <Printer size={15} />
+            </button>
+            <button
+              onClick={toggleDark}
+              title={dark ? 'Light mode' : 'Dark mode'}
+              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors print:hidden"
+            >
+              {dark ? <Sun size={15} /> : <Moon size={15} />}
             </button>
           </div>
         </div>
@@ -154,7 +163,7 @@ export default function App() {
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           title="Back to top"
-          className="fixed left-4 z-30 w-9 h-9 flex items-center justify-center rounded-full bg-white border border-gray-200 shadow-md text-gray-400 hover:text-gray-600 hover:shadow-lg transition-all animate-fade-in print:hidden"
+          className="fixed left-4 z-30 w-9 h-9 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:shadow-lg transition-all animate-fade-in print:hidden"
           style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}
         >
           <ArrowUp size={15} />
@@ -165,7 +174,7 @@ export default function App() {
         <div className="fixed right-6 z-30 flex flex-col items-end gap-2 print:hidden" style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>
           <div
             className={`
-              bg-white rounded-2xl rounded-br-sm shadow-lg px-4 py-2.5 text-sm text-gray-700
+              bg-white dark:bg-gray-800 rounded-2xl rounded-br-sm shadow-lg px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200
               transition-all duration-500
               ${showGreeting ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}
             `}

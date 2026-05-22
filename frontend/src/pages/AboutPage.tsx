@@ -1,7 +1,7 @@
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mb-8">
-      <h2 className="text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-3 pb-2 border-b border-gray-200">
+      <h2 className="text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-3 pb-2 border-b border-gray-200 dark:border-gray-700">
         {title}
       </h2>
       {children}
@@ -99,10 +99,10 @@ export function AboutPage() {
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 tracking-tight">About</h1>
-        <p className="mt-2 text-sm text-gray-500 leading-relaxed">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">About</h1>
+        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
           This portfolio site is a full-stack AI application — not just a static resume.{' '}
-          <strong className="text-gray-700">Folio</strong> is a Retrieval-Augmented Generation (RAG) chatbot
+          <strong className="text-gray-700 dark:text-gray-200">Folio</strong> is a Retrieval-Augmented Generation (RAG) chatbot
           that lets recruiters and HR professionals ask natural-language questions about Dan's background
           and get grounded, accurate answers in real time.
         </p>
@@ -112,8 +112,8 @@ export function AboutPage() {
         <div className="space-y-2">
           {stack.map(({ layer, items }) => (
             <div key={layer} className="flex flex-col sm:flex-row sm:gap-3 text-sm">
-              <span className="font-medium text-gray-700 sm:w-32 shrink-0">{layer}</span>
-              <span className="text-gray-500">{items}</span>
+              <span className="font-medium text-gray-700 dark:text-gray-200 sm:w-32 shrink-0">{layer}</span>
+              <span className="text-gray-500 dark:text-gray-400">{items}</span>
             </div>
           ))}
         </div>
@@ -123,8 +123,8 @@ export function AboutPage() {
         <div className="space-y-4">
           {dataFlow.map(({ step, desc }) => (
             <div key={step}>
-              <div className="text-sm font-semibold text-gray-800 mb-1">{step}</div>
-              <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
+              <div className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-1">{step}</div>
+              <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{desc}</p>
             </div>
           ))}
         </div>
@@ -134,8 +134,8 @@ export function AboutPage() {
         <div className="space-y-4">
           {security.map(({ layer, desc }) => (
             <div key={layer}>
-              <div className="text-sm font-semibold text-gray-800 mb-1">{layer}</div>
-              <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
+              <div className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-1">{layer}</div>
+              <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{desc}</p>
             </div>
           ))}
         </div>
@@ -144,7 +144,7 @@ export function AboutPage() {
       <Section title="Features">
         <ul className="space-y-2">
           {features.map((f) => (
-            <li key={f} className="text-sm text-gray-600 flex gap-2">
+            <li key={f} className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
               <span className="text-emerald-400 shrink-0 mt-0.5">✓</span>
               <span>{f}</span>
             </li>

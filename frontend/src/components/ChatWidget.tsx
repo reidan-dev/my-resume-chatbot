@@ -52,6 +52,14 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMess
     if (isOpen) setTimeout(() => inputRef.current?.focus(), 100)
   }, [isOpen])
 
+  useEffect(() => {
+    if (isStreaming) {
+      const orig = document.title
+      document.title = 'Folio is thinking… | Dan Pablo'
+      return () => { document.title = orig }
+    }
+  }, [isStreaming])
+
   function submit() {
     const text = input.trim()
     if (!text || isStreaming || isExhausted || health.status === 'offline') return
@@ -84,7 +92,7 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMess
       {/* Chat panel */}
       <div
         className={`
-          fixed z-50 flex flex-col bg-white shadow-2xl will-change-transform
+          fixed z-50 flex flex-col bg-white dark:bg-gray-900 shadow-2xl will-change-transform
           transition-all duration-300 ease-out
 
           /* Mobile: bottom sheet — slides up/down */
@@ -93,7 +101,7 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMess
 
           /* Desktop: floating box — fades + scales in/out */
           md:inset-x-auto md:bottom-20 md:right-6 md:top-auto
-          md:w-[320px] md:h-[460px] md:rounded-2xl md:border md:border-gray-200
+          md:w-[320px] md:h-[460px] md:rounded-2xl md:border md:border-gray-200 dark:md:border-gray-700
           md:translate-y-0
           ${isOpen
             ? 'md:opacity-100 md:scale-100 md:pointer-events-auto'
@@ -102,10 +110,10 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMess
         `}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-3 py-2.5 border-b border-gray-100 shrink-0 rounded-t-2xl">
+        <div className="flex items-center justify-between px-3 py-2.5 border-b border-gray-100 dark:border-gray-800 shrink-0 rounded-t-2xl">
           <div className="flex items-center gap-1.5">
             <span className="text-base">👓</span>
-            <span className="font-semibold text-gray-900 text-sm">{BOT_NAME}</span>
+            <span className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{BOT_NAME}</span>
             <div className={`w-1.5 h-1.5 rounded-full ${
               health.status === 'online' ? 'bg-emerald-500' :
               health.status === 'offline' ? 'bg-red-400' :
@@ -118,7 +126,7 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMess
               <button
                 onClick={reset}
                 title="New conversation"
-                className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+                className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
                 <RotateCcw size={13} />
               </button>
@@ -126,14 +134,14 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMess
             <button
               onClick={onClose}
               title="Close"
-              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors md:hidden"
+              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors md:hidden"
             >
               <X size={15} />
             </button>
             <button
               onClick={onClose}
               title="Minimize"
-              className="hidden md:flex p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+              className="hidden md:flex p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               <Minus size={15} />
             </button>
@@ -144,10 +152,10 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMess
         <div ref={scrollContainerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto px-3 py-3 space-y-2.5">
           {/* Static intro message */}
           <div className="flex justify-start gap-1.5 items-start">
-            <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm shrink-0 mt-0.5">
+            <div className="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-sm shrink-0 mt-0.5">
               👓
             </div>
-            <div className="max-w-[85%] px-3 py-2 rounded-2xl rounded-tl-sm bg-white border border-gray-200 text-gray-800 text-xs">
+            <div className="max-w-[85%] px-3 py-2 rounded-2xl rounded-tl-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100 text-xs">
               {renderIntro(BOT_INTRO)}
             </div>
           </div>
@@ -169,7 +177,7 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMess
 
         {/* Input */}
         {!isExhausted && (
-          <div className="px-3 pt-2.5 border-t border-gray-100 shrink-0 pb-[calc(0.375rem+env(safe-area-inset-bottom))]">
+          <div className="px-3 pt-2.5 border-t border-gray-100 dark:border-gray-800 shrink-0 pb-[calc(0.375rem+env(safe-area-inset-bottom))]">
             <div className="flex items-end gap-1.5">
               <textarea
                 ref={inputRef}
@@ -179,7 +187,7 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMess
                 placeholder="Ask about Dan…"
                 rows={1}
                 disabled={isStreaming}
-                className="flex-1 resize-none rounded-xl border border-gray-200 px-3 py-2 text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:opacity-50 max-h-24 overflow-y-auto"
+                className="flex-1 resize-none rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-xs text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:opacity-50 max-h-24 overflow-y-auto"
                 style={{ fieldSizing: 'content' } as React.CSSProperties}
               />
               <button

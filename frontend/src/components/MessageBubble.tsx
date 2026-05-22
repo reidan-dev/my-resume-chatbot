@@ -59,22 +59,22 @@ export function MessageBubble({ message, onDanClick }: Props) {
 
   return (
     <div className="flex justify-start gap-1.5 items-start group">
-      <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm shrink-0 mt-0.5">
+      <div className="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-sm shrink-0 mt-0.5">
         👓
       </div>
       <div className="max-w-[85%] space-y-1">
         <div
           className={`relative px-3 py-2 rounded-2xl rounded-tl-sm text-xs ${
             message.error
-              ? 'bg-red-50 text-red-700 border border-red-200'
-              : 'bg-white border border-gray-200 text-gray-800'
+              ? 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800'
+              : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100'
           }`}
         >
           {!message.streaming && !message.error && message.content && (
             <button
               onClick={copyToClipboard}
               title="Copy response"
-              className="absolute top-1.5 right-1.5 opacity-60 sm:opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-md text-gray-300 hover:text-gray-500 hover:bg-gray-100"
+              className="absolute top-1.5 right-1.5 opacity-60 sm:opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-md text-gray-300 dark:text-gray-600 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               {copied ? <Check size={11} className="text-emerald-500" /> : <Copy size={11} />}
             </button>
@@ -87,9 +87,9 @@ export function MessageBubble({ message, onDanClick }: Props) {
                 p: ({ children }) => <p className="mb-1.5 last:mb-0">{children}</p>,
                 ul: ({ children }) => <ul className="list-disc pl-4 mb-1.5 space-y-0.5">{children}</ul>,
                 ol: ({ children }) => <ol className="list-decimal pl-4 mb-1.5 space-y-0.5">{children}</ol>,
-                strong: ({ children }) => <strong className="font-semibold text-gray-900">{children}</strong>,
+                strong: ({ children }) => <strong className="font-semibold text-gray-900 dark:text-gray-100">{children}</strong>,
                 code: ({ children }) => (
-                  <code className="px-1 py-0.5 rounded bg-gray-100 text-xs font-mono text-gray-800">
+                  <code className="px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-xs font-mono text-gray-800 dark:text-gray-200">
                     {children}
                   </code>
                 ),
@@ -105,7 +105,7 @@ export function MessageBubble({ message, onDanClick }: Props) {
                     )
                   }
                   if (href === '#folio') {
-                    return <strong className="font-semibold text-red-900">{children}</strong>
+                    return <strong className="font-semibold text-red-900 dark:text-red-400">{children}</strong>
                   }
                   return <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
                 },

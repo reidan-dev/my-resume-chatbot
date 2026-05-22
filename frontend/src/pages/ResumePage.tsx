@@ -29,7 +29,7 @@ function HighlightedText({ text }: { text: string }) {
     <>
       {parts.map((part, i) =>
         _termSet.has(part)
-          ? <strong key={i} className="font-semibold text-gray-800">{part}</strong>
+          ? <strong key={i} className="font-semibold text-gray-800 dark:text-gray-200">{part}</strong>
           : <span key={i}>{part}</span>
       )}
     </>
@@ -195,7 +195,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
       ref={ref}
       className={`mb-8 transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
     >
-      <h2 className="text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-3 pb-2 border-b border-gray-200">
+      <h2 className="text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-3 pb-2 border-b border-gray-200 dark:border-gray-700">
         {title}
       </h2>
       {children}
@@ -219,7 +219,7 @@ export function ResumePage() {
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       {/* Header */}
       <header className="mb-8 animate-fade-in-up">
-        <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">
           Reiniel <AnimatedDan /> A. Pablo
         </h1>
         <p className="mt-1 text-base font-medium text-emerald-600">
@@ -230,7 +230,7 @@ export function ResumePage() {
           <span className="block sm:inline">AI Practitioner</span>
         </p>
 
-        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-500">
+        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
           <a href={`mailto:${EMAIL}`} className="flex items-center gap-1.5 hover:text-emerald-600 transition-colors">
             <Mail size={13} /> {EMAIL}
           </a>
@@ -251,12 +251,12 @@ export function ResumePage() {
         <div className="space-y-3">
           {Object.entries(skills).map(([category, items]) => (
             <div key={category}>
-              <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">{category}</span>
+              <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">{category}</span>
               <div className="mt-1.5 flex flex-wrap gap-1.5">
                 {items.map((skill) => (
                   <span
                     key={skill}
-                    className="px-2 py-0.5 rounded-full bg-gray-100 border border-gray-200 text-xs text-gray-600 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-700 transition-colors cursor-default"
+                    className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:border-emerald-200 dark:hover:border-emerald-700 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors cursor-default"
                   >
                     {skill}
                   </span>
@@ -278,7 +278,7 @@ export function ResumePage() {
                 {/* Timeline column: dot + line share same center */}
                 <div className="flex flex-col items-center shrink-0 print:hidden">
                   <div className="w-2 h-2 mt-[5px] rounded-full bg-emerald-500 border-2 border-white ring-1 ring-emerald-200 shrink-0" />
-                  {!isLast && <div className="w-px flex-1 bg-gray-200 mt-1" />}
+                  {!isLast && <div className="w-px flex-1 bg-gray-200 dark:bg-gray-700 mt-1" />}
                 </div>
 
                 {/* Content */}
@@ -288,7 +288,7 @@ export function ResumePage() {
                       <button
                         onClick={() => toggleJob(i)}
                         title={isCollapsed ? 'Expand' : 'Collapse'}
-                        className="mt-0.5 p-0.5 rounded text-gray-300 hover:text-gray-500 transition-colors shrink-0 print:hidden"
+                        className="mt-0.5 p-0.5 rounded text-gray-300 dark:text-gray-600 hover:text-gray-500 dark:hover:text-gray-400 transition-colors shrink-0 print:hidden"
                       >
                         <ChevronDown
                           size={13}
@@ -296,13 +296,13 @@ export function ResumePage() {
                         />
                       </button>
                       <div>
-                        <div className="font-semibold text-gray-900 text-sm">{job.title}</div>
-                        <div className="text-gray-500 text-xs mt-0.5">{job.company}</div>
+                        <div className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{job.title}</div>
+                        <div className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">{job.company}</div>
                       </div>
                     </div>
-                    <span className="text-xs text-gray-400 shrink-0 mt-0.5 pl-5 sm:pl-0">
+                    <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0 mt-0.5 pl-5 sm:pl-0">
                       {job.period}
-                      <span className="text-gray-300"> · </span>
+                      <span className="text-gray-300 dark:text-gray-600"> · </span>
                       {job.duration}
                     </span>
                   </div>
@@ -310,8 +310,8 @@ export function ResumePage() {
                   {!isCollapsed && (
                     <ul className="mt-2 space-y-1 pl-5">
                       {job.bullets.map((b) => (
-                        <li key={b} className="text-sm text-gray-600 flex gap-2">
-                          <span className="text-gray-300 shrink-0 mt-0.5">—</span>
+                        <li key={b} className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
+                          <span className="text-gray-300 dark:text-gray-600 shrink-0 mt-0.5">—</span>
                           <span><HighlightedText text={b} /></span>
                         </li>
                       ))}
@@ -326,22 +326,22 @@ export function ResumePage() {
 
       {/* Projects */}
       <Section title="Projects & Training">
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
           Most of my work across all roles involved end-to-end development — frontend, API, and backend — but the products and software I built are proprietary and not publicly shareable.{' '}
-          <span className="text-gray-600">I'm happy to walk through them in detail in person.</span>{' '}
+          <span className="text-gray-600 dark:text-gray-300">I'm happy to walk through them in detail in person.</span>{' '}
           The projects below are ones I can share openly.
         </p>
         <div className="space-y-4">
           {projects.map((p) => (
             <div key={p.name}>
               <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
-                <span className="font-semibold text-gray-900 text-sm">{p.name}</span>
-                <span className="text-xs text-gray-400 shrink-0">{p.period}</span>
+                <span className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{p.name}</span>
+                <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0">{p.period}</span>
               </div>
               <ul className="mt-2 space-y-1">
                 {p.bullets.map((b) => (
-                  <li key={b} className="text-sm text-gray-600 flex gap-2">
-                    <span className="text-gray-300 shrink-0 mt-0.5">—</span>
+                  <li key={b} className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
+                    <span className="text-gray-300 dark:text-gray-600 shrink-0 mt-0.5">—</span>
                     <span><HighlightedText text={b} /></span>
                   </li>
                 ))}
@@ -355,24 +355,24 @@ export function ResumePage() {
       <Section title="Education">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-0.5">
           <div>
-            <div className="font-semibold text-gray-900 text-sm">BS Electronics and Communications Engineering</div>
-            <div className="text-gray-500 text-xs mt-0.5">AMA Computer College</div>
+            <div className="font-semibold text-gray-900 dark:text-gray-100 text-sm">BS Electronics and Communications Engineering</div>
+            <div className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">AMA Computer College</div>
           </div>
-          <span className="text-xs text-gray-400 shrink-0 mt-0.5">Graduated Apr 2017</span>
+          <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0 mt-0.5">Graduated Apr 2017</span>
         </div>
         <ul className="mt-2 space-y-1">
-          <li className="text-sm text-gray-600 flex gap-2">
-            <span className="text-gray-300 shrink-0 mt-0.5">—</span>
+          <li className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
+            <span className="text-gray-300 dark:text-gray-600 shrink-0 mt-0.5">—</span>
             Clark Development Corporation – Student Excellence Awardee
           </li>
-          <li className="text-sm text-gray-600 flex gap-2">
-            <span className="text-gray-300 shrink-0 mt-0.5">—</span>
+          <li className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
+            <span className="text-gray-300 dark:text-gray-600 shrink-0 mt-0.5">—</span>
             PRC Licensed Electronics Engineer & Electronics Technician (Apr 2018)
           </li>
         </ul>
       </Section>
 
-      <p className="text-xs text-gray-400 text-center mt-2 pb-2 print:hidden">Last updated May 2026</p>
+      <p className="text-xs text-gray-400 dark:text-gray-600 text-center mt-2 pb-2 print:hidden">Last updated May 2026</p>
     </div>
   )
 }

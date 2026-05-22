@@ -30,10 +30,10 @@ export function ContactCard({ resetAt }: { resetAt: Date }) {
   const timeLeft = useCountdown(resetAt)
 
   return (
-    <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 space-y-4 text-sm animate-fade-in">
+    <div className="rounded-2xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-900/20 p-5 space-y-4 text-sm animate-fade-in">
       <div>
-        <p className="font-semibold text-emerald-800 text-base">🎉 Looks like you're interested!</p>
-        <p className="text-emerald-700 mt-1">
+        <p className="font-semibold text-emerald-800 dark:text-emerald-300 text-base">🎉 Looks like you're interested!</p>
+        <p className="text-emerald-700 dark:text-emerald-400 mt-1">
           You've used all {LIMIT} questions. Let's connect directly.
         </p>
       </div>
@@ -41,7 +41,7 @@ export function ContactCard({ resetAt }: { resetAt: Date }) {
       <div className="space-y-2">
         <a
           href={`mailto:${CONTACT_EMAIL}`}
-          className="flex items-center gap-3 min-h-[44px] text-emerald-700 hover:text-emerald-900 transition-colors"
+          className="flex items-center gap-3 min-h-[44px] text-emerald-700 dark:text-emerald-400 hover:text-emerald-900 dark:hover:text-emerald-300 transition-colors"
         >
           <Mail size={16} />
           {CONTACT_EMAIL}
@@ -50,7 +50,7 @@ export function ContactCard({ resetAt }: { resetAt: Date }) {
           href={CONTACT_LINKEDIN}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-3 min-h-[44px] text-emerald-700 hover:text-emerald-900 transition-colors"
+          className="flex items-center gap-3 min-h-[44px] text-emerald-700 dark:text-emerald-400 hover:text-emerald-900 dark:hover:text-emerald-300 transition-colors"
         >
           <ExternalLink size={16} />
           LinkedIn Profile
@@ -59,14 +59,14 @@ export function ContactCard({ resetAt }: { resetAt: Date }) {
           href={CONTACT_GITHUB}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-3 min-h-[44px] text-emerald-700 hover:text-emerald-900 transition-colors"
+          className="flex items-center gap-3 min-h-[44px] text-emerald-700 dark:text-emerald-400 hover:text-emerald-900 dark:hover:text-emerald-300 transition-colors"
         >
           <ExternalLink size={16} />
           GitHub Profile
         </a>
       </div>
 
-      <p className="text-xs text-emerald-600">↻ Questions reset in {timeLeft}</p>
+      <p className="text-xs text-emerald-600 dark:text-emerald-500">↻ Questions reset in {timeLeft}</p>
     </div>
   )
 }
