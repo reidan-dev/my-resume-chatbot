@@ -116,6 +116,16 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 
 > Most of my work across all roles involved end-to-end development spanning frontend, API, and backend. The products and software I built are proprietary and cannot be shared publicly, but I am happy to discuss them in detail in person. The projects below are publicly shareable.
 
+### AI Portfolio Site with RAG Chatbot (this site)
+
+**Personal Project | 2025**
+
+- Built a full-stack AI portfolio site with an embedded RAG chatbot named Folio: a production-deployed application, not a demo.
+- Stack: FastAPI (Python 3.13) backend with LangChain RAG pipeline, OpenAI gpt-4o-mini (chat) and text-embedding-3-small (embeddings), Supabase pgvector for vector storage, React + TypeScript + Vite + Tailwind CSS frontend.
+- Deployed on Railway (backend, Dockerized) and Vercel (frontend) with Supabase as the hosted database.
+- Implemented 4-layer API security: input injection guard, per-IP burst and window rate limiting, global daily cap, and contact form spam protection (honeypot, keyword filter, IP rate limit).
+- Responses stream token-by-token via Server-Sent Events (SSE); conversation history is persisted in Supabase for review.
+
 ### Check-App – Clinical Decision Support Chatbot
 
 **Eskwelabs Data Science Bootcamp, Cohort 7 | May–August 2021**
