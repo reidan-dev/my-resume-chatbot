@@ -6,6 +6,8 @@ The site has two tabs — **Resume** (the interactive CV) and **About this App**
 
 **5 free questions per 3-day window per IP.** After the limit, a contact card appears.
 
+Chat conversations (question + response) are logged to Supabase for review. A disclosure is shown in the chat footer.
+
 ---
 
 ## Stack
@@ -108,6 +110,10 @@ Three layers protect against API cost abuse — see [API_SECURITY.md](API_SECURI
 | Contact form guard | IP rate limit (3/hr) + honeypot + field validation + spam keyword filter |
 
 **Set a hard spending limit in your OpenAI dashboard** (Billing → Limits → Hard limit: $5/month) as the ultimate backstop.
+
+### Resetting the rate limit (owner only)
+
+Navigate to `/?reset=<your-secret>` to clear the browser-side rate limit counter. The secret is set via `VITE_RESET_SECRET` in Vercel. Works on any device including mobile.
 
 ---
 

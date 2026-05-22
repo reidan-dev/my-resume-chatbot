@@ -104,8 +104,11 @@ VITE_OWNER_NAME=Reiniel Dan Pablo
 VITE_BOT_NAME=Folio
 VITE_BOT_INTRO=Hey there! I'm Folio, Dan's AI portfolio assistant — powered by a RAG pipeline that grounds every answer directly in his resume and Q&A guide, so no guessing here. Ask me anything about his background, skills, or experience!
 
-# Set to "true" to show the "Open to work" badge in the nav and resume header
+# Set to "true" to show the "Open to work" badge in the nav
 VITE_OPEN_TO_WORK=false
+
+# Secret for /?reset=<value> to clear the rate limit counter. Leave blank to disable.
+VITE_RESET_SECRET=
 ```
 
 **What you actually need to edit:**

@@ -82,7 +82,7 @@ If you haven't created a GitHub repo yet:
    - **Region:** pick the one closest to you
 3. Click **Create new project** and wait ~1 minute for it to provision
 
-### 1.2 Enable the pgvector extension
+### 1.2 Enable the pgvector extension and create the chat log table
 
 1. In the left sidebar → **SQL Editor**
 2. Click **New query**
@@ -90,9 +90,18 @@ If you haven't created a GitHub repo yet:
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE IF NOT EXISTS chat_logs (
+  id bigserial primary key,
+  created_at timestamptz default now(),
+  session_id text,
+  user_message text,
+  ai_response text
+);
 ```
 
 4. Click **Run** — you should see `Success. No rows returned`
+5. When Supabase warns about Row Level Security, click **Run and enable RLS** — do not create any policies. RLS enabled with no policies means only the service role (your backend) can write to it; the public anon key is blocked entirely.
 
 ### 1.3 Get your connection string
 
@@ -272,7 +281,8 @@ Add each one:
 | `VITE_OWNER_NAME` | `Reiniel Dan Pablo` | Your name |
 | `VITE_BOT_NAME` | `Folio` | Chat widget header name |
 | `VITE_BOT_INTRO` | `Hey there! I'm Folio, Dan's AI portfolio assistant — powered by a RAG pipeline that grounds every answer directly in his resume and Q&A guide, so no guessing here. Ask me anything about his background, skills, or experience!` | Opening message in the chat |
-| `VITE_OPEN_TO_WORK` | `true` or `false` | Shows/hides the "Open to work" badge in the nav and resume header |
+| `VITE_OPEN_TO_WORK` | `true` or `false` | Shows/hides the "Open to work" badge in the nav |
+| `VITE_RESET_SECRET` | any secret string | Enables `/?reset=<value>` to clear the rate limit counter — owner use only. Leave blank to disable. |
 
 ### 4.3 Deploy
 
@@ -343,10 +353,13 @@ git push
 
 **Vercel:**
 1. Project → **Settings** → **Domains**
-2. Type your domain and click **Add**
-3. Vercel shows you the DNS records to add — go to your domain registrar and add them
+2. Type your domain (e.g. `danpablo.dev`) and click **Add**
+3. Vercel shows you the DNS records to add — go to your domain registrar and add them (either an A record to `76.76.21.21` or a CNAME to `cname.vercel-dns.com`)
 
-**Railway:**
+**After adding the domain, update CORS on Railway:**
+Go to Railway → your service → **Variables** → `BACKEND_CORS_ORIGINS` → change it to your custom domain (e.g. `https://danpablo.dev`). Railway redeploys automatically.
+
+**Railway (optional — only if you want a custom domain for the API too):**
 1. Service → **Settings** → **Domains** → **Add Custom Domain**
 2. Add the CNAME record Railway gives you to your DNS
 

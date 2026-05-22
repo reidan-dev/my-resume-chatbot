@@ -187,7 +187,11 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick }: Props) {
                 <Send size={13} />
               </button>
             </div>
-            <p className="mt-1.5 text-center text-[10px] text-gray-300">{health.model} · Conversations may be logged.</p>
+            <div className="mt-1.5 flex items-center justify-center gap-2 text-[10px] text-gray-400">
+              <span>{health.model}</span>
+              <span className="text-gray-300">·</span>
+              <span>Conversations may be logged.</span>
+            </div>
           </div>
         )}
       </div>
