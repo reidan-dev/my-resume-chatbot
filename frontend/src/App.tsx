@@ -155,6 +155,12 @@ export default function App() {
         {activePage === 'resume' ? <ResumePage /> : <ProjectsPage />}
       </div>
 
+      {/* Startup gradient highlight — fades with the nudge callout */}
+      <div
+        className={`fixed inset-x-0 bottom-0 h-[50vh] z-10 pointer-events-none transition-opacity duration-700 print:hidden ${showNudge ? 'opacity-100' : 'opacity-0'}`}
+        style={{ background: 'linear-gradient(to top, rgba(2,68,45,0.85) 0%, rgba(5,120,80,0.5) 35%, rgba(16,185,129,0.15) 65%, transparent 100%)' }}
+      />
+
       <div className="print:hidden">
         <ChatWidget
           isOpen={chatOpen}

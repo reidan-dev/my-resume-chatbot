@@ -157,14 +157,17 @@ function PdfModal({ url, title, onClose }: { url: string; title: string; onClose
   )
 }
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({ project, index }: { project: Project; index: number }) {
   const [expanded, setExpanded] = useState(false)
   const [pdfOpen, setPdfOpen] = useState(false)
   const status = statusConfig[project.status] ?? statusConfig.archived
 
   return (
     <>
-      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 flex flex-col overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+      <div
+        className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 flex flex-col overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 animate-fade-in-up"
+        style={{ animationDelay: `${index * 60}ms`, animationFillMode: 'both' }}
+      >
         <ImageBanner project={project} />
 
         <div className="flex flex-col gap-2 p-4 flex-1">
@@ -259,8 +262,8 @@ export function ProjectsPage() {
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        {projects.map((project) => (
-          <ProjectCard key={project.name} project={project} />
+        {projects.map((project, i) => (
+          <ProjectCard key={project.name} project={project} index={i} />
         ))}
       </div>
     </div>
