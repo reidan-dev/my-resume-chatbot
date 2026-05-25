@@ -26,11 +26,22 @@ class Settings(BaseSettings):
     database_url: str = ""  # postgresql+psycopg://... for pgvector (Supabase)
 
     # Rate limiting
-    rate_limit_questions: int = 5
-    rate_limit_window_days: int = 3
+    rate_limit_mode: str = "default"        # "default" | "active"
+    rate_limit_questions: int = 5           # default mode: questions per IP per window
+    rate_limit_window_days: int = 3         # default mode: window length
+    rate_limit_questions_active: int = 10   # active mode: questions per IP per window
+    rate_limit_window_days_active: int = 1  # active mode: window length
     burst_limit: int = 3             # max requests per minute per IP
     global_daily_limit: int = 100    # max total questions per day across all users
     redis_url: str = ""
+
+    @property
+    def effective_rate_limit_questions(self) -> int:
+        return self.rate_limit_questions_active if self.rate_limit_mode == "active" else self.rate_limit_questions
+
+    @property
+    def effective_rate_limit_window_days(self) -> int:
+        return self.rate_limit_window_days_active if self.rate_limit_mode == "active" else self.rate_limit_window_days
 
     # Input guard
     max_message_length: int = 300

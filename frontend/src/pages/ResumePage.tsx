@@ -1,35 +1,32 @@
 import { useState, useEffect } from 'react'
-import { ExternalLink, Mail, MapPin, Phone, ChevronDown } from 'lucide-react'
+import { Mail, MapPin, Phone, ChevronDown } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
+import resumeData from '../data/resume.json'
+import { AboutModal } from '../components/AboutModal'
 
-const TECH_TERMS = [
-  // multi-word terms first (longest match wins)
-  'Claude Code', 'OpenAI Codex', 'Presto SQL', 'Gensim LDA', 'Logistic Regression',
-  'Apache Superset', 'Apache Spark', 'Apache Zeppelin',
-  'Agile Scrum', 'REST APIs', 'REST API',
-  'BeautifulSoup', 'SciSpaCy', 'Selenium',
-  'Node.js', 'Vue.js', 'FastAPI', 'Django', 'Flask', 'Bootstrap', 'SpaCy',
-  'TypeScript', 'JavaScript', 'PostgreSQL', 'Bitbucket', 'GitHub',
-  'Jenkins', 'Terraform', 'Docker', 'GraphQL', 'Microservices',
-  'React', 'Python', 'Pytest', 'Jest', 'TDD', 'Jira', 'Confluence', 'Waterfall',
-  'AWS', 'HTML5', 'CSS3', 'SQL', 'TCL', 'Bash', 'Git',
-  'F1-score', '94%', '98–100%',
-]
+function LinkedInIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13" aria-hidden="true">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+  )
+}
 
-const _termSet = new Set(TECH_TERMS)
-const _highlightPattern = new RegExp(
-  `(${[...TECH_TERMS].sort((a, b) => b.length - a.length)
-    .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-    .join('|')})`
-)
+function GitHubIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13" aria-hidden="true">
+      <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+    </svg>
+  )
+}
 
-function HighlightedText({ text }: { text: string }) {
-  const parts = text.split(_highlightPattern)
+function RichText({ text }: { text: string }) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/)
   return (
     <>
       {parts.map((part, i) =>
-        _termSet.has(part)
-          ? <strong key={i} className="font-semibold text-gray-800 dark:text-gray-200">{part}</strong>
+        part.startsWith('**') && part.endsWith('**')
+          ? <strong key={i} className="font-semibold text-gray-800 dark:text-gray-200">{part.slice(2, -2)}</strong>
           : <span key={i}>{part}</span>
       )}
     </>
@@ -38,108 +35,9 @@ function HighlightedText({ text }: { text: string }) {
 
 const GITHUB = import.meta.env.VITE_CONTACT_GITHUB ?? 'https://github.com/reidan-dev'
 const EMAIL = import.meta.env.VITE_CONTACT_EMAIL ?? 'reinieldan@gmail.com'
+const LINKEDIN = import.meta.env.VITE_CONTACT_LINKEDIN ?? 'https://www.linkedin.com/in/reiniel-dan-pablo'
 
-const skills: Record<string, string[]> = {
-  'Backend Development': ['Python', 'Django', 'Flask', 'FastAPI', 'Node.js', 'REST APIs', 'GraphQL', 'Microservices', 'TDD', 'Pytest', 'Jest'],
-  'Frontend & Web': ['JavaScript', 'React', 'Vue.js', 'Bootstrap', 'HTML5', 'CSS3'],
-  'Data & Infrastructure': ['Presto SQL', 'PostgreSQL', 'Apache Superset', 'Apache Spark', 'AWS (S3/Lambda/EC2)', 'Terraform', 'Jenkins', 'Docker'],
-  'Tools & Methods': ['Git', 'Jira', 'Confluence', 'Claude Code', 'OpenAI Codex', 'Agile Scrum', 'Waterfall'],
-}
-
-const experience = [
-  {
-    title: 'Software Developer – Backend',
-    company: 'Sharesource → Biarri Networks (AUS)',
-    period: 'Sep 2022 – Apr 2026',
-    duration: '3 yrs 7 mos',
-    bullets: [
-      'Maintained and extended 60+ proprietary Python packages: internal algorithmic tools used by GIS designers and network consultants to plan and design fibre optic network infrastructure, from small-scale local deployments to national-level rollouts.',
-      'Core work: adding new features, keeping packages current with framework/library advances, performance optimization, and resolving issues reported by GIS designers and consultants.',
-      'Maintained clean REST API contracts between backend packages and frontends, ensuring GIS design tools stayed reliably connected across the full stack.',
-      'Part of package maintenance included writing and maintaining Pytest test suites (TDD) per repo, with integration tests and regression tests scheduled via Jenkins cron jobs to run automatically and catch breakage across the ecosystem.',
-      'Configured Jenkins pipelines for cron-based job management across complex multi-repo packages.',
-      'Deployed critical infrastructure hotfixes under tight production constraints; optimized webhook pipelines.',
-      'Pioneered AI automation workflows using Claude Code and OpenAI Codex to eliminate repetitive developer tasks.',
-    ],
-  },
-  {
-    title: 'Data Visualization Consultant / Data Analyst',
-    company: 'Amihan Global Strategies',
-    period: 'Aug 2022 – Feb 2023',
-    duration: '6 mos',
-    bullets: [
-      'Technical lead for a national-scale data project ingesting 100k+ real-time rows daily from a national service actively used by millions of Filipinos.',
-      'Cleaned, aggregated, and surfaced actionable metrics from raw JSON/XML telemetry using Python, Presto SQL, PostgreSQL, Apache Zeppelin, and Apache Spark.',
-      'Built Apache Superset dashboards presenting complex data insights in a way accessible to non-technical clients and stakeholders.',
-      'Contributed to customer persona classification — segmenting daily service users to enable targeted service improvements, smarter resource allocation, and data-driven business decisions.',
-      'Contributed to traffic management analytics to monitor and optimize national service load patterns.',
-    ],
-  },
-  {
-    title: 'Software Engineer',
-    company: 'Denso Techno Philippines Inc.',
-    period: 'Aug 2019 – Feb 2022',
-    duration: '2 yrs 6 mos',
-    bullets: [
-      'Built full-stack enterprise web applications connected to production factories in Japan — replacing manual machine checks with real-time dashboards showing live production line flow and machine conditions.',
-      'Machines on the factory floor sent status and telemetry to APIs; built the full stack (Django/FastAPI backends, React/Vue.js frontends) to ingest, process, and visualize that data for operators.',
-      'Deployed microservices with Docker on AWS (S3, Lambda, EC2) using Terraform.',
-      'Achieved 98–100% QA clearance across all integration contracts via strict TDD with Pytest and Jest.',
-    ],
-  },
-  {
-    title: 'Part-Time College Instructor',
-    company: 'STI College – Angeles City',
-    period: 'Feb 2023 – Jul 2023',
-    duration: '5 mos',
-    bullets: [
-      'Taught IT students full-stack web development (backend to frontend) with the goal of each student shipping a personal website by end of semester — achieved.',
-      'Taught project management to Business Administration students; cross-pollinated both courses by having biz ad students manage IT students\' capstone projects — simulating real product owner / developer dynamics.',
-      'Both class goals met: IT students shipped, biz ad students completed full project documentation hitting all milestones as if submitting to a real product owner.',
-    ],
-  },
-  {
-    title: 'IC Design Engineer',
-    company: 'Synkom IC Technology Inc.',
-    period: 'Oct 2018 – Apr 2019',
-    duration: '6 mos',
-    bullets: [
-      'Wrote automated data parsing scripts in Python, TCL, and Bash to clean hardware verification logs.',
-      'Designed hardware layout specifications and schematics based on circuit theory.',
-    ],
-  },
-  {
-    title: 'Academic Instructor',
-    company: 'AMA Computer College – Angeles City',
-    period: 'Jun 2017 – Aug 2017',
-    duration: '3 mos',
-    bullets: [
-      'Taught General Mathematics and General Science across 8 sections of 20–25 Senior High School students.',
-      'Managing 160+ students simultaneously across multiple sections developed strong people management, scheduling, and classroom leadership skills that carry directly into engineering team dynamics.',
-    ],
-  },
-]
-
-const projects = [
-  {
-    name: 'AI Resume Site with RAG Chatbot (this site)',
-    period: 'Personal Project, 2025',
-    bullets: [
-      'Built a full-stack AI resume site with an embedded RAG chatbot named Folio — production-deployed, not a demo.',
-      'Stack: FastAPI + LangChain RAG pipeline, OpenAI gpt-4o-mini, Supabase pgvector, React + TypeScript + Vite + Tailwind CSS.',
-      'Deployed on Railway (backend, Dockerized) and Vercel (frontend); SSE token streaming, Supabase chat logging, 4-layer API security.',
-    ],
-  },
-  {
-    name: 'Check-App — Clinical Decision Support Chatbot',
-    period: 'Eskwelabs Bootcamp, 2021',
-    bullets: [
-      'Built a Messenger chatbot triaging symptoms to medical specialists (ENT, Neurology, Ophthalmology).',
-      'NLP pipeline: BeautifulSoup/Selenium scraping, SpaCy/SciSpaCy preprocessing, Gensim LDA, Logistic Regression — 94% F1-score on 7,300+ clinical records.',
-      'Awarded Best in Project Management and Best Project (Sprint 4).',
-    ],
-  },
-]
+const { meta, skills, experience, projects, education } = resumeData
 
 function AnimatedDan() {
   const [phase, setPhase] = useState<'idle' | 'drawing' | 'lit' | 'erasing'>('idle')
@@ -205,6 +103,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 export function ResumePage() {
   const [collapsed, setCollapsed] = useState<Set<number>>(new Set())
+  const [aboutOpen, setAboutOpen] = useState(false)
 
   function toggleJob(i: number) {
     setCollapsed((prev) => {
@@ -219,30 +118,46 @@ export function ResumePage() {
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       {/* Header */}
       <header className="mb-8 animate-fade-in-up">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">
-          Reiniel <AnimatedDan /> A. Pablo
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">
+          {meta.name.first} <AnimatedDan /> {meta.name.last}
         </h1>
-        <p className="mt-1 text-base font-medium text-emerald-600">
-          <span className="block sm:inline">Software Developer</span>
-          <span className="hidden sm:inline"> · </span>
-          <span className="block sm:inline">Data Analyst</span>
-          <span className="hidden sm:inline"> · </span>
-          <span className="block sm:inline">AI Practitioner</span>
+        <p className="mt-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">
+          {meta.titles.join(' · ')}
         </p>
 
-        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
-          <a href={`mailto:${EMAIL}`} className="flex items-center gap-1.5 hover:text-emerald-600 transition-colors">
-            <Mail size={13} /> {EMAIL}
-          </a>
-          <a href={GITHUB} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 hover:text-emerald-600 transition-colors">
-            <ExternalLink size={13} /> {GITHUB.replace('https://', '')}
-          </a>
-          <span className="flex items-center gap-1.5">
-            <MapPin size={13} /> Pampanga, PH
-          </span>
-          <span className="flex items-center gap-1.5">
-            <Phone size={13} /> (+63) 976-208-8422
-          </span>
+        <div className="mt-4 space-y-2">
+          <div className="flex flex-wrap gap-2">
+            <a
+              href={`mailto:${EMAIL}`}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs font-medium text-gray-600 dark:text-gray-300 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all shadow-sm print:shadow-none"
+            >
+              <Mail size={12} /> {EMAIL}
+            </a>
+            <a
+              href={LINKEDIN}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs font-medium text-gray-600 dark:text-gray-300 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all shadow-sm print:shadow-none"
+            >
+              <LinkedInIcon /> LinkedIn
+            </a>
+            <a
+              href={GITHUB}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs font-medium text-gray-600 dark:text-gray-300 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all shadow-sm print:shadow-none"
+            >
+              <GitHubIcon /> GitHub
+            </a>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs font-medium text-gray-500 dark:text-gray-400 shadow-sm print:shadow-none">
+              <MapPin size={12} /> {meta.location}
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs font-medium text-gray-500 dark:text-gray-400 shadow-sm print:shadow-none">
+              <Phone size={12} /> {meta.phone}
+            </span>
+          </div>
         </div>
       </header>
 
@@ -307,16 +222,18 @@ export function ResumePage() {
                     </span>
                   </div>
 
-                  {!isCollapsed && (
-                    <ul className="mt-2 space-y-1 pl-5">
-                      {job.bullets.map((b) => (
-                        <li key={b} className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
-                          <span className="text-gray-300 dark:text-gray-600 shrink-0 mt-0.5">—</span>
-                          <span><HighlightedText text={b} /></span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${isCollapsed ? 'grid-rows-[0fr]' : 'grid-rows-[1fr]'}`}>
+                    <div className="overflow-hidden">
+                      <ul className="mt-2 space-y-1 pl-5">
+                        {job.bullets.map((b) => (
+                          <li key={b} className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
+                            <span className="text-gray-300 dark:text-gray-600 shrink-0 mt-0.5">—</span>
+                            <span><RichText text={b} /></span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
             )
@@ -326,13 +243,9 @@ export function ResumePage() {
 
       {/* Projects */}
       <Section title="Projects & Training">
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-          Most of my work across all roles involved end-to-end development — frontend, API, and backend — but the products and software I built are proprietary and not publicly shareable.{' '}
-          <span className="text-gray-600 dark:text-gray-300">I'm happy to walk through them in detail in person.</span>{' '}
-          The projects below are ones I can share openly.
-        </p>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{projects.note}</p>
         <div className="space-y-4">
-          {projects.map((p) => (
+          {projects.items.map((p) => (
             <div key={p.name}>
               <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
                 <span className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{p.name}</span>
@@ -342,7 +255,7 @@ export function ResumePage() {
                 {p.bullets.map((b) => (
                   <li key={b} className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
                     <span className="text-gray-300 dark:text-gray-600 shrink-0 mt-0.5">—</span>
-                    <span><HighlightedText text={b} /></span>
+                    <span><RichText text={b} /></span>
                   </li>
                 ))}
               </ul>
@@ -353,26 +266,38 @@ export function ResumePage() {
 
       {/* Education */}
       <Section title="Education">
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-0.5">
-          <div>
-            <div className="font-semibold text-gray-900 dark:text-gray-100 text-sm">BS Electronics and Communications Engineering</div>
-            <div className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">AMA Computer College</div>
+        {education.map((edu) => (
+          <div key={edu.degree}>
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-0.5">
+              <div>
+                <div className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{edu.degree}</div>
+                <div className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">{edu.school}</div>
+              </div>
+              <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0 mt-0.5">Graduated {edu.graduated}</span>
+            </div>
+            <ul className="mt-2 space-y-1">
+              {edu.bullets.map((b) => (
+                <li key={b} className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
+                  <span className="text-gray-300 dark:text-gray-600 shrink-0 mt-0.5">—</span>
+                  {b}
+                </li>
+              ))}
+            </ul>
           </div>
-          <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0 mt-0.5">Graduated Apr 2017</span>
-        </div>
-        <ul className="mt-2 space-y-1">
-          <li className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
-            <span className="text-gray-300 dark:text-gray-600 shrink-0 mt-0.5">—</span>
-            Clark Development Corporation – Student Excellence Awardee
-          </li>
-          <li className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
-            <span className="text-gray-300 dark:text-gray-600 shrink-0 mt-0.5">—</span>
-            PRC Licensed Electronics Engineer & Electronics Technician (Apr 2018)
-          </li>
-        </ul>
+        ))}
       </Section>
 
-      <p className="text-xs text-gray-400 dark:text-gray-600 text-center mt-2 pb-2 print:hidden">Last updated May 2026</p>
+      <div className="text-center mt-2 pb-2 print:hidden space-y-1">
+        <p className="text-xs text-gray-400 dark:text-gray-600">Last updated {meta.lastUpdated}</p>
+        <button
+          onClick={() => setAboutOpen(true)}
+          className="text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors underline underline-offset-2"
+        >
+          About Folio
+        </button>
+      </div>
+
+      {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} />}
     </div>
   )
 }

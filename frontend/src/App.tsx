@@ -1,29 +1,31 @@
 import { useState, useEffect, useRef } from 'react'
-import { MessageSquare, Share2, Check, Printer, ArrowUp, Moon, Sun } from 'lucide-react'
+import { MessageSquare, Share2, Check, Printer, ArrowUp, Moon, Sun, Glasses } from 'lucide-react'
 import confetti from 'canvas-confetti'
 
 const OPEN_TO_WORK = import.meta.env.VITE_OPEN_TO_WORK === 'true'
 import { ResumePage } from './pages/ResumePage'
-import { AboutPage } from './pages/AboutPage'
 import { ChatWidget } from './components/ChatWidget'
 import { ContactModal } from './components/ContactModal'
 import { useRateLimit } from './hooks/useRateLimit'
+import { useHealth } from './hooks/useHealth'
 import { useDarkMode } from './hooks/useDarkMode'
 
-const LIMIT = 5
 const BOT_NAME = import.meta.env.VITE_BOT_NAME ?? 'Folio'
 
 export default function App() {
-  const [activePage, setActivePage] = useState<'resume' | 'about'>('resume')
   const [chatOpen, setChatOpen] = useState(false)
   const [contactOpen, setContactOpen] = useState(false)
-  const [showGreeting, setShowGreeting] = useState(false)
+  const [showNudge, setShowNudge] = useState(true)
   const [copied, setCopied] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [showScrollTop, setShowScrollTop] = useState(false)
   const confettiFiredRef = useRef(false)
+  const [isFirstVisit] = useState(() => !localStorage.getItem('folio_visited'))
   const { dark, toggle: toggleDark } = useDarkMode()
-  const rateLimit = useRateLimit()
+  const health = useHealth()
+  const limit = health.rateLimit?.limit ?? 5
+  const windowMs = (health.rateLimit?.windowDays ?? 3) * 24 * 60 * 60 * 1000
+  const rateLimit = useRateLimit(limit, windowMs)
 
   async function handleShare() {
     const url = window.location.origin
@@ -37,9 +39,8 @@ export default function App() {
   }
 
   useEffect(() => {
-    const t1 = setTimeout(() => setShowGreeting(true), 800)
-    const t2 = setTimeout(() => setShowGreeting(false), 6000)
-    return () => { clearTimeout(t1); clearTimeout(t2) }
+    const t = setTimeout(() => setShowNudge(false), 10_000)
+    return () => clearTimeout(t)
   }, [])
 
   useEffect(() => {
@@ -81,30 +82,19 @@ export default function App() {
   }
 
   function openChat() {
-    setShowGreeting(false)
+    setShowNudge(false)
+    if (isFirstVisit) localStorage.setItem('folio_visited', '1')
     setChatOpen(true)
   }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Tab navigation */}
+      {/* Nav */}
       <nav className="sticky top-0 z-20 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 print:hidden relative overflow-hidden">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 flex items-center">
-          <div className="flex gap-4 sm:gap-6 flex-1">
-            {(['resume', 'about'] as const).map((page) => (
-              <button
-                key={page}
-                onClick={() => setActivePage(page)}
-                className={`py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
-                  activePage === page
-                    ? 'border-emerald-500 text-emerald-600'
-                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
-                }`}
-              >
-                {page === 'resume' ? 'Resume' : 'About'}
-              </button>
-            ))}
-          </div>
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 flex items-center gap-3">
+          <Glasses size={17} className="text-emerald-500 shrink-0" />
+          <div className="w-px h-4 bg-gray-200 dark:bg-gray-700 shrink-0" />
+          <div className="flex-1" />
           <div className="flex items-center gap-1 shrink-0">
             {OPEN_TO_WORK && (
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400 text-xs font-medium">
@@ -142,8 +132,8 @@ export default function App() {
         />
       </nav>
 
-      <div key={activePage} className="animate-fade-in-up">
-        {activePage === 'resume' ? <ResumePage /> : <AboutPage />}
+      <div className="animate-fade-in-up">
+        <ResumePage />
       </div>
 
       <div className="print:hidden">
@@ -151,6 +141,8 @@ export default function App() {
           isOpen={chatOpen}
           onClose={() => setChatOpen(false)}
           rateLimit={rateLimit}
+          health={health}
+          limit={limit}
           onDanClick={() => setContactOpen(true)}
           onFirstMessage={fireConfetti}
         />
@@ -172,28 +164,33 @@ export default function App() {
 
       {!chatOpen && (
         <div className="fixed right-6 z-30 flex flex-col items-end gap-2 print:hidden" style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>
+          {/* Nudge callout — always shown, fades out after 10s or on chat open */}
           <div
-            className={`
-              bg-white dark:bg-gray-800 rounded-2xl rounded-br-sm shadow-lg px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200
-              transition-all duration-500
-              ${showGreeting ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}
-            `}
+            className={`bg-white dark:bg-gray-800 rounded-2xl rounded-br-sm shadow-lg border border-emerald-100 dark:border-emerald-900/40 px-4 py-3 max-w-[220px] text-center leading-snug transition-all duration-500 ${
+              showNudge ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'
+            }`}
           >
-            Come have a chat with me! 👋
+            <span className="block font-medium text-gray-900 dark:text-gray-100 text-sm mb-0.5">✨ Try the chatbot!</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">Ask Folio anything about Dan's experience! 🕶️</span>
           </div>
 
-          <button
-            onClick={openChat}
-            className="flex items-center gap-2 px-4 py-3 rounded-2xl bg-emerald-600 text-white shadow-lg hover:bg-emerald-700 active:scale-95 transition-all"
-          >
-            <MessageSquare size={16} />
-            <span className="text-sm font-medium">Chat with {BOT_NAME}</span>
-            {rateLimit.remaining < LIMIT && (
-              <span className="text-xs bg-white/20 px-1.5 py-0.5 rounded-full">
-                {rateLimit.remaining} left
-              </span>
+          <div className="relative">
+            {showNudge && (
+              <span className="absolute inset-0 rounded-2xl bg-emerald-400 opacity-30 animate-ping pointer-events-none" />
             )}
-          </button>
+            <button
+              onClick={openChat}
+              className="relative flex items-center gap-2 px-4 py-3 rounded-2xl bg-emerald-600 text-white shadow-lg hover:bg-emerald-700 active:scale-95 transition-all"
+            >
+              <MessageSquare size={16} />
+              <span className="text-sm font-medium">Chat with {BOT_NAME}</span>
+              {rateLimit.remaining < limit && (
+                <span className="text-xs bg-white/20 px-1.5 py-0.5 rounded-full">
+                  {rateLimit.remaining} left
+                </span>
+              )}
+            </button>
+          </div>
         </div>
       )}
     </div>

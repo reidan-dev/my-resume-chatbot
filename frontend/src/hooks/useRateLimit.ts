@@ -2,15 +2,13 @@ import { useState, useCallback } from 'react'
 
 const STORAGE_KEY = 'resume_rl'
 const RESET_SECRET = import.meta.env.VITE_RESET_SECRET as string | undefined
-const LIMIT = 5
-const WINDOW_MS = 3 * 24 * 60 * 60 * 1000
 
 interface RLState {
   count: number
   resetAt: number
 }
 
-function load(): RLState {
+function load(windowMs: number): RLState {
   try {
     const params = new URLSearchParams(window.location.search)
     if (RESET_SECRET && params.get('reset') === RESET_SECRET) {
@@ -18,18 +16,18 @@ function load(): RLState {
       window.history.replaceState(null, '', window.location.pathname)
     }
     const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return { count: 0, resetAt: Date.now() + WINDOW_MS }
+    if (!raw) return { count: 0, resetAt: Date.now() + windowMs }
     const s = JSON.parse(raw) as RLState
     return Date.now() >= s.resetAt
-      ? { count: 0, resetAt: Date.now() + WINDOW_MS }
+      ? { count: 0, resetAt: Date.now() + windowMs }
       : s
   } catch {
-    return { count: 0, resetAt: Date.now() + WINDOW_MS }
+    return { count: 0, resetAt: Date.now() + windowMs }
   }
 }
 
-export function useRateLimit() {
-  const [state, setState] = useState<RLState>(load)
+export function useRateLimit(limit: number = 5, windowMs: number = 3 * 24 * 60 * 60 * 1000) {
+  const [state, setState] = useState<RLState>(() => load(windowMs))
 
   const increment = useCallback(() => {
     setState((prev) => {
@@ -40,14 +38,14 @@ export function useRateLimit() {
   }, [])
 
   const syncFromHeaders = useCallback((remaining: number, resetAt: string) => {
-    const next = { count: LIMIT - remaining, resetAt: new Date(resetAt).getTime() }
+    const next = { count: limit - remaining, resetAt: new Date(resetAt).getTime() }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
     setState(next)
-  }, [])
+  }, [limit])
 
   return {
-    remaining: Math.max(0, LIMIT - state.count),
-    isExhausted: state.count >= LIMIT,
+    remaining: Math.max(0, limit - state.count),
+    isExhausted: state.count >= limit,
     resetAt: new Date(state.resetAt),
     increment,
     syncFromHeaders,

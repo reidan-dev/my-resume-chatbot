@@ -1,9 +1,10 @@
 """
 Run with: uv run python -m rag.ingest
-Reads from backend/data/resume.md and backend/data/hr-questions-context.md.
-To update content: edit the source files in references/, copy to backend/data/, then re-run.
+Resume content is sourced from frontend/src/data/resume.json (single source of truth).
+Q&A context is sourced from references/hr-questions-context.md via 0__run_ingest.sh.
 """
 import os
+import json
 import chromadb
 from langchain_text_splitters import MarkdownHeaderTextSplitter
 from langchain_core.documents import Document
@@ -11,8 +12,9 @@ from langchain_chroma import Chroma
 from llm.provider import get_embeddings
 from config import settings
 
-DATA_FILES = [
-    ("data/resume.md", "resume"),
+RESUME_JSON_PATH = "../frontend/src/data/resume.json"
+
+CONTEXT_FILES = [
     ("data/hr-questions-context.md", "context"),
 ]
 
@@ -21,6 +23,70 @@ HEADERS_TO_SPLIT = [
     ("##", "h2"),
     ("###", "h3"),
 ]
+
+
+def _json_to_markdown(data: dict) -> str:
+    lines: list[str] = []
+    meta = data["meta"]
+
+    lines.append(f"# {meta['name']['first']} {meta['name']['nick']} {meta['name']['last']}")
+    lines.append(f"\n**Titles**: {' | '.join(meta['titles'])}")
+    lines.append(f"**Location**: {meta['location']} | **Phone**: {meta['phone']}\n")
+
+    lines.append("## Skills\n")
+    for category, items in data["skills"].items():
+        lines.append(f"### {category}\n{', '.join(items)}\n")
+
+    lines.append("## Experience\n")
+    for job in data["experience"]:
+        lines.append(f"### {job['title']} at {job['company']}")
+        lines.append(f"Period: {job['period']} ({job['duration']})\n")
+        for b in job["bullets"]:
+            lines.append(f"- {b}")
+        lines.append("")
+
+    lines.append("## Projects\n")
+    lines.append(data["projects"]["note"] + "\n")
+    for p in data["projects"]["items"]:
+        lines.append(f"### {p['name']}")
+        lines.append(f"{p['period']}\n")
+        for b in p["bullets"]:
+            lines.append(f"- {b}")
+        lines.append("")
+
+    lines.append("## Education\n")
+    for edu in data["education"]:
+        lines.append(f"### {edu['degree']}")
+        lines.append(f"{edu['school']} — Graduated {edu['graduated']}\n")
+        for b in edu["bullets"]:
+            lines.append(f"- {b}")
+        lines.append("")
+
+    return "\n".join(lines)
+
+
+def _load_resume_json_docs(splitter: MarkdownHeaderTextSplitter) -> list[Document]:
+    if not os.path.exists(RESUME_JSON_PATH):
+        print(f"  WARNING: {RESUME_JSON_PATH} not found — skipping resume.")
+        return []
+
+    with open(RESUME_JSON_PATH, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    markdown = _json_to_markdown(data)
+    chunks = splitter.split_text(markdown)
+    print(f"  {RESUME_JSON_PATH}: {len(chunks)} chunks")
+
+    docs = []
+    for chunk in chunks:
+        section = " > ".join(
+            filter(None, [chunk.metadata.get("h1", ""), chunk.metadata.get("h2", ""), chunk.metadata.get("h3", "")])
+        ) or "General"
+        docs.append(Document(
+            page_content=chunk.page_content,
+            metadata={"source_file": RESUME_JSON_PATH, "section": section, "type": "resume"},
+        ))
+    return docs
 
 
 def run_ingest():
@@ -35,9 +101,9 @@ def run_ingest():
 
     splitter = MarkdownHeaderTextSplitter(headers_to_split_on=HEADERS_TO_SPLIT)
     embeddings = get_embeddings()
-    all_docs: list[Document] = []
+    all_docs: list[Document] = _load_resume_json_docs(splitter)
 
-    for filepath, doc_type in DATA_FILES:
+    for filepath, doc_type in CONTEXT_FILES:
         if not os.path.exists(filepath):
             print(f"  WARNING: {filepath} not found — skipping.")
             continue

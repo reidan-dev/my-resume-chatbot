@@ -43,6 +43,11 @@ async def health():
     return {
         "status": "ok",
         "model": model_map.get(settings.llm_provider, settings.llm_provider),
+        "rate_limit": {
+            "mode": settings.rate_limit_mode,
+            "limit": settings.effective_rate_limit_questions,
+            "window_days": settings.effective_rate_limit_window_days,
+        },
     }
 
 

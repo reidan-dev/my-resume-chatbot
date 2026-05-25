@@ -7,10 +7,11 @@ export type HealthStatus = 'checking' | 'online' | 'offline'
 export interface HealthResult {
   status: HealthStatus
   model: string
+  rateLimit: { mode: string; limit: number; windowDays: number } | null
 }
 
 export function useHealth(): HealthResult {
-  const [result, setResult] = useState<HealthResult>({ status: 'checking', model: '…' })
+  const [result, setResult] = useState<HealthResult>({ status: 'checking', model: '…', rateLimit: null })
 
   useEffect(() => {
     async function check() {
@@ -20,7 +21,13 @@ export function useHealth(): HealthResult {
         })
         if (res.ok) {
           const data = await res.json()
-          setResult({ status: 'online', model: data.model ?? 'unknown' })
+          setResult({
+            status: 'online',
+            model: data.model ?? 'unknown',
+            rateLimit: data.rate_limit
+              ? { mode: data.rate_limit.mode, limit: data.rate_limit.limit, windowDays: data.rate_limit.window_days }
+              : null,
+          })
         } else {
           setResult((prev) => ({ ...prev, status: 'offline' }))
         }

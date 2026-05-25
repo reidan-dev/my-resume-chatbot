@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Check, Copy } from 'lucide-react'
+import { Check, Copy, Glasses } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import { SourceBadge } from './SourceBadge'
 import type { Message } from '../hooks/useChat'
@@ -59,8 +59,8 @@ export function MessageBubble({ message, onDanClick }: Props) {
 
   return (
     <div className="flex justify-start gap-1.5 items-start group">
-      <div className="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-sm shrink-0 mt-0.5">
-        👓
+      <div className="w-6 h-6 rounded-full bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center shrink-0 mt-0.5">
+        <Glasses size={13} className="text-emerald-500" />
       </div>
       <div className="max-w-[85%] space-y-1">
         <div

@@ -78,6 +78,8 @@ class RAGChain:
                 yield token
 
         if full_response:
+            yield "\n\n— 👓 (Folio)"
+            full_response += "\n\n— 👓 (Folio)"
             log_chat(session_id, query, full_response)
 
         history = self.histories.setdefault(session_id, [])

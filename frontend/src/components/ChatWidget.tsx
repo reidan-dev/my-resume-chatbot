@@ -1,14 +1,13 @@
 import { useState, useRef, useEffect, type KeyboardEvent } from 'react'
-import { X, Send, RotateCcw, Minus } from 'lucide-react'
+import { X, Send, RotateCcw, Minus, Glasses } from 'lucide-react'
 import { useChat } from '../hooks/useChat'
-import { useHealth } from '../hooks/useHealth'
 import type { useRateLimit } from '../hooks/useRateLimit'
+import type { HealthResult } from '../hooks/useHealth'
 import { MessageBubble } from './MessageBubble'
 import { ContactCard } from './ContactCard'
 import { SuggestedQuestions } from './SuggestedQuestions'
 import { RateLimitBadge } from './RateLimitBadge'
 
-const LIMIT = 5
 const BOT_NAME = import.meta.env.VITE_BOT_NAME ?? 'Folio'
 const BOT_INTRO = import.meta.env.VITE_BOT_INTRO ?? `Hey there! I'm Folio, Dan's AI portfolio assistant — powered by a RAG pipeline that grounds every answer directly in his resume and Q&A guide, so no guessing here. Ask me anything about his background, skills, or experience!`
 
@@ -24,13 +23,14 @@ interface Props {
   isOpen: boolean
   onClose: () => void
   rateLimit: ReturnType<typeof useRateLimit>
+  health: HealthResult
+  limit: number
   onDanClick: () => void
   onFirstMessage?: () => void
 }
 
-export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMessage }: Props) {
+export function ChatWidget({ isOpen, onClose, rateLimit, health, limit, onDanClick, onFirstMessage }: Props) {
   const { messages, sendMessage, isStreaming, isExhausted, remaining, resetAt, reset } = useChat(rateLimit)
-  const health = useHealth()
   const [input, setInput] = useState('')
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -92,7 +92,7 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMess
       {/* Chat panel */}
       <div
         className={`
-          fixed z-50 flex flex-col bg-white dark:bg-gray-900 shadow-2xl will-change-transform
+          fixed z-50 flex flex-col bg-white dark:bg-gray-900 shadow-2xl will-change-transform overflow-hidden
           transition-all duration-300 ease-out
 
           /* Mobile: bottom sheet — slides up/down */
@@ -112,14 +112,14 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMess
         {/* Header */}
         <div className="flex items-center justify-between px-3 py-2.5 border-b border-gray-100 dark:border-gray-800 shrink-0 rounded-t-2xl">
           <div className="flex items-center gap-1.5">
-            <span className="text-base">👓</span>
+            <Glasses size={16} className="text-emerald-500 shrink-0" />
             <span className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{BOT_NAME}</span>
             <div className={`w-1.5 h-1.5 rounded-full ${
               health.status === 'online' ? 'bg-emerald-500' :
               health.status === 'offline' ? 'bg-red-400' :
               'bg-gray-300 animate-pulse'
             }`} />
-            <RateLimitBadge remaining={remaining} limit={LIMIT} />
+            <RateLimitBadge remaining={remaining} limit={limit} />
           </div>
           <div className="flex items-center gap-0.5">
             {messages.length > 0 && (
@@ -152,8 +152,8 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMess
         <div ref={scrollContainerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto px-3 py-3 space-y-2.5">
           {/* Static intro message */}
           <div className="flex justify-start gap-1.5 items-start">
-            <div className="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-sm shrink-0 mt-0.5">
-              👓
+            <div className="w-6 h-6 rounded-full bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center shrink-0 mt-0.5">
+              <Glasses size={13} className="text-emerald-500" />
             </div>
             <div className="max-w-[85%] px-3 py-2 rounded-2xl rounded-tl-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100 text-xs">
               {renderIntro(BOT_INTRO)}
@@ -178,7 +178,7 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMess
         {/* Input */}
         {!isExhausted && (
           <div className="px-3 pt-2.5 border-t border-gray-100 dark:border-gray-800 shrink-0 pb-[calc(0.375rem+env(safe-area-inset-bottom))]">
-            <div className="flex items-end gap-1.5">
+            <div className="flex items-end gap-1.5 min-w-0">
               <textarea
                 ref={inputRef}
                 value={input}
@@ -187,8 +187,7 @@ export function ChatWidget({ isOpen, onClose, rateLimit, onDanClick, onFirstMess
                 placeholder="Ask about Dan…"
                 rows={1}
                 disabled={isStreaming}
-                className="flex-1 resize-none rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-xs text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:opacity-50 max-h-24 overflow-y-auto"
-                style={{ fieldSizing: 'content' } as React.CSSProperties}
+                className="flex-1 min-w-0 resize-none rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-xs text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:opacity-50 max-h-24 overflow-hidden"
               />
               <button
                 onClick={submit}

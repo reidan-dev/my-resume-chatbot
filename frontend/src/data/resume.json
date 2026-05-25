@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "name": { "first": "Reiniel", "nick": "Dan", "last": "A. Pablo" },
+    "titles": ["Software Developer", "Data Analyst", "AI Practitioner"],
+    "location": "Pampanga, PH",
+    "phone": "+63 976-208-8422",
+    "lastUpdated": "May 2026"
+  },
+  "skills": {
+    "Backend Development": ["Python", "Django", "Flask", "FastAPI", "Node.js", "REST APIs", "GraphQL", "Microservices", "TDD", "Pytest", "Jest"],
+    "Frontend & Web": ["JavaScript", "React", "Vue.js", "Bootstrap", "HTML5", "CSS3"],
+    "Data & Infrastructure": ["Presto SQL", "PostgreSQL", "Apache Superset", "Apache Spark", "AWS (S3/Lambda/EC2)", "Terraform", "Jenkins", "Docker"],
+    "Tools & Methods": ["Git", "Jira", "Confluence", "Claude Code", "OpenAI Codex", "Agile Scrum", "Waterfall"]
+  },
+  "experience": [
+    {
+      "title": "Software Developer – Backend",
+      "company": "Sharesource → Biarri Networks (AUS)",
+      "period": "Sep 2022 – Apr 2026",
+      "duration": "3 yrs 7 mos",
+      "bullets": [
+        "Maintained and extended **60+** proprietary **Python** packages: internal algorithmic tools used by GIS designers and network consultants to plan and design fibre optic network infrastructure, from small-scale local deployments to national-level rollouts.",
+        "Core work: adding new features, keeping packages current with framework/library advances, performance optimization, and resolving issues reported by GIS designers and consultants.",
+        "Maintained clean **REST API** contracts between backend packages and frontends, ensuring GIS design tools stayed reliably connected across the full stack.",
+        "Part of package maintenance included writing and maintaining **Pytest** test suites (**TDD**) per repo, with integration tests and regression tests scheduled via **Jenkins** cron jobs to run automatically and catch breakage across the ecosystem.",
+        "Configured **Jenkins** pipelines for cron-based job management across complex multi-repo packages.",
+        "Deployed critical infrastructure hotfixes under tight production constraints; optimized webhook pipelines.",
+        "Pioneered AI automation workflows using **Claude Code** and **OpenAI Codex** to eliminate repetitive developer tasks."
+      ]
+    },
+    {
+      "title": "Data Visualization Consultant / Data Analyst",
+      "company": "Amihan Global Strategies",
+      "period": "Aug 2022 – Feb 2023",
+      "duration": "6 mos",
+      "bullets": [
+        "Technical lead for a national-scale data project ingesting **100k+** real-time rows daily from a national service actively used by millions of Filipinos.",
+        "Cleaned, aggregated, and surfaced actionable metrics from raw JSON/XML telemetry using **Python**, **Presto SQL**, **PostgreSQL**, **Apache Zeppelin**, and **Apache Spark**.",
+        "Built **Apache Superset** dashboards presenting complex data insights in a way accessible to non-technical clients and stakeholders.",
+        "Contributed to customer persona classification — segmenting daily service users to enable targeted service improvements, smarter resource allocation, and data-driven business decisions.",
+        "Contributed to traffic management analytics to monitor and optimize national service load patterns."
+      ]
+    },
+    {
+      "title": "Software Engineer",
+      "company": "Denso Techno Philippines Inc.",
+      "period": "Aug 2019 – Feb 2022",
+      "duration": "2 yrs 6 mos",
+      "bullets": [
+        "Built full-stack enterprise web applications connected to production factories in Japan — replacing manual machine checks with real-time dashboards showing live production line flow and machine conditions.",
+        "Machines on the factory floor sent status and telemetry to APIs; built the full stack (**Django**/**FastAPI** backends, **React**/**Vue.js** frontends) to ingest, process, and visualize that data for operators.",
+        "Deployed **Microservices** with **Docker** on **AWS** (S3, Lambda, EC2) using **Terraform**.",
+        "Achieved **98–100%** QA clearance across all integration contracts via strict **TDD** with **Pytest** and **Jest**."
+      ]
+    },
+    {
+      "title": "Part-Time College Instructor",
+      "company": "STI College – Angeles City",
+      "period": "Feb 2023 – Jul 2023",
+      "duration": "5 mos",
+      "bullets": [
+        "Taught IT students full-stack web development (backend to frontend) with the goal of each student shipping a personal website by end of semester — achieved.",
+        "Taught project management to Business Administration students; cross-pollinated both courses by having biz ad students manage IT students' capstone projects — simulating real product owner / developer dynamics.",
+        "Both class goals met: IT students shipped, biz ad students completed full project documentation hitting all milestones as if submitting to a real product owner."
+      ]
+    },
+    {
+      "title": "IC Design Engineer",
+      "company": "Synkom IC Technology Inc.",
+      "period": "Oct 2018 – Apr 2019",
+      "duration": "6 mos",
+      "bullets": [
+        "Wrote automated data parsing scripts in **Python**, **TCL**, and **Bash** to clean hardware verification logs.",
+        "Designed hardware layout specifications and schematics based on circuit theory."
+      ]
+    },
+    {
+      "title": "Academic Instructor",
+      "company": "AMA Computer College – Angeles City",
+      "period": "Jun 2017 – Aug 2017",
+      "duration": "3 mos",
+      "bullets": [
+        "Taught General Mathematics and General Science across **8 sections** of 20–25 Senior High School students.",
+        "Managing **160+** students simultaneously across multiple sections developed strong people management, scheduling, and classroom leadership skills that carry directly into engineering team dynamics."
+      ]
+    }
+  ],
+  "projects": {
+    "note": "Most of my work across all roles involved end-to-end development — frontend, API, and backend — but the products and software I built are proprietary and not publicly shareable. I'm happy to walk through them in detail in person. The projects below are ones I can share openly.",
+    "items": [
+      {
+        "name": "AI Resume Site with RAG Chatbot (this site)",
+        "period": "Personal Project, 2025",
+        "bullets": [
+          "Built a full-stack AI resume site with an embedded **RAG** chatbot named Folio — production-deployed, not a demo.",
+          "Stack: **FastAPI** + **LangChain** **RAG** pipeline, **OpenAI** gpt-4o-mini, **Supabase** pgvector, **React** + **TypeScript** + **Vite** + **Tailwind CSS**.",
+          "Deployed on **Railway** (backend, **Dockerized**) and **Vercel** (frontend); **SSE** token streaming, **Supabase** chat logging, 4-layer API security."
+        ]
+      },
+      {
+        "name": "Check-App — Clinical Decision Support Chatbot",
+        "period": "Eskwelabs Bootcamp, 2021",
+        "bullets": [
+          "Built a Messenger chatbot triaging symptoms to medical specialists (ENT, Neurology, Ophthalmology).",
+          "**NLP** pipeline: **BeautifulSoup**/**Selenium** scraping, **SpaCy**/**SciSpaCy** preprocessing, **Gensim LDA**, **Logistic Regression** — **94% F1-score** on **7,300+** clinical records.",
+          "Awarded Best in Project Management and Best Project (Sprint 4)."
+        ]
+      }
+    ]
+  },
+  "education": [
+    {
+      "degree": "BS Electronics and Communications Engineering",
+      "school": "AMA Computer College",
+      "graduated": "Apr 2017",
+      "bullets": [
+        "Clark Development Corporation – Student Excellence Awardee",
+        "PRC Licensed Electronics Engineer & Electronics Technician (Apr 2018)"
+      ]
+    }
+  ]
+}
