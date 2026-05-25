@@ -13,7 +13,7 @@
     "location": "Pampanga, PH",
     "phone": "+63 976-208-8422",
     "lastUpdated": "May 2026",
-    "summary": "Full-stack developer with 5+ years building Python backends, data pipelines, and React frontends across GIS software, clinical AI, and data visualization. Currently maintaining and extending proprietary Python packages for fibre optic network planning at Biarri Networks. Passionate about practical AI \u2014 from RAG-grounded chatbots to NLP-powered clinical tools."
+    "summary": "it's me, hi, i'm the developer, it's me..."
   },
   "skills": {
     "Backend Development": [
@@ -205,7 +205,7 @@
       "tagline": "Clinical decision support chatbot on Facebook Messenger",
       "description": "A Messenger chatbot triaging user-reported symptoms to the right medical specialist \u2014 ENT, Neurology, or Ophthalmology. NLP pipeline included web scraping, SpaCy/SciSpaCy preprocessing, Gensim LDA topic modelling, and Logistic Regression \u2014 achieving 94% F1-score on 7,300+ clinical records. Awarded Best in Project Management and Best Project (Sprint 4) at Eskwelabs.",
       "period": "2021",
-      "status": "archived",
+      "status": "migrating",
       "tags": [
         "Python",
         "NLP",
@@ -217,10 +217,11 @@
         "Selenium",
         "Facebook Messenger API"
       ],
-      "github": null,
+      "github": "https://github.com/reidan-dev/check-app",
       "live": null,
       "image": null,
-      "emoji": "\ud83e\ude7a"
+      "emoji": "\ud83e\ude7a",
+      "pdf": "/capstone-check-app.pdf"
     },
     {
       "name": "Eevee Virtual Pet \u2014 macOS",
@@ -258,7 +259,7 @@
         "GeoJSON",
         "Data Viz"
       ],
-      "github": null,
+      "github": "https://github.com/reidan-dev/ph-2022-election-map",
       "live": null,
       "image": null,
       "emoji": "\ud83d\uddfa\ufe0f"

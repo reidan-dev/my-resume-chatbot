@@ -34,9 +34,53 @@ function RichText({ text }: { text: string }) {
   )
 }
 
-const GITHUB = import.meta.env.VITE_CONTACT_GITHUB ?? 'https://github.com/reidan-dev'
-const EMAIL = import.meta.env.VITE_CONTACT_EMAIL ?? 'reinieldan@gmail.com'
+const GITHUB   = import.meta.env.VITE_CONTACT_GITHUB   ?? 'https://github.com/reidan-dev'
+const EMAIL    = import.meta.env.VITE_CONTACT_EMAIL    ?? 'reinieldan@gmail.com'
 const LINKEDIN = import.meta.env.VITE_CONTACT_LINKEDIN ?? 'https://www.linkedin.com/in/reiniel-dan-pablo'
+
+const QUOTE = "it's me, hi, i'm the developer, it's me..."
+
+function QuoteLine() {
+  const [count, setCount]   = useState(0)
+  const [phase, setPhase]   = useState<'typing' | 'holding' | 'deleting'>('typing')
+
+  useEffect(() => {
+    let t: ReturnType<typeof setTimeout>
+    if (phase === 'typing') {
+      if (count < QUOTE.length) t = setTimeout(() => setCount(c => c + 1), 65)
+      else                      t = setTimeout(() => setPhase('holding'), 5000)
+    } else if (phase === 'holding') {
+      t = setTimeout(() => setPhase('deleting'), 0)
+    } else {
+      if (count > 0) t = setTimeout(() => setCount(c => c - 1), 38)
+      else           t = setTimeout(() => setPhase('typing'),    450)
+    }
+    return () => clearTimeout(t)
+  }, [count, phase])
+
+  const full     = count === QUOTE.length
+  const displayed = QUOTE.slice(0, count)
+
+  const linkCls = 'underline underline-offset-2 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors'
+
+  return (
+    <blockquote className="border-l-2 border-emerald-400 dark:border-emerald-500 pl-4 mt-3 animate-fade-in-up">
+      <p className="text-sm italic text-emerald-600 dark:text-emerald-400 whitespace-nowrap">
+        {full ? (
+          <>
+            <a href={LINKEDIN} target="_blank" rel="noreferrer" className={linkCls}>it's me</a>
+            {", hi, i'm the developer, "}
+            <a href={LINKEDIN} target="_blank" rel="noreferrer" className={linkCls}>it's me</a>
+            {'...'}
+          </>
+        ) : (
+          displayed
+        )}
+        <span className="animate-pulse ml-px">|</span>
+      </p>
+    </blockquote>
+  )
+}
 
 const { meta, skills, experience, projects, education } = resumeData
 
@@ -146,6 +190,8 @@ export function ResumePage() {
           {meta.titles.join(' · ')}
         </p>
 
+        <QuoteLine />
+
         <div className="mt-4 space-y-2">
           <div className="flex flex-wrap gap-2">
             <a
@@ -181,11 +227,6 @@ export function ResumePage() {
           </div>
         </div>
       </header>
-
-      {/* Summary */}
-      <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-8 animate-fade-in-up">
-        {meta.summary}
-      </p>
 
       {/* Skills */}
       <Section title="Skills">
