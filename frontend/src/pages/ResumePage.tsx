@@ -102,11 +102,31 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 export function ResumePage() {
-  const [collapsed, setCollapsed] = useState<Set<number>>(new Set())
+  const [collapsed, setCollapsed] = useState<Set<number>>(() => new Set(experience.map((_, i) => i)))
+  const [collapsedProjects, setCollapsedProjects] = useState<Set<number>>(() => new Set(projects.items.map((_, i) => i)))
+  const [collapsedEdu, setCollapsedEdu] = useState<Set<number>>(() => new Set(education.map((_, i) => i)))
   const [aboutOpen, setAboutOpen] = useState(false)
 
   function toggleJob(i: number) {
     setCollapsed((prev) => {
+      const next = new Set(prev)
+      if (next.has(i)) next.delete(i)
+      else next.add(i)
+      return next
+    })
+  }
+
+  function toggleProject(i: number) {
+    setCollapsedProjects((prev) => {
+      const next = new Set(prev)
+      if (next.has(i)) next.delete(i)
+      else next.add(i)
+      return next
+    })
+  }
+
+  function toggleEdu(i: number) {
+    setCollapsedEdu((prev) => {
       const next = new Set(prev)
       if (next.has(i)) next.delete(i)
       else next.add(i)
@@ -203,7 +223,7 @@ export function ResumePage() {
                       <button
                         onClick={() => toggleJob(i)}
                         title={isCollapsed ? 'Expand' : 'Collapse'}
-                        className="mt-0.5 p-0.5 rounded text-gray-300 dark:text-gray-600 hover:text-gray-500 dark:hover:text-gray-400 transition-colors shrink-0 print:hidden"
+                        className="mt-0.5 p-0.5 rounded text-emerald-500 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors shrink-0 print:hidden"
                       >
                         <ChevronDown
                           size={13}
@@ -218,7 +238,7 @@ export function ResumePage() {
                     <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0 mt-0.5 pl-5 sm:pl-0">
                       {job.period}
                       <span className="text-gray-300 dark:text-gray-600"> · </span>
-                      {job.duration}
+                      ({job.duration})
                     </span>
                   </div>
 
@@ -245,46 +265,78 @@ export function ResumePage() {
       <Section title="Projects & Training">
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{projects.note}</p>
         <div className="space-y-4">
-          {projects.items.map((p) => (
-            <div key={p.name}>
-              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
-                <span className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{p.name}</span>
-                <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0">{p.period}</span>
+          {projects.items.map((p, i) => {
+            const isCollapsed = collapsedProjects.has(i)
+            return (
+              <div key={p.name}>
+                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
+                  <div className="flex items-start gap-1.5">
+                    <button
+                      onClick={() => toggleProject(i)}
+                      title={isCollapsed ? 'Expand' : 'Collapse'}
+                      className="mt-0.5 p-0.5 rounded text-emerald-500 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors shrink-0 print:hidden"
+                    >
+                      <ChevronDown size={13} className={`transition-transform duration-200 ${isCollapsed ? '-rotate-90' : ''}`} />
+                    </button>
+                    <span className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{p.name}</span>
+                  </div>
+                  <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0 pl-5 sm:pl-0">{p.period}</span>
+                </div>
+                <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${isCollapsed ? 'grid-rows-[0fr]' : 'grid-rows-[1fr]'}`}>
+                  <div className="overflow-hidden">
+                    <ul className="mt-2 space-y-1 pl-5">
+                      {p.bullets.map((b) => (
+                        <li key={b} className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
+                          <span className="text-gray-300 dark:text-gray-600 shrink-0 mt-0.5">—</span>
+                          <span><RichText text={b} /></span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <ul className="mt-2 space-y-1">
-                {p.bullets.map((b) => (
-                  <li key={b} className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
-                    <span className="text-gray-300 dark:text-gray-600 shrink-0 mt-0.5">—</span>
-                    <span><RichText text={b} /></span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </Section>
 
       {/* Education */}
       <Section title="Education">
-        {education.map((edu) => (
-          <div key={edu.degree}>
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-0.5">
-              <div>
-                <div className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{edu.degree}</div>
-                <div className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">{edu.school}</div>
+        {education.map((edu, i) => {
+          const isCollapsed = collapsedEdu.has(i)
+          return (
+            <div key={edu.degree}>
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-0.5">
+                <div className="flex items-start gap-1.5">
+                  <button
+                    onClick={() => toggleEdu(i)}
+                    title={isCollapsed ? 'Expand' : 'Collapse'}
+                    className="mt-0.5 p-0.5 rounded text-emerald-500 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors shrink-0 print:hidden"
+                  >
+                    <ChevronDown size={13} className={`transition-transform duration-200 ${isCollapsed ? '-rotate-90' : ''}`} />
+                  </button>
+                  <div>
+                    <div className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{edu.degree}</div>
+                    <div className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">{edu.school}</div>
+                  </div>
+                </div>
+                <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0 mt-0.5 pl-5 sm:pl-0">Graduated {edu.graduated}</span>
               </div>
-              <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0 mt-0.5">Graduated {edu.graduated}</span>
+              <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${isCollapsed ? 'grid-rows-[0fr]' : 'grid-rows-[1fr]'}`}>
+                <div className="overflow-hidden">
+                  <ul className="mt-2 space-y-1 pl-5">
+                    {edu.bullets.map((b) => (
+                      <li key={b} className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
+                        <span className="text-gray-300 dark:text-gray-600 shrink-0 mt-0.5">—</span>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
-            <ul className="mt-2 space-y-1">
-              {edu.bullets.map((b) => (
-                <li key={b} className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
-                  <span className="text-gray-300 dark:text-gray-600 shrink-0 mt-0.5">—</span>
-                  {b}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+          )
+        })}
       </Section>
 
       <div className="text-center mt-2 pb-2 print:hidden space-y-1">

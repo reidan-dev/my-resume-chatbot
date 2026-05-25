@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { X } from 'lucide-react'
+import { X, ChevronDown } from 'lucide-react'
+import { MermaidDiagram } from './MermaidDiagram'
 
 const stack = [
   { layer: 'Frontend',     items: 'React 18 · TypeScript · Vite · Tailwind CSS v3 · Lucide React' },
@@ -70,12 +71,21 @@ interface Props {
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false)
   return (
-    <section className="mb-6">
-      <h3 className="text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-3 pb-2 border-b border-gray-200 dark:border-gray-700">
+    <section className="mb-4">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between text-xs font-semibold uppercase tracking-widest text-emerald-600 pb-2 border-b border-gray-200 dark:border-gray-700 mb-0 hover:text-emerald-500 transition-colors"
+      >
         {title}
-      </h3>
-      {children}
+        <ChevronDown size={12} className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+      </button>
+      <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+        <div className="overflow-hidden">
+          <div className="pt-3">{children}</div>
+        </div>
+      </div>
     </section>
   )
 }
@@ -128,6 +138,13 @@ export function AboutModal({ onClose }: Props) {
           </Section>
 
           <Section title="How It Works">
+            <MermaidDiagram chart={`flowchart LR
+    A("💬 You ask\na question")
+    B("🔢 Question is\nmatched against\nDan's resume")
+    C("📄 Relevant\nsections\nretrieved")
+    D("🤖 AI reads context\n& crafts an answer")
+    E("⚡ Answer\nstreams back\nto you")
+    A --> B --> C --> D --> E`} />
             <div className="space-y-3">
               {dataFlow.map(({ step, desc }) => (
                 <div key={step}>

@@ -7,11 +7,12 @@ type Project = {
   tagline: string
   description: string
   period: string
-  status: 'live' | 'wip' | 'archived'
+  status: 'live' | 'wip' | 'archived' | 'local'
   tags: string[]
   github: string | null
   live: string | null
   image: string | null
+  emoji: string | null
 }
 
 const projects = resumeData.personal_projects as Project[]
@@ -20,6 +21,7 @@ const statusConfig = {
   live:     { label: 'Live',        dot: 'bg-emerald-500', className: 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-700' },
   wip:      { label: 'In Progress', dot: 'bg-amber-400',   className: 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-700' },
   archived: { label: 'Archived',    dot: 'bg-gray-400',    className: 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700' },
+  local:    { label: 'Local',       dot: 'bg-sky-400',     className: 'bg-sky-50 dark:bg-sky-900/30 text-sky-700 dark:text-sky-400 border-sky-200 dark:border-sky-700' },
 }
 
 /* Deterministic gradient per project name so placeholders feel intentional */
@@ -39,21 +41,20 @@ function gradientFor(name: string) {
 function ImageBanner({ project }: { project: Project }) {
   if (project.image) {
     return (
-      <div className="w-full aspect-video overflow-hidden rounded-t-2xl">
+      <div className="w-full h-20 overflow-hidden rounded-t-2xl">
         <img src={project.image} alt={project.name} className="w-full h-full object-cover" />
       </div>
     )
   }
   const gradient = gradientFor(project.name)
-  const initials = project.name
-    .split(/[\s—–-]+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() ?? '')
-    .join('')
   return (
-    <div className={`w-full aspect-video rounded-t-2xl bg-gradient-to-br ${gradient} flex items-center justify-center`}>
-      <span className="text-white/30 font-bold text-5xl select-none tracking-tight">{initials}</span>
+    <div className={`w-full h-20 rounded-t-2xl bg-gradient-to-br ${gradient} flex items-center justify-center`}>
+      {project.emoji
+        ? <span className="text-4xl select-none drop-shadow-sm">{project.emoji}</span>
+        : <span className="text-white/30 font-bold text-4xl select-none tracking-tight">
+            {project.name.split(/[\s—–-]+/).filter(Boolean).slice(0, 2).map((w) => w[0]?.toUpperCase() ?? '').join('')}
+          </span>
+      }
     </div>
   )
 }
@@ -68,7 +69,7 @@ function ProjectCard({ project }: { project: Project }) {
       <ImageBanner project={project} />
 
       {/* Body */}
-      <div className="flex flex-col gap-3 p-5 flex-1">
+      <div className="flex flex-col gap-2 p-4 flex-1">
         {/* Name + status */}
         <div className="flex items-start justify-between gap-3">
           <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm leading-snug">{project.name}</h3>

@@ -1,22 +1,66 @@
 {
   "meta": {
-    "name": { "first": "Reiniel", "nick": "Dan", "last": "A. Pablo" },
-    "titles": ["Software Developer", "Data Analyst", "AI Practitioner"],
+    "name": {
+      "first": "Reiniel",
+      "nick": "Dan",
+      "last": "A. Pablo"
+    },
+    "titles": [
+      "Software Developer",
+      "Data Analyst",
+      "AI Practitioner"
+    ],
     "location": "Pampanga, PH",
     "phone": "+63 976-208-8422",
     "lastUpdated": "May 2026"
   },
   "skills": {
-    "Backend Development": ["Python", "Django", "Flask", "FastAPI", "Node.js", "REST APIs", "GraphQL", "Microservices", "TDD", "Pytest", "Jest"],
-    "Frontend & Web": ["JavaScript", "React", "Vue.js", "Bootstrap", "HTML5", "CSS3"],
-    "Data & Infrastructure": ["Presto SQL", "PostgreSQL", "Apache Superset", "Apache Spark", "AWS (S3/Lambda/EC2)", "Terraform", "Jenkins", "Docker"],
-    "Tools & Methods": ["Git", "Jira", "Confluence", "Claude Code", "OpenAI Codex", "Agile Scrum", "Waterfall"]
+    "Backend Development": [
+      "Python",
+      "Django",
+      "Flask",
+      "FastAPI",
+      "Node.js",
+      "REST APIs",
+      "GraphQL",
+      "Microservices",
+      "TDD",
+      "Pytest",
+      "Jest"
+    ],
+    "Frontend & Web": [
+      "JavaScript",
+      "React",
+      "Vue.js",
+      "Bootstrap",
+      "HTML5",
+      "CSS3"
+    ],
+    "Data & Infrastructure": [
+      "Presto SQL",
+      "PostgreSQL",
+      "Apache Superset",
+      "Apache Spark",
+      "AWS (S3/Lambda/EC2)",
+      "Terraform",
+      "Jenkins",
+      "Docker"
+    ],
+    "Tools & Methods": [
+      "Git",
+      "Jira",
+      "Confluence",
+      "Claude Code",
+      "OpenAI Codex",
+      "Agile Scrum",
+      "Waterfall"
+    ]
   },
   "experience": [
     {
-      "title": "Software Developer – Backend",
-      "company": "Sharesource → Biarri Networks (AUS)",
-      "period": "Sep 2022 – Apr 2026",
+      "title": "Software Developer \u2013 Backend",
+      "company": "Sharesource \u2192 Biarri Networks (AUS)",
+      "period": "Sep 2022 \u2013 Apr 2026",
       "duration": "3 yrs 7 mos",
       "bullets": [
         "Maintained and extended **60+** proprietary **Python** packages: internal algorithmic tools used by GIS designers and network consultants to plan and design fibre optic network infrastructure, from small-scale local deployments to national-level rollouts.",
@@ -31,43 +75,43 @@
     {
       "title": "Data Visualization Consultant / Data Analyst",
       "company": "Amihan Global Strategies",
-      "period": "Aug 2022 – Feb 2023",
+      "period": "Aug 2022 \u2013 Feb 2023",
       "duration": "6 mos",
       "bullets": [
         "Technical lead for a national-scale data project ingesting **100k+** real-time rows daily from a national service actively used by millions of Filipinos.",
         "Cleaned, aggregated, and surfaced actionable metrics from raw JSON/XML telemetry using **Python**, **Presto SQL**, **PostgreSQL**, **Apache Zeppelin**, and **Apache Spark**.",
         "Built **Apache Superset** dashboards presenting complex data insights in a way accessible to non-technical clients and stakeholders.",
-        "Contributed to customer persona classification — segmenting daily service users to enable targeted service improvements, smarter resource allocation, and data-driven business decisions.",
+        "Contributed to customer persona classification \u2014 segmenting daily service users to enable targeted service improvements, smarter resource allocation, and data-driven business decisions.",
         "Contributed to traffic management analytics to monitor and optimize national service load patterns."
       ]
     },
     {
       "title": "Software Engineer",
       "company": "Denso Techno Philippines Inc.",
-      "period": "Aug 2019 – Feb 2022",
+      "period": "Aug 2019 \u2013 Feb 2022",
       "duration": "2 yrs 6 mos",
       "bullets": [
-        "Built full-stack enterprise web applications connected to production factories in Japan — replacing manual machine checks with real-time dashboards showing live production line flow and machine conditions.",
+        "Built full-stack enterprise web applications connected to production factories in Japan \u2014 replacing manual machine checks with real-time dashboards showing live production line flow and machine conditions.",
         "Machines on the factory floor sent status and telemetry to APIs; built the full stack (**Django**/**FastAPI** backends, **React**/**Vue.js** frontends) to ingest, process, and visualize that data for operators.",
         "Deployed **Microservices** with **Docker** on **AWS** (S3, Lambda, EC2) using **Terraform**.",
-        "Achieved **98–100%** QA clearance across all integration contracts via strict **TDD** with **Pytest** and **Jest**."
+        "Achieved **98\u2013100%** QA clearance across all integration contracts via strict **TDD** with **Pytest** and **Jest**."
       ]
     },
     {
       "title": "Part-Time College Instructor",
-      "company": "STI College – Angeles City",
-      "period": "Feb 2023 – Jul 2023",
+      "company": "STI College \u2013 Angeles City",
+      "period": "Feb 2023 \u2013 Jul 2023",
       "duration": "5 mos",
       "bullets": [
-        "Taught IT students full-stack web development (backend to frontend) with the goal of each student shipping a personal website by end of semester — achieved.",
-        "Taught project management to Business Administration students; cross-pollinated both courses by having biz ad students manage IT students' capstone projects — simulating real product owner / developer dynamics.",
+        "Taught IT students full-stack web development (backend to frontend) with the goal of each student shipping a personal website by end of semester \u2014 achieved.",
+        "Taught project management to Business Administration students; cross-pollinated both courses by having biz ad students manage IT students' capstone projects \u2014 simulating real product owner / developer dynamics.",
         "Both class goals met: IT students shipped, biz ad students completed full project documentation hitting all milestones as if submitting to a real product owner."
       ]
     },
     {
       "title": "IC Design Engineer",
       "company": "Synkom IC Technology Inc.",
-      "period": "Oct 2018 – Apr 2019",
+      "period": "Oct 2018 \u2013 Apr 2019",
       "duration": "6 mos",
       "bullets": [
         "Wrote automated data parsing scripts in **Python**, **TCL**, and **Bash** to clean hardware verification logs.",
@@ -76,33 +120,33 @@
     },
     {
       "title": "Academic Instructor",
-      "company": "AMA Computer College – Angeles City",
-      "period": "Jun 2017 – Aug 2017",
+      "company": "AMA Computer College \u2013 Angeles City",
+      "period": "Jun 2017 \u2013 Aug 2017",
       "duration": "3 mos",
       "bullets": [
-        "Taught General Mathematics and General Science across **8 sections** of 20–25 Senior High School students.",
+        "Taught General Mathematics and General Science across **8 sections** of 20\u201325 Senior High School students.",
         "Managing **160+** students simultaneously across multiple sections developed strong people management, scheduling, and classroom leadership skills that carry directly into engineering team dynamics."
       ]
     }
   ],
   "projects": {
-    "note": "Most of my work across all roles involved end-to-end development — frontend, API, and backend — but the products and software I built are proprietary and not publicly shareable. I'm happy to walk through them in detail in person. The projects below are ones I can share openly.",
+    "note": "Most of my work across all roles involved end-to-end development \u2014 frontend, API, and backend \u2014 but the products and software I built are proprietary and not publicly shareable. I'm happy to walk through them in detail in person. The projects below are ones I can share openly.",
     "items": [
       {
         "name": "AI Resume Site with RAG Chatbot (this site)",
         "period": "Personal Project, 2025",
         "bullets": [
-          "Built a full-stack AI resume site with an embedded **RAG** chatbot named Folio — production-deployed, not a demo.",
+          "Built a full-stack AI resume site with an embedded **RAG** chatbot named Folio \u2014 production-deployed, not a demo.",
           "Stack: **FastAPI** + **LangChain** **RAG** pipeline, **OpenAI** gpt-4o-mini, **Supabase** pgvector, **React** + **TypeScript** + **Vite** + **Tailwind CSS**.",
           "Deployed on **Railway** (backend, **Dockerized**) and **Vercel** (frontend); **SSE** token streaming, **Supabase** chat logging, 4-layer API security."
         ]
       },
       {
-        "name": "Check-App — Clinical Decision Support Chatbot",
+        "name": "Check-App \u2014 Clinical Decision Support Chatbot",
         "period": "Eskwelabs Bootcamp, 2021",
         "bullets": [
           "Built a Messenger chatbot triaging symptoms to medical specialists (ENT, Neurology, Ophthalmology).",
-          "**NLP** pipeline: **BeautifulSoup**/**Selenium** scraping, **SpaCy**/**SciSpaCy** preprocessing, **Gensim LDA**, **Logistic Regression** — **94% F1-score** on **7,300+** clinical records.",
+          "**NLP** pipeline: **BeautifulSoup**/**Selenium** scraping, **SpaCy**/**SciSpaCy** preprocessing, **Gensim LDA**, **Logistic Regression** \u2014 **94% F1-score** on **7,300+** clinical records.",
           "Awarded Best in Project Management and Best Project (Sprint 4)."
         ]
       }
@@ -112,35 +156,111 @@
     {
       "name": "Beadify",
       "tagline": "Turn any image into a bead art pattern",
-      "description": "Upload a photo, set a grid size, and Beadify maps every pixel region to the nearest color in your bead palette using CIEDE2000 color matching with a K-D Tree for fast lookup. Optional Floyd-Steinberg dithering, LANCZOS downscaling, 1:1 color assignment, and multi-image tiling. The output is an interactive pegboard where you click beads to mark them done — progress auto-saves per project. Includes fill tool, region select, guide grid with focus mode, undo/redo, rulers, keyboard nav, and PNG/CSV export. Built with a FastAPI backend and a React + Vite frontend.",
+      "description": "Upload a photo, set a grid size, and Beadify maps every pixel region to the nearest color in your bead palette using CIEDE2000 color matching with a K-D Tree for fast lookup. Optional Floyd-Steinberg dithering, LANCZOS downscaling, 1:1 color assignment, and multi-image tiling. The output is an interactive pegboard where you click beads to mark them done \u2014 progress auto-saves per project. Includes fill tool, region select, guide grid with focus mode, undo/redo, rulers, keyboard nav, and PNG/CSV export. Built with a FastAPI backend and a React + Vite frontend.",
       "period": "2025",
       "status": "live",
-      "tags": ["Python", "FastAPI", "React", "Vite", "CIEDE2000", "K-D Tree", "Floyd-Steinberg", "Image Processing", "Pillow"],
+      "tags": [
+        "Python",
+        "FastAPI",
+        "React",
+        "Vite",
+        "CIEDE2000",
+        "K-D Tree",
+        "Floyd-Steinberg",
+        "Image Processing",
+        "Pillow"
+      ],
       "github": "https://github.com/reidan-dev/beadify",
       "live": "https://beadify.danpablo.dev",
-      "image": null
+      "image": null,
+      "emoji": "\ud83c\udfa8"
     },
     {
-      "name": "danpablo.dev — AI Resume Site",
+      "name": "danpablo.dev \u2014 AI Resume Site",
       "tagline": "Full-stack RAG chatbot embedded in a live resume site",
       "description": "A production-deployed AI resume site where recruiters can chat with Folio, a RAG chatbot grounded strictly in my resume and Q&A guide. Built end-to-end: FastAPI backend with a LangChain RAG pipeline, OpenAI embeddings stored in Supabase pgvector, and a React frontend with real-time SSE token streaming. Includes 4-layer API security, conversation logging, and rate limiting modes.",
       "period": "2025",
       "status": "live",
-      "tags": ["React", "TypeScript", "Vite", "Tailwind CSS", "FastAPI", "LangChain", "OpenAI", "Supabase", "Docker", "Railway", "Vercel"],
+      "tags": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "Tailwind CSS",
+        "FastAPI",
+        "LangChain",
+        "OpenAI",
+        "Supabase",
+        "Docker",
+        "Railway",
+        "Vercel"
+      ],
       "github": "https://github.com/reidan-dev/my-resume-chatbot",
       "live": "https://danpablo.dev",
-      "image": null
+      "image": null,
+      "emoji": "\ud83e\udd16"
     },
     {
       "name": "Check-App",
       "tagline": "Clinical decision support chatbot on Facebook Messenger",
-      "description": "A Messenger chatbot triaging user-reported symptoms to the right medical specialist — ENT, Neurology, or Ophthalmology. NLP pipeline included web scraping, SpaCy/SciSpaCy preprocessing, Gensim LDA topic modelling, and Logistic Regression — achieving 94% F1-score on 7,300+ clinical records. Awarded Best in Project Management and Best Project (Sprint 4) at Eskwelabs.",
+      "description": "A Messenger chatbot triaging user-reported symptoms to the right medical specialist \u2014 ENT, Neurology, or Ophthalmology. NLP pipeline included web scraping, SpaCy/SciSpaCy preprocessing, Gensim LDA topic modelling, and Logistic Regression \u2014 achieving 94% F1-score on 7,300+ clinical records. Awarded Best in Project Management and Best Project (Sprint 4) at Eskwelabs.",
       "period": "2021",
       "status": "archived",
-      "tags": ["Python", "NLP", "SpaCy", "SciSpaCy", "Gensim", "Logistic Regression", "BeautifulSoup", "Selenium", "Facebook Messenger API"],
+      "tags": [
+        "Python",
+        "NLP",
+        "SpaCy",
+        "SciSpaCy",
+        "Gensim",
+        "Logistic Regression",
+        "BeautifulSoup",
+        "Selenium",
+        "Facebook Messenger API"
+      ],
       "github": null,
       "live": null,
-      "image": null
+      "image": null,
+      "emoji": "\ud83e\ude7a"
+    },
+    {
+      "name": "Eevee Virtual Pet \u2014 macOS",
+      "tagline": "Desktop companion app with all 9 Eeveelutions roaming your screen",
+      "description": "A macOS menu-bar app featuring all 9 Eeveelutions with distinct personality-driven movement across your screen \u2014 each with unique speed, turn rate, idle frequency, and edge preference. Built in Swift/SwiftUI + AppKit. Includes a Pomodoro timer, daily goals, break reminders, and idle sleep \u2014 pets react visually to each productivity event. Two display modes: floating desktop overlay (rendered below app windows) or a contained fish-tank window. Click pets to make them jump, drag to reposition.",
+      "period": "2025",
+      "status": "local",
+      "tags": [
+        "Swift",
+        "SwiftUI",
+        "AppKit",
+        "macOS",
+        "NSPanel",
+        "Combine",
+        "SpriteSheet"
+      ],
+      "github": "https://github.com/reidan-dev/eevee-virtual-pet-mac-os",
+      "live": null,
+      "image": null,
+      "emoji": "\ud83d\udc3e"
+    },
+    {
+      "name": "PH 2022 Election Map",
+      "tagline": "Interactive choropleth map of the 2022 Philippine presidential results by municipality",
+      "description": "A weekend data project scraping and visualizing the 2022 Philippine presidential election results at the municipality/city level. Selenium scraped vote tallies per candidate per area; Pandas + Parquet handled the data pipeline; PyScript + Matplotlib rendered the interactive choropleth inline in the browser. Results are broken down by candidate with hover details per region.",
+      "period": "2022",
+      "status": "local",
+      "tags": [
+        "Python",
+        "Selenium",
+        "Pandas",
+        "Parquet",
+        "PyScript",
+        "Matplotlib",
+        "GeoJSON",
+        "Data Viz"
+      ],
+      "github": null,
+      "live": null,
+      "image": null,
+      "emoji": "\ud83d\uddfa\ufe0f"
     }
   ],
   "education": [
@@ -149,7 +269,7 @@
       "school": "AMA Computer College",
       "graduated": "Apr 2017",
       "bullets": [
-        "Clark Development Corporation – Student Excellence Awardee",
+        "Clark Development Corporation \u2013 Student Excellence Awardee",
         "PRC Licensed Electronics Engineer & Electronics Technician (Apr 2018)"
       ]
     }
