@@ -13,6 +13,7 @@ export default {
         'fade-in-up': 'fadeInUp 0.25s ease-out both',
         'slide-up': 'slideUp 0.3s ease-out',
         'pulse-dot': 'pulseDot 1.4s ease-in-out infinite',
+        'shine': 'shine 2.8s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: { from: { opacity: '0' }, to: { opacity: '1' } },
@@ -21,6 +22,12 @@ export default {
         pulseDot: {
           '0%, 80%, 100%': { transform: 'scale(0)', opacity: '0.5' },
           '40%': { transform: 'scale(1)', opacity: '1' },
+        },
+        shine: {
+          '0%':   { transform: 'translateX(-100%) skewX(-15deg)', opacity: '0' },
+          '10%':  { opacity: '1' },
+          '40%':  { transform: 'translateX(250%) skewX(-15deg)', opacity: '0' },
+          '100%': { transform: 'translateX(250%) skewX(-15deg)', opacity: '0' },
         },
       },
     },

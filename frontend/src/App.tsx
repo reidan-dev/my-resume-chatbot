@@ -201,15 +201,15 @@ export default function App() {
 
           <div className="relative">
             {showNudge && (
-              <>
-                <span className="absolute inset-0 rounded-2xl bg-emerald-400 opacity-30 animate-ping pointer-events-none" />
-                <span className="absolute -inset-1 rounded-[20px] border-[3px] border-white/70 animate-ping pointer-events-none" style={{ animationDuration: '1.2s', animationDelay: '0.4s' }} />
-              </>
+              <span className="absolute inset-0 rounded-2xl bg-emerald-400 opacity-30 animate-ping pointer-events-none" />
             )}
             <button
               onClick={openChat}
-              className={`relative flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-emerald-600 text-white shadow-lg hover:bg-emerald-700 active:scale-95 transition-all ${showNudge ? 'ring-[3px] ring-white/60' : ''}`}
+              className="relative flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-emerald-600 text-white shadow-lg hover:bg-emerald-700 active:scale-95 transition-all overflow-hidden"
             >
+              {showNudge && (
+                <span className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shine pointer-events-none" />
+              )}
               <MessageSquare size={16} />
               <span className="text-sm font-medium">Chat with {BOT_NAME}</span>
               {rateLimit.remaining < limit && (
