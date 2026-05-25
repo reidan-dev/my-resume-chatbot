@@ -151,7 +151,7 @@ export default function App() {
         />
       </nav>
 
-      <div className="animate-fade-in-up">
+      <div key={activePage} className="animate-fade-in-up">
         {activePage === 'resume' ? <ResumePage /> : <ProjectsPage />}
       </div>
 

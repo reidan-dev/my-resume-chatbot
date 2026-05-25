@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { deviconClass } from '../utils/deviconMap'
 import { Mail, MapPin, Phone, ChevronDown } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
 import resumeData from '../data/resume.json'
@@ -181,6 +182,11 @@ export function ResumePage() {
         </div>
       </header>
 
+      {/* Summary */}
+      <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-8 animate-fade-in-up">
+        {meta.summary}
+      </p>
+
       {/* Skills */}
       <Section title="Skills">
         <div className="space-y-3">
@@ -188,14 +194,18 @@ export function ResumePage() {
             <div key={category}>
               <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">{category}</span>
               <div className="mt-1.5 flex flex-wrap gap-1.5">
-                {items.map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:border-emerald-200 dark:hover:border-emerald-700 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors cursor-default"
-                  >
-                    {skill}
-                  </span>
-                ))}
+                {items.map((skill) => {
+                  const icon = deviconClass(skill)
+                  return (
+                    <span
+                      key={skill}
+                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:border-emerald-200 dark:hover:border-emerald-700 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors cursor-default"
+                    >
+                      {icon && <i className={`${icon} text-[13px] leading-none`} />}
+                      {skill}
+                    </span>
+                  )
+                })}
               </div>
             </div>
           ))}

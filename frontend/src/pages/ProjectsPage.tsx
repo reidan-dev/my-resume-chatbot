@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { GitFork, ExternalLink, ChevronDown } from 'lucide-react'
 import resumeData from '../data/resume.json'
+import { deviconClass } from '../utils/deviconMap'
 
 type Project = {
   name: string
@@ -64,7 +65,7 @@ function ProjectCard({ project }: { project: Project }) {
   const status = statusConfig[project.status] ?? statusConfig.archived
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 flex flex-col overflow-hidden hover:shadow-lg transition-shadow duration-200">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 flex flex-col overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
       {/* Image / banner */}
       <ImageBanner project={project} />
 
@@ -80,34 +81,38 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
 
         {/* Tagline — always visible */}
-        <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">{project.tagline}</p>
+        <p className="text-xs font-medium text-gray-700 dark:text-gray-200 leading-snug">{project.tagline}</p>
 
         {/* Long description — expandable */}
         <div>
-          <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${expanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
-            <div className="overflow-hidden">
-              <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed pb-1">{project.description}</p>
-            </div>
-          </div>
           <button
             onClick={() => setExpanded((v) => !v)}
-            className="flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors mt-0.5"
+            className="flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors"
           >
             <ChevronDown size={12} className={`transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`} />
             {expanded ? 'Less' : 'More'}
           </button>
+          <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${expanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+            <div className="overflow-hidden">
+              <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed pt-1.5">{project.description}</p>
+            </div>
+          </div>
         </div>
 
         {/* Tags */}
         <div className="flex flex-wrap gap-1.5">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-[10px] px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
-            >
-              {tag}
-            </span>
-          ))}
+          {project.tags.map((tag) => {
+            const icon = deviconClass(tag)
+            return (
+              <span
+                key={tag}
+                className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
+              >
+                {icon && <i className={`${icon} text-[11px] leading-none`} />}
+                {tag}
+              </span>
+            )
+          })}
         </div>
 
         {/* Footer */}
