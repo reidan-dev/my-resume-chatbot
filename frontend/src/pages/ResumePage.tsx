@@ -65,7 +65,7 @@ function QuoteLine() {
 
   return (
     <blockquote className="border-l-2 border-emerald-400 dark:border-emerald-500 pl-4 mt-3 animate-fade-in-up">
-      <p className="text-sm italic text-emerald-600 dark:text-emerald-400 whitespace-nowrap">
+      <p className="text-sm italic text-emerald-600 dark:text-emerald-400 break-words">
         {full ? (
           <>
             <a href={LINKEDIN} target="_blank" rel="noreferrer" className={linkCls}>it's me</a>

@@ -95,13 +95,13 @@ export default function App() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Nav */}
       <nav className="sticky top-0 z-20 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 print:hidden relative overflow-hidden">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
+        <div className="max-w-2xl mx-auto px-3 sm:px-6 py-3 flex items-center gap-2 sm:gap-3 min-w-0">
           {/* Brand */}
-          <div className="flex items-center gap-2 shrink-0">
-            <div className="w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center shadow-sm">
+          <div className="flex items-center gap-1.5 shrink-0">
+            <div className="w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center shadow-sm shrink-0">
               <Glasses size={15} className="text-white" />
             </div>
-            <span className="font-semibold text-sm text-gray-900 dark:text-gray-100 tracking-tight">Dan Pablo</span>
+            <span className="font-semibold text-sm text-gray-900 dark:text-gray-100 tracking-tight whitespace-nowrap">Dan Pablo</span>
           </div>
           <div className="w-px h-5 bg-gray-200 dark:bg-gray-700 shrink-0" />
           {/* Page tabs */}
@@ -123,9 +123,9 @@ export default function App() {
           <div className="flex-1" />
           <div className="flex items-center gap-1 shrink-0">
             {OPEN_TO_WORK && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400 text-xs font-medium">
+              <span className="inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400 text-xs font-medium shrink-0">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                Open to work
+                <span className="hidden sm:inline">Open to work</span>
               </span>
             )}
             <button
@@ -180,7 +180,7 @@ export default function App() {
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           title="Back to top"
-          className="fixed left-4 z-30 w-9 h-9 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:shadow-lg transition-all animate-fade-in print:hidden"
+          className="fixed left-3 sm:left-4 z-30 w-9 h-9 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:shadow-lg transition-all animate-fade-in print:hidden"
           style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}
         >
           <ArrowUp size={15} />
@@ -188,15 +188,15 @@ export default function App() {
       )}
 
       {!chatOpen && (
-        <div className="fixed right-6 z-30 flex flex-col items-end gap-2 print:hidden" style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>
+        <div className="fixed right-4 sm:right-6 z-30 flex flex-col items-end gap-2 print:hidden" style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>
           {/* Nudge callout — always shown, fades out after 10s or on chat open */}
           <div
-            className={`bg-white dark:bg-gray-800 rounded-2xl rounded-br-sm shadow-lg border border-emerald-100 dark:border-emerald-900/40 px-4 py-3 max-w-[220px] text-center leading-snug transition-all duration-500 ${
+            className={`bg-white dark:bg-gray-800 rounded-2xl rounded-br-sm shadow-lg border border-emerald-100 dark:border-emerald-900/40 px-3 sm:px-4 py-2.5 sm:py-3 max-w-[180px] sm:max-w-[220px] text-center leading-snug transition-all duration-500 ${
               showNudge ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'
             }`}
           >
-            <span className="block font-medium text-gray-900 dark:text-gray-100 text-sm mb-0.5">✨ Try the chatbot!</span>
-            <span className="text-xs text-gray-500 dark:text-gray-400">Ask Folio anything about Dan's experience! 🕶️</span>
+            <span className="block font-medium text-gray-900 dark:text-gray-100 text-xs sm:text-sm mb-0.5">✨ Try the chatbot!</span>
+            <span className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">Ask Folio anything about Dan's experience! 🕶️</span>
           </div>
 
           <div className="relative">
@@ -205,7 +205,7 @@ export default function App() {
             )}
             <button
               onClick={openChat}
-              className="relative flex items-center gap-2 px-4 py-3 rounded-2xl bg-emerald-600 text-white shadow-lg hover:bg-emerald-700 active:scale-95 transition-all"
+              className="relative flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-emerald-600 text-white shadow-lg hover:bg-emerald-700 active:scale-95 transition-all"
             >
               <MessageSquare size={16} />
               <span className="text-sm font-medium">Chat with {BOT_NAME}</span>
