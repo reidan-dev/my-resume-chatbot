@@ -187,7 +187,14 @@ export function ResumePage() {
           {meta.name.first} <AnimatedDan /> {meta.name.last}
         </h1>
         <p className="mt-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">
-          {meta.titles.join(' · ')}
+          {meta.titles.map((title, i) => (
+            <span key={title}>
+              {i > 0 && (
+                <><span className="sm:hidden"><br /></span><span className="hidden sm:inline"> · </span></>
+              )}
+              {title}
+            </span>
+          ))}
         </p>
 
         <QuoteLine />
