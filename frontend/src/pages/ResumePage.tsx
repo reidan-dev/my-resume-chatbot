@@ -277,22 +277,20 @@ export function ResumePage() {
                 {/* Content */}
                 <div className={`flex-1 ${!isLast ? 'pb-6' : ''}`}>
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-0.5">
-                    <div className="flex items-start gap-1.5">
-                      <button
-                        onClick={() => toggleJob(i)}
-                        title={isCollapsed ? 'Expand' : 'Collapse'}
-                        className="mt-0.5 p-0.5 rounded text-emerald-500 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors shrink-0 print:hidden"
-                      >
-                        <ChevronDown
-                          size={13}
-                          className={`transition-transform duration-200 ${isCollapsed ? '-rotate-90' : ''}`}
-                        />
-                      </button>
+                    <button
+                      onClick={() => toggleJob(i)}
+                      title={isCollapsed ? 'Expand' : 'Collapse'}
+                      className="flex items-start gap-1.5 text-left group"
+                    >
+                      <ChevronDown
+                        size={13}
+                        className={`mt-0.5 shrink-0 text-emerald-500 dark:text-emerald-400 transition-transform duration-200 print:hidden ${isCollapsed ? '-rotate-90' : ''}`}
+                      />
                       <div>
-                        <div className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{job.title}</div>
+                        <div className="font-semibold text-gray-900 dark:text-gray-100 text-sm group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">{job.title}</div>
                         <div className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">{job.company}</div>
                       </div>
-                    </div>
+                    </button>
                     <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0 mt-0.5 pl-5 sm:pl-0">
                       {job.period}
                       <span className="text-gray-300 dark:text-gray-600"> · </span>
@@ -328,16 +326,14 @@ export function ResumePage() {
             return (
               <div key={p.name}>
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
-                  <div className="flex items-start gap-1.5">
-                    <button
-                      onClick={() => toggleProject(i)}
-                      title={isCollapsed ? 'Expand' : 'Collapse'}
-                      className="mt-0.5 p-0.5 rounded text-emerald-500 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors shrink-0 print:hidden"
-                    >
-                      <ChevronDown size={13} className={`transition-transform duration-200 ${isCollapsed ? '-rotate-90' : ''}`} />
-                    </button>
-                    <span className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{p.name}</span>
-                  </div>
+                  <button
+                    onClick={() => toggleProject(i)}
+                    title={isCollapsed ? 'Expand' : 'Collapse'}
+                    className="flex items-start gap-1.5 text-left group"
+                  >
+                    <ChevronDown size={13} className={`mt-0.5 shrink-0 text-emerald-500 dark:text-emerald-400 transition-transform duration-200 print:hidden ${isCollapsed ? '-rotate-90' : ''}`} />
+                    <span className="font-semibold text-gray-900 dark:text-gray-100 text-sm group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">{p.name}</span>
+                  </button>
                   <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0 pl-5 sm:pl-0">{p.period}</span>
                 </div>
                 <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${isCollapsed ? 'grid-rows-[0fr]' : 'grid-rows-[1fr]'}`}>
@@ -365,19 +361,17 @@ export function ResumePage() {
           return (
             <div key={edu.degree}>
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-0.5">
-                <div className="flex items-start gap-1.5">
-                  <button
-                    onClick={() => toggleEdu(i)}
-                    title={isCollapsed ? 'Expand' : 'Collapse'}
-                    className="mt-0.5 p-0.5 rounded text-emerald-500 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors shrink-0 print:hidden"
-                  >
-                    <ChevronDown size={13} className={`transition-transform duration-200 ${isCollapsed ? '-rotate-90' : ''}`} />
-                  </button>
+                <button
+                  onClick={() => toggleEdu(i)}
+                  title={isCollapsed ? 'Expand' : 'Collapse'}
+                  className="flex items-start gap-1.5 text-left group"
+                >
+                  <ChevronDown size={13} className={`mt-0.5 shrink-0 text-emerald-500 dark:text-emerald-400 transition-transform duration-200 print:hidden ${isCollapsed ? '-rotate-90' : ''}`} />
                   <div>
-                    <div className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{edu.degree}</div>
+                    <div className="font-semibold text-gray-900 dark:text-gray-100 text-sm group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">{edu.degree}</div>
                     <div className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">{edu.school}</div>
                   </div>
-                </div>
+                </button>
                 <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0 mt-0.5 pl-5 sm:pl-0">Graduated {edu.graduated}</span>
               </div>
               <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${isCollapsed ? 'grid-rows-[0fr]' : 'grid-rows-[1fr]'}`}>
