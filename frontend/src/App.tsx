@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
-import { MessageSquare, Share2, Check, Printer, ArrowUp, Moon, Sun, Glasses } from 'lucide-react'
+import { MessageSquare, Share2, Check, ArrowUp, Moon, Sun, Glasses } from 'lucide-react'
 import confetti from 'canvas-confetti'
 
 const OPEN_TO_WORK = import.meta.env.VITE_OPEN_TO_WORK === 'true'
 import { ResumePage } from './pages/ResumePage'
+import { ProjectsPage } from './pages/ProjectsPage'
 import { ChatWidget } from './components/ChatWidget'
 import { ContactModal } from './components/ContactModal'
 import { useRateLimit } from './hooks/useRateLimit'
@@ -12,7 +13,10 @@ import { useDarkMode } from './hooks/useDarkMode'
 
 const BOT_NAME = import.meta.env.VITE_BOT_NAME ?? 'Folio'
 
+type Page = 'resume' | 'projects'
+
 export default function App() {
+  const [activePage, setActivePage] = useState<Page>('resume')
   const [chatOpen, setChatOpen] = useState(false)
   const [contactOpen, setContactOpen] = useState(false)
   const [showNudge, setShowNudge] = useState(true)
@@ -90,10 +94,32 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Nav */}
-      <nav className="sticky top-0 z-20 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 print:hidden relative overflow-hidden">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 flex items-center gap-3">
-          <Glasses size={17} className="text-emerald-500 shrink-0" />
-          <div className="w-px h-4 bg-gray-200 dark:bg-gray-700 shrink-0" />
+      <nav className="sticky top-0 z-20 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 print:hidden relative overflow-hidden">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
+          {/* Brand */}
+          <div className="flex items-center gap-2 shrink-0">
+            <div className="w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center shadow-sm">
+              <Glasses size={15} className="text-white" />
+            </div>
+            <span className="font-semibold text-sm text-gray-900 dark:text-gray-100 tracking-tight">Dan Pablo</span>
+          </div>
+          <div className="w-px h-5 bg-gray-200 dark:bg-gray-700 shrink-0" />
+          {/* Page tabs */}
+          <div className="flex items-center gap-0.5">
+            {(['resume', 'projects'] as Page[]).map((page) => (
+              <button
+                key={page}
+                onClick={() => setActivePage(page)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors capitalize ${
+                  activePage === page
+                    ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+          </div>
           <div className="flex-1" />
           <div className="flex items-center gap-1 shrink-0">
             {OPEN_TO_WORK && (
@@ -108,13 +134,6 @@ export default function App() {
               className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               {copied ? <Check size={15} className="text-emerald-500" /> : <Share2 size={15} />}
-            </button>
-            <button
-              onClick={() => window.print()}
-              title="Print / Save PDF"
-              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors print:hidden"
-            >
-              <Printer size={15} />
             </button>
             <button
               onClick={toggleDark}
@@ -133,7 +152,7 @@ export default function App() {
       </nav>
 
       <div className="animate-fade-in-up">
-        <ResumePage />
+        {activePage === 'resume' ? <ResumePage /> : <ProjectsPage />}
       </div>
 
       <div className="print:hidden">

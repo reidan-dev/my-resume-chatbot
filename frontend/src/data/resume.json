@@ -108,6 +108,30 @@
       }
     ]
   },
+  "personal_projects": [
+    {
+      "name": "danpablo.dev — AI Resume Site",
+      "tagline": "Full-stack RAG chatbot embedded in a live resume site",
+      "description": "A production-deployed AI resume site where recruiters can chat with Folio, a RAG chatbot grounded strictly in my resume and Q&A guide. Built end-to-end: FastAPI backend with a LangChain RAG pipeline, OpenAI embeddings stored in Supabase pgvector, and a React frontend with real-time SSE token streaming. Includes 4-layer API security, conversation logging, and rate limiting modes.",
+      "period": "2025",
+      "status": "live",
+      "tags": ["React", "TypeScript", "Vite", "Tailwind CSS", "FastAPI", "LangChain", "OpenAI", "Supabase", "Docker", "Railway", "Vercel"],
+      "github": "https://github.com/reidan-dev/my-resume-chatbot",
+      "live": "https://danpablo.dev",
+      "image": null
+    },
+    {
+      "name": "Check-App",
+      "tagline": "Clinical decision support chatbot on Facebook Messenger",
+      "description": "A Messenger chatbot triaging user-reported symptoms to the right medical specialist — ENT, Neurology, or Ophthalmology. NLP pipeline included web scraping, SpaCy/SciSpaCy preprocessing, Gensim LDA topic modelling, and Logistic Regression — achieving 94% F1-score on 7,300+ clinical records. Awarded Best in Project Management and Best Project (Sprint 4) at Eskwelabs.",
+      "period": "2021",
+      "status": "archived",
+      "tags": ["Python", "NLP", "SpaCy", "SciSpaCy", "Gensim", "Logistic Regression", "BeautifulSoup", "Selenium", "Facebook Messenger API"],
+      "github": null,
+      "live": null,
+      "image": null
+    }
+  ],
   "education": [
     {
       "degree": "BS Electronics and Communications Engineering",
