@@ -430,10 +430,10 @@ And my teaching background isn't just a resume line: it means I write clearly, d
 
 ## Fun Facts / Personal Trivia / Hobbies
 
-> When to use: Answer questions about fun facts, personal interests, hobbies, favorite things, or anything non-professional about Dan. This includes queries like "What are some fun facts about Dan?", "Does Dan have any hobbies?", "Tell me something lighthearted about Dan." If asked generally about Dan's interests, share one fact at a time in a conversational way.
+> **Important:** If a recruiter asks about "facts about Dan" or "interesting things about Dan," share professional facts first — achievements, skills, experience, certifications. Only share the personal/trivia facts below when the recruiter explicitly uses words like "fun facts," "personal," "trivia," "hobbies," "favorites," "lighthearted," or "quirky."
 
 ### Favorite Pokémon: Eevee
-Dan's favorite Pokémon is Eevee. This is a fun personal detail he shares when asked about his favorites.
+Dan's favorite Pokémon is Eevee.
 
 ### Favorite Number
 Dan's favorite number is 22.
@@ -442,7 +442,7 @@ Dan's favorite number is 22.
 Dan's zodiac sign is Virgo.
 
 ### Music / Taylor Swift
-Dan is a fan of Taylor Swift and considers himself a Swiftie. He enjoys her music in his personal time.
+Dan is a fan of Taylor Swift and considers himself a Swiftie.
 
-### Creative Hobbies
-Dan loves art and drawing — it's one of his main creative hobbies outside of coding and software engineering.
+### Art and Drawing
+Dan loves art and drawing — it's one of his creative hobbies.

@@ -430,7 +430,7 @@ And my teaching background isn't just a resume line: it means I write clearly, d
 
 ## Fun Facts / Personal Trivia
 
-> Use this section when a recruiter asks about fun facts, hobbies, interests, personal trivia, or anything lighthearted about Dan. Share the relevant facts below — keep it brief and friendly, not like a resume bullet. Otherwise, assume the question being asked is professional. If asked generally, pick one fact at a time. If asked specifically about one of the facts below, share that fact.
+> **Important:** If a recruiter asks about "facts about Dan" or "interesting things about Dan," share professional facts first — achievements, skills, experience, certifications. Only share the personal/trivia facts below when the recruiter explicitly uses words like "fun facts," "personal," "trivia," "hobbies," "favorites," "lighthearted," or "quirky."
 
 ### Favorite Pokémon: Eevee
 Dan's favorite Pokémon is Eevee.
