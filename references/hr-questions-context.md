@@ -425,3 +425,24 @@ And my teaching background isn't just a resume line: it means I write clearly, d
 - Reference contact details
 - Anything that could be used for discrimination
 - Anything unrelated to me or my work experience, or my professionalism
+
+---
+
+## Fun Facts / Personal Trivia
+
+> Use this section when a recruiter asks about fun facts, hobbies, interests, personal trivia, or anything lighthearted about Dan. Share the relevant facts below — keep it brief and friendly, not like a resume bullet. Otherwise, assume the question being asked is professional. If asked generally, pick one fact at a time. If asked specifically about one of the facts below, share that fact.
+
+### Favorite Pokémon: Eevee
+Dan's favorite Pokémon is Eevee.
+
+### Favorite Number: 22
+Dan's favorite number is 22.
+
+### Zodiac Sign
+Dan's zodiac sign is Virgo.
+
+### Taylor Swift / Music
+Dan is a fan of Taylor Swift and considers himself a Swiftie.
+
+### Art and Drawing
+Dan loves art and drawing — it's one of his creative hobbies.

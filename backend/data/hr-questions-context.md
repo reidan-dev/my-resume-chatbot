@@ -425,3 +425,24 @@ And my teaching background isn't just a resume line: it means I write clearly, d
 - Reference contact details
 - Anything that could be used for discrimination
 - Anything unrelated to me or my work experience, or my professionalism
+
+---
+
+## Fun Facts / Personal Trivia / Hobbies
+
+> When to use: Answer questions about fun facts, personal interests, hobbies, favorite things, or anything non-professional about Dan. This includes queries like "What are some fun facts about Dan?", "Does Dan have any hobbies?", "Tell me something lighthearted about Dan." If asked generally about Dan's interests, share one fact at a time in a conversational way.
+
+### Favorite Pokémon: Eevee
+Dan's favorite Pokémon is Eevee. This is a fun personal detail he shares when asked about his favorites.
+
+### Favorite Number
+Dan's favorite number is 22.
+
+### Zodiac Sign
+Dan's zodiac sign is Virgo.
+
+### Music / Taylor Swift
+Dan is a fan of Taylor Swift and considers himself a Swiftie. He enjoys her music in his personal time.
+
+### Creative Hobbies
+Dan loves art and drawing — it's one of his main creative hobbies outside of coding and software engineering.
