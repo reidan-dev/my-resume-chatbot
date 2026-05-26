@@ -36,6 +36,19 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 
 ## Work Experience
 
+### Collaborators / International Experience
+
+Dan has worked with teammates and clients across the following countries during his career:
+
+| Country | Code | Role(s) |
+|---------|------|---------|
+| Philippines | PH | Biarri Networks, Amihan Global Strategies, Denso Techno, Synkom, STI College, AMA Computer College |
+| Japan | JP | Denso Techno, Synkom |
+| United States | US | Biarri Networks |
+| Australia | AU | Biarri Networks |
+| Spain | ES | Biarri Networks |
+| Vietnam | VN | Biarri Networks |
+
 ### Software Developer – Backend | Sharesource → Biarri Networks (AUS)
 
 **September 2022 – April 2026 | 3 years 7 months | Metro Manila, PH / Remote**
@@ -146,3 +159,9 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 **MACH by DICT | December 2021 | Online**
 
 - Completed structured training on building Python web applications with Flask.
+
+---
+
+## Fun Facts
+
+- Favorite Pokémon is Eevee.

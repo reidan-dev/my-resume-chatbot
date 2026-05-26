@@ -42,11 +42,35 @@ def _json_to_markdown(data: dict) -> str:
         lines.append(f"### {job['title']} at {job['company']}")
         lines.append(f"Period: {job['period']} ({job['duration']})\n")
         if job.get("countries"):
-            flags = " ".join(f"{c}" for c in job["countries"])
-            lines.append(f"Countries worked with: {flags}\n")
+            # Full country names so the chatbot recognizes them by name or code
+            country_names = {
+                "AU": "Australia", "ES": "Spain", "JP": "Japan",
+                "PH": "Philippines", "US": "United States", "VN": "Vietnam",
+            }
+            collaborators = ", ".join(country_names.get(c, c) for c in job["countries"])
+            lines.append(f"Countries worked with (teammates/clients): {collaborators} ({', '.join(job['countries'])})\n")
         for b in job["bullets"]:
             lines.append(f"- {b}")
         lines.append("")
+
+    # Global summary: all collaborators across entire career
+    all_countries: list[str] = []
+    for job in data["experience"]:
+        if job.get("countries"):
+            all_countries.extend(job["countries"])
+    seen: set[str] = set()
+    unique: list[str] = []
+    for c in all_countries:
+        if c not in seen:
+            seen.add(c)
+            unique.append(c)
+    country_names = {
+        "AU": "Australia", "ES": "Spain", "JP": "Japan",
+        "PH": "Philippines", "US": "United States", "VN": "Vietnam",
+    }
+    lines.append("## Collaborators / International Experience\n")
+    names = ", ".join(country_names.get(c, c) for c in unique)
+    lines.append(f"All countries Dan has worked with (teammates/clients): {names} ({', '.join(unique)})\n")
 
     lines.append("## Projects\n")
     lines.append(data["projects"]["note"] + "\n")
