@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { MessageSquare, Share2, Check, ArrowUp, ArrowUpRight, Moon, Sun, Glasses } from 'lucide-react'
+import { MessageSquare, Share2, Check, ArrowUp, Moon, Sun, Glasses } from 'lucide-react'
 import confetti from 'canvas-confetti'
 
 const OPEN_TO_WORK = import.meta.env.VITE_OPEN_TO_WORK === 'true'
@@ -164,7 +164,7 @@ export default function App() {
       <div key={activePage} className="animate-fade-in-up">
         {activePage === 'resume' ? <ResumePage onAboutClick={() => setActivePage('about')} />
          : activePage === 'projects' ? <ProjectsPage onAboutClick={() => setActivePage('about')} />
-         : <AboutPage onChatClick={openChat} onAboutClick={() => setActivePage('resume')} />}
+         : <AboutPage onChatClick={openChat} />}
       </div>
 
       {/* Startup gradient highlight — fades with the nudge callout */}

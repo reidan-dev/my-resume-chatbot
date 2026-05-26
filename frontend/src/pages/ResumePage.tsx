@@ -130,7 +130,7 @@ function AnimatedDan() {
   )
 }
 
-function Section({ title, icon: Icon, children }: { title: string; icon: React.ReactNode; children: React.ReactNode }) {
+function Section({ title, icon: Icon, children }: { title: string; icon: React.ComponentType<{ className?: string }>; children: React.ReactNode }) {
   const { ref, inView } = useInView(0.05)
   return (
     <div
@@ -138,7 +138,7 @@ function Section({ title, icon: Icon, children }: { title: string; icon: React.R
       className={`mb-8 transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
     >
       <h2 className="text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-3 pb-2 border-b border-gray-200 dark:border-gray-700">
-        <span className="flex items-center gap-2"><Icon className="w-4 h-4" />{title}</span>
+        <span className="flex items-center gap-2"><Icon className="w-4 h-4 shrink-0" />{title}</span>
       </h2>
       {children}
     </div>

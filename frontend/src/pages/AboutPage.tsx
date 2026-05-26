@@ -1,9 +1,8 @@
 import { useState } from 'react'
-import { ChevronDown, Shield, Code2, ArrowUpRight, Brain, MessageSquare, Cpu, Database } from 'lucide-react'
+import { ChevronDown, Shield, Code2, ArrowUpRight, Brain, MessageSquare, Cpu } from 'lucide-react'
 
 interface Props {
   onChatClick?: () => void
-  onAboutClick?: () => void
 }
 
 function CollapsibleSection({ title, subtitle, icon: Icon, children }: { title: string; subtitle: string; icon: React.ComponentType<{ className?: string }>; children: React.ReactNode }) {
@@ -127,7 +126,7 @@ function PipelineDiagram() {
   )
 }
 
-export function AboutPage({ onChatClick, onAboutClick }: Props) {
+export function AboutPage({ onChatClick }: Props) {
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <header className="mb-8">
