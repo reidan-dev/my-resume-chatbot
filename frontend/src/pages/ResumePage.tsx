@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { deviconClass } from '../utils/deviconMap'
-import { Mail, MapPin, Phone, ChevronDown, Wrench, Briefcase, GraduationCap, FileText, Globe } from 'lucide-react'
+import { Mail, MapPin, Phone, ChevronDown, Wrench, Briefcase, GraduationCap, FileText } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
 import resumeData from '../data/resume.json'
 
@@ -25,10 +25,6 @@ const COUNTRY_FLAGS: Record<string, string> = {
 }
 const COUNTRY_NAMES: Record<string, string> = {
   US: 'United States', PH: 'Philippines', JP: 'Japan', ES: 'Spain', VN: 'Vietnam', AU: 'Australia',
-}
-
-function countryFlag(code: string): string {
-  return COUNTRY_FLAGS[code] ?? '🌍'
 }
 
 function RichText({ text }: { text: string }) {
