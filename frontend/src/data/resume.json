@@ -177,7 +177,7 @@
       "emoji": "\ud83c\udfa8"
     },
     {
-      "name": "danpablo.dev \u2014 AI Resume Site",
+      "name": "My AI-enabled Chatbot Resume Page",
       "tagline": "Full-stack RAG chatbot embedded in a live resume site",
       "description": "A production-deployed AI resume site where recruiters can chat with Folio, a RAG chatbot grounded strictly in my resume and Q&A guide. Built end-to-end: FastAPI backend with a LangChain RAG pipeline, OpenAI embeddings stored in Supabase pgvector, and a React frontend with real-time SSE token streaming. Includes 4-layer API security, conversation logging, and rate limiting modes.",
       "period": "2025",

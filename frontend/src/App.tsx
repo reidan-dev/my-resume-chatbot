@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
-import { MessageSquare, Share2, Check, ArrowUp, Moon, Sun, Glasses } from 'lucide-react'
+import { MessageSquare, Share2, Check, ArrowUp, ArrowUpRight, Moon, Sun, Glasses } from 'lucide-react'
 import confetti from 'canvas-confetti'
 
 const OPEN_TO_WORK = import.meta.env.VITE_OPEN_TO_WORK === 'true'
 import { ResumePage } from './pages/ResumePage'
 import { ProjectsPage } from './pages/ProjectsPage'
+import { AboutPage } from './pages/AboutPage'
 import { ChatWidget } from './components/ChatWidget'
 import { ContactModal } from './components/ContactModal'
 import { useRateLimit } from './hooks/useRateLimit'
@@ -13,7 +14,7 @@ import { useDarkMode } from './hooks/useDarkMode'
 
 const BOT_NAME = import.meta.env.VITE_BOT_NAME ?? 'Folio'
 
-type Page = 'resume' | 'projects'
+type Page = 'resume' | 'projects' | 'about'
 
 export default function App() {
   const [activePage, setActivePage] = useState<Page>('resume')
@@ -74,6 +75,15 @@ export default function App() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [chatOpen])
 
+  useEffect(() => {
+    function onNavigate(e: Event) {
+      const page = (e as CustomEvent).detail as Page
+      setActivePage(page)
+    }
+    document.addEventListener('folio-navigate', onNavigate)
+    return () => document.removeEventListener('folio-navigate', onNavigate)
+  }, [])
+
   function fireConfetti() {
     if (confettiFiredRef.current) return
     confettiFiredRef.current = true
@@ -106,7 +116,7 @@ export default function App() {
           <div className="w-px h-5 bg-gray-200 dark:bg-gray-700 shrink-0" />
           {/* Page tabs */}
           <div className="flex items-center gap-0.5">
-            {(['resume', 'projects'] as Page[]).map((page) => (
+            {(['resume', 'projects', 'about'] as Page[]).map((page) => (
               <button
                 key={page}
                 onClick={() => setActivePage(page)}
@@ -152,7 +162,9 @@ export default function App() {
       </nav>
 
       <div key={activePage} className="animate-fade-in-up">
-        {activePage === 'resume' ? <ResumePage /> : <ProjectsPage />}
+        {activePage === 'resume' ? <ResumePage onAboutClick={() => setActivePage('about')} />
+         : activePage === 'projects' ? <ProjectsPage onAboutClick={() => setActivePage('about')} />
+         : <AboutPage onChatClick={openChat} onAboutClick={() => setActivePage('resume')} />}
       </div>
 
       {/* Startup gradient highlight — fades with the nudge callout */}

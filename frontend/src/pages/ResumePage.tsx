@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
 import { deviconClass } from '../utils/deviconMap'
-import { Mail, MapPin, Phone, ChevronDown } from 'lucide-react'
+import { Mail, MapPin, Phone, ChevronDown, Wrench, Briefcase, GraduationCap, FileText } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
 import resumeData from '../data/resume.json'
-import { AboutModal } from '../components/AboutModal'
 
 function LinkedInIcon() {
   return (
@@ -131,7 +130,7 @@ function AnimatedDan() {
   )
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({ title, icon: Icon, children }: { title: string; icon: React.ReactNode; children: React.ReactNode }) {
   const { ref, inView } = useInView(0.05)
   return (
     <div
@@ -139,18 +138,17 @@ function Section({ title, children }: { title: string; children: React.ReactNode
       className={`mb-8 transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
     >
       <h2 className="text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-3 pb-2 border-b border-gray-200 dark:border-gray-700">
-        {title}
+        <span className="flex items-center gap-2"><Icon className="w-4 h-4" />{title}</span>
       </h2>
       {children}
     </div>
   )
 }
 
-export function ResumePage() {
+export function ResumePage({ onAboutClick }: { onAboutClick?: () => void }) {
   const [collapsed, setCollapsed] = useState<Set<number>>(() => new Set(experience.map((_, i) => i)))
   const [collapsedProjects, setCollapsedProjects] = useState<Set<number>>(() => new Set(projects.items.map((_, i) => i)))
   const [collapsedEdu, setCollapsedEdu] = useState<Set<number>>(() => new Set(education.map((_, i) => i)))
-  const [aboutOpen, setAboutOpen] = useState(false)
 
   function toggleJob(i: number) {
     setCollapsed((prev) => {
@@ -236,7 +234,7 @@ export function ResumePage() {
       </header>
 
       {/* Skills */}
-      <Section title="Skills">
+      <Section title="Skills" icon={Wrench}>
         <div className="space-y-3">
           {Object.entries(skills).map(([category, items]) => (
             <div key={category}>
@@ -261,7 +259,7 @@ export function ResumePage() {
       </Section>
 
       {/* Experience */}
-      <Section title="Experience">
+      <Section title="Experience" icon={Briefcase}>
         <div>
           {experience.map((job, i) => {
             const isCollapsed = collapsed.has(i)
@@ -318,7 +316,7 @@ export function ResumePage() {
       </Section>
 
       {/* Projects */}
-      <Section title="Projects & Training">
+      <Section title="Projects & Training" icon={FileText}>
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{projects.note}</p>
         <div className="space-y-4">
           {projects.items.map((p, i) => {
@@ -355,7 +353,7 @@ export function ResumePage() {
       </Section>
 
       {/* Education */}
-      <Section title="Education">
+      <Section title="Education" icon={GraduationCap}>
         {education.map((edu, i) => {
           const isCollapsed = collapsedEdu.has(i)
           return (
@@ -394,14 +392,12 @@ export function ResumePage() {
       <div className="text-center mt-2 pb-2 print:hidden space-y-1">
         <p className="text-xs text-gray-400 dark:text-gray-600">Last updated {meta.lastUpdated}</p>
         <button
-          onClick={() => setAboutOpen(true)}
+          onClick={onAboutClick}
           className="text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors underline underline-offset-2"
         >
           About Folio
         </button>
       </div>
-
-      {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} />}
     </div>
   )
 }
