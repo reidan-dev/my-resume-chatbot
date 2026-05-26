@@ -298,19 +298,6 @@ export function ResumePage({ onAboutClick }: { onAboutClick?: () => void }) {
                       <div>
                         <div className="font-semibold text-gray-900 dark:text-gray-100 text-sm group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">{job.title}</div>
                         <div className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">{job.company}</div>
-                        {job.countries && job.countries.length > 0 && (
-                          <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
-                            {job.countries.map((c) => (
-                              <span
-                                key={c}
-                                className="text-sm cursor-default hover:scale-110 transition-transform"
-                                title={`Worked with teammates/clients in ${COUNTRY_NAMES[c] ?? c}`}
-                              >
-                                {COUNTRY_FLAGS[c]}
-                              </span>
-                            ))}
-                          </div>
-                        )}
                       </div>
                     </button>
                     <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0 mt-0.5 pl-5 sm:pl-0">
