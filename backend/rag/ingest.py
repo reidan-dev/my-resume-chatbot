@@ -41,6 +41,9 @@ def _json_to_markdown(data: dict) -> str:
     for job in data["experience"]:
         lines.append(f"### {job['title']} at {job['company']}")
         lines.append(f"Period: {job['period']} ({job['duration']})\n")
+        if job.get("countries"):
+            flags = " ".join(f"{c}" for c in job["countries"])
+            lines.append(f"Countries worked with: {flags}\n")
         for b in job["bullets"]:
             lines.append(f"- {b}")
         lines.append("")
