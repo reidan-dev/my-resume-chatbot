@@ -322,6 +322,16 @@ export function ResumePage({ onAboutClick }: { onAboutClick?: () => void }) {
 
                   <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${isCollapsed ? 'grid-rows-[0fr]' : 'grid-rows-[1fr]'}`}>
                     <div className="overflow-hidden">
+                      {job.countries && job.countries.length > 0 && (
+                        <div className="mt-2 flex items-center gap-2 flex-wrap text-xs text-gray-400 dark:text-gray-500">
+                          <span className="font-medium">Countries worked with:</span>
+                          {job.countries.map((c) => (
+                            <span key={c} className="text-base cursor-default hover:scale-110 transition-transform" title={`Worked with teammates/clients in ${COUNTRY_NAMES[c] ?? c}`}>
+                              {COUNTRY_FLAGS[c]}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                       <ul className="mt-2 space-y-1 pl-5">
                         {job.bullets.map((b) => (
                           <li key={b} className="text-sm text-gray-600 dark:text-gray-300 flex gap-2">
