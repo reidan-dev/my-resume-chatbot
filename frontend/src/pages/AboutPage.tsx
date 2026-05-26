@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChevronDown, Shield, Code2, ArrowUpRight, Brain, MessageSquare, Cpu } from 'lucide-react'
+import { ChevronDown, Shield, Code2, ArrowUpRight, Brain, MessageSquare, Cpu, Sparkles } from 'lucide-react'
 
 interface Props {
   onChatClick?: () => void
@@ -196,6 +196,35 @@ export function AboutPage({ onChatClick }: Props) {
           <p>
             It also serves as a repersonalizable template: change the env vars, swap in a new resume, and the chatbot
             adapts without any code changes.
+          </p>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection title="Future Use" subtitle="A reusable pattern for any product" icon={Sparkles}>
+        <div className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed space-y-3">
+          <p>
+            Folio started as a personal project, but the pattern behind it is a proof of concept for something much
+            broader: <strong className="text-gray-900 dark:text-gray-100">any product, service, or website can benefit from an embedded chatbot</strong> that acts as a conversational assistant or guide.
+          </p>
+          <p>
+            Think of it this way — in my case, <strong>the product being showcased is me</strong>. The chatbot lets recruiters and hiring managers explore my background conversationally instead of scanning bullet points. But the same pattern applies to any domain:
+          </p>
+          <ul className="space-y-1.5">
+            <li className="flex gap-2">
+              <span className="text-emerald-400 shrink-0 mt-0.5">→</span>
+              <span><strong>SaaS product page</strong> — guide visitors through features, pricing, and use cases based on their needs</span>
+            </li>
+            <li className="flex gap-2">
+              <span className="text-emerald-400 shrink-0 mt-0.5">→</span>
+              <span><strong>E-commerce site</strong> — help shoppers find products, compare options, and make purchase decisions</span>
+            </li>
+            <li className="flex gap-2">
+              <span className="text-emerald-400 shrink-0 mt-0.5">→</span>
+              <span><strong>Portfolio / agency site</strong> — walk visitors through case studies, services, and pricing in a natural flow</span>
+            </li>
+          </ul>
+          <p>
+            All it takes is swapping out the knowledge base (resume, product catalog, FAQ docs) — the architecture, RAG pipeline, and UI stay the same. The chatbot adapts to whatever you're showcasing.
           </p>
         </div>
       </CollapsibleSection>

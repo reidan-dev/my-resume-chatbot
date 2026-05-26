@@ -40,6 +40,8 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 
 **September 2022 – April 2026 | 3 years 7 months | Metro Manila, PH / Remote**
 
+**Remote collaborators**: United States, Spain, Vietnam, Australia
+
 - Maintained and extended 60+ proprietary Python packages: internal algorithmic tools used by GIS (Geographic Information System) designers and network consultants to plan and design fibre optic network infrastructure. The tools support network design at scales ranging from small local area deployments to national-level fibre rollouts, handling geospatial data, network topology, route optimization, and coverage planning.
 - Core day-to-day work: adding new features requested by GIS designers and consultants, keeping packages current with advances in frameworks, libraries, and dependencies, performance optimization, and resolving issues reported by the design and consulting teams.
 - Maintained clean REST API contracts between the backend packages and frontends: ensuring the GIS design tools stayed reliably connected across the full stack, and that frontend teams could always depend on stable, well-documented API surfaces.
@@ -74,7 +76,9 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 
 ### Software Engineer | Denso Techno Philippines Inc.
 
-**August 2019 – February 2022 | 2 years 6 months | Metro Manila, PH**
+**August 2019 – February 2022 | 2 years 6 months | Metro Manila, PH / Remote**
+
+**Remote collaborators**: Japan
 
 - Built full-stack enterprise web applications connected to production factories in Japan. Instead of operators manually walking the factory floor to check machine status and conditions, machines sent telemetry and status data to APIs; the systems I built consumed those feeds and presented them visually: giving operators a real-time view of the entire production line flow and machine health from a single interface.
 - Owned the full stack for these systems: Python (Django, Flask, FastAPI) for the backend APIs; JavaScript (React, Node.js, Vue.js, Bootstrap) for the operator-facing frontends.
@@ -84,7 +88,9 @@ Advanced Problem Solving, Critical Thinking, Technical Instruction, Team Leaders
 
 ### IC Design Engineer | Synkom IC Technology Inc.
 
-**October 2018 – April 2019 | 6 months | Metro Manila, PH**
+**October 2018 – April 2019 | 6 months | Metro Manila, PH / Remote collaborations with Japan**
+
+**Remote collaborators**: Japan
 
 - Formulated detailed hardware layout specifications, design schematics, and structural assembly instructions based on electronics engineering and electrical circuit logic theory.
 - Wrote automated data parsing scripts using Python, TCL, and Bash to clean and ingest raw hardware verification telemetry logs.

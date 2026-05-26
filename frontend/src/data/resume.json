@@ -61,6 +61,7 @@
     {
       "title": "Software Developer \u2013 Backend",
       "company": "Sharesource \u2192 Biarri Networks (AUS)",
+      "countries": ["US", "ES", "VN", "AU", "PH"],
       "period": "Sep 2022 \u2013 Apr 2026",
       "duration": "3 yrs 7 mos",
       "bullets": [
@@ -76,6 +77,7 @@
     {
       "title": "Data Visualization Consultant / Data Analyst",
       "company": "Amihan Global Strategies",
+      "countries": ["PH"],
       "period": "Aug 2022 \u2013 Feb 2023",
       "duration": "6 mos",
       "bullets": [
@@ -89,6 +91,7 @@
     {
       "title": "Software Engineer",
       "company": "Denso Techno Philippines Inc.",
+      "countries": ["PH", "JP"],
       "period": "Aug 2019 \u2013 Feb 2022",
       "duration": "2 yrs 6 mos",
       "bullets": [
@@ -101,6 +104,7 @@
     {
       "title": "Part-Time College Instructor",
       "company": "STI College \u2013 Angeles City",
+      "countries": ["PH"],
       "period": "Feb 2023 \u2013 Jul 2023",
       "duration": "5 mos",
       "bullets": [
@@ -112,6 +116,7 @@
     {
       "title": "IC Design Engineer",
       "company": "Synkom IC Technology Inc.",
+      "countries": ["PH", "JP"],
       "period": "Oct 2018 \u2013 Apr 2019",
       "duration": "6 mos",
       "bullets": [
@@ -122,6 +127,7 @@
     {
       "title": "Academic Instructor",
       "company": "AMA Computer College \u2013 Angeles City",
+      "countries": ["PH"],
       "period": "Jun 2017 \u2013 Aug 2017",
       "duration": "3 mos",
       "bullets": [
