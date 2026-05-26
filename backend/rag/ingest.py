@@ -91,13 +91,6 @@ def _load_resume_json_docs(splitter: MarkdownHeaderTextSplitter) -> list[Documen
 
 def run_ingest():
     print(f"Ingesting into {settings.vector_db}...")
-    client = chromadb.HttpClient(host=settings.chroma_host, port=settings.chroma_port)
-
-    try:
-        client.delete_collection("resume")
-        print("Dropped existing collection.")
-    except Exception:
-        pass
 
     splitter = MarkdownHeaderTextSplitter(headers_to_split_on=HEADERS_TO_SPLIT)
     embeddings = get_embeddings()
@@ -148,6 +141,7 @@ def run_ingest():
             pre_delete_collection=True,
         )
     elif settings.vector_db == "chroma":
+        client = chromadb.HttpClient(host=settings.chroma_host, port=settings.chroma_port)
         Chroma.from_documents(
             documents=all_docs,
             embedding=embeddings,
