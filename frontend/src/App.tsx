@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { MessageSquare, Share2, Check, ArrowUp, Moon, Sun, Glasses } from 'lucide-react'
 import confetti from 'canvas-confetti'
+import { AnimatedBorder } from './components/AnimatedBorder'
 
 const OPEN_TO_WORK = import.meta.env.VITE_OPEN_TO_WORK === 'true'
 import { ResumePage } from './pages/ResumePage'
@@ -20,7 +21,6 @@ export default function App() {
   const [activePage, setActivePage] = useState<Page>('resume')
   const [chatOpen, setChatOpen] = useState(false)
   const [contactOpen, setContactOpen] = useState(false)
-  const [showNudge, setShowNudge] = useState(true)
   const [copied, setCopied] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [showScrollTop, setShowScrollTop] = useState(false)
@@ -42,11 +42,6 @@ export default function App() {
       setTimeout(() => setCopied(false), 2000)
     }
   }
-
-  useEffect(() => {
-    const t = setTimeout(() => setShowNudge(false), 10_000)
-    return () => clearTimeout(t)
-  }, [])
 
   useEffect(() => {
     function onScroll() {
@@ -96,7 +91,6 @@ export default function App() {
   }
 
   function openChat() {
-    setShowNudge(false)
     if (isFirstVisit) localStorage.setItem('folio_visited', '1')
     setChatOpen(true)
   }
@@ -132,10 +126,10 @@ export default function App() {
           <div className="flex-1" />
           <div className="flex items-center gap-1 shrink-0">
             {OPEN_TO_WORK && (
-              <span className="inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400 text-xs font-medium shrink-0">
+              <AnimatedBorder radius="9999px" className="shrink-0" innerClassName="flex items-center gap-1.5 px-2 sm:px-2.5 py-1 bg-white dark:bg-gray-900">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                <span className="hidden sm:inline">Open to work</span>
-              </span>
+                <span className="hidden sm:inline text-emerald-700 dark:text-emerald-400 text-xs font-medium">Open to work</span>
+              </AnimatedBorder>
             )}
             <button
               onClick={handleShare}
@@ -166,12 +160,6 @@ export default function App() {
          : <AboutPage />}
       </div>
 
-      {/* Startup gradient highlight — fades with the nudge callout */}
-      <div
-        className={`fixed inset-x-0 bottom-0 h-[50vh] z-10 pointer-events-none transition-opacity duration-700 print:hidden ${showNudge ? 'opacity-100' : 'opacity-0'}`}
-        style={{ background: 'linear-gradient(to top, rgba(2,68,45,0.85) 0%, rgba(5,120,80,0.5) 35%, rgba(16,185,129,0.15) 65%, transparent 100%)' }}
-      />
-
       <div className="print:hidden">
         <ChatWidget
           isOpen={chatOpen}
@@ -200,36 +188,26 @@ export default function App() {
 
       {!chatOpen && (
         <div className="fixed right-4 sm:right-6 z-30 flex flex-col items-end gap-2 print:hidden" style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>
-          {/* Nudge callout — always shown, fades out after 10s or on chat open */}
-          <div
-            className={`bg-white dark:bg-gray-800 rounded-2xl rounded-br-sm shadow-lg border border-emerald-100 dark:border-emerald-900/40 px-3 sm:px-4 py-2.5 sm:py-3 max-w-[180px] sm:max-w-[220px] text-center leading-snug transition-all duration-500 ${
-              showNudge ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'
-            }`}
-          >
+          {/* Nudge callout */}
+          <div className="bg-white dark:bg-gray-800 rounded-2xl rounded-br-sm shadow-lg border border-emerald-100 dark:border-emerald-900/40 px-3 sm:px-4 py-2.5 sm:py-3 max-w-[180px] sm:max-w-[220px] text-center leading-snug">
             <span className="block font-medium text-gray-900 dark:text-gray-100 text-xs sm:text-sm mb-0.5">✨ Try the chatbot!</span>
             <span className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">Ask Folio anything about Dan's experience! 🕶️</span>
           </div>
 
-          <div className="relative">
-            {showNudge && (
-              <span className="absolute inset-0 rounded-2xl bg-emerald-400 opacity-30 animate-ping pointer-events-none" />
-            )}
+          <AnimatedBorder radius="1rem" className="shadow-lg hover:shadow-xl active:scale-95 transition-all" innerClassName="bg-white dark:bg-gray-800">
             <button
               onClick={openChat}
-              className="relative flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-emerald-600 text-white shadow-lg hover:bg-emerald-700 active:scale-95 transition-all overflow-hidden"
+              className="flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 w-full"
             >
-              {showNudge && (
-                <span className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shine pointer-events-none" />
-              )}
-              <MessageSquare size={16} />
-              <span className="text-sm font-medium">Chat with {BOT_NAME}</span>
+              <MessageSquare size={16} className="text-emerald-600 dark:text-emerald-400" />
+              <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Chat with {BOT_NAME}</span>
               {rateLimit.remaining < limit && (
-                <span className="text-xs bg-white/20 px-1.5 py-0.5 rounded-full">
+                <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-1.5 py-0.5 rounded-full">
                   {rateLimit.remaining} left
                 </span>
               )}
             </button>
-          </div>
+          </AnimatedBorder>
         </div>
       )}
     </div>

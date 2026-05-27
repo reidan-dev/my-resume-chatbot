@@ -6,6 +6,7 @@ import 'react-pdf/dist/Page/AnnotationLayer.css'
 import 'react-pdf/dist/Page/TextLayer.css'
 import resumeData from '../data/resume.json'
 import { deviconClass } from '../utils/deviconMap'
+import { AnimatedBorder } from '../components/AnimatedBorder'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
 
@@ -316,8 +317,7 @@ export function ProjectsPage({ onAboutClick }: { onAboutClick?: () => void }) {
 
       {/* Hero: Folio — the live demo */}
       {folio && (
-        <div className="folio-hero mb-8 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 animate-fade-in-up">
-          <div className="relative z-10 bg-white dark:bg-gray-800 rounded-[14px]">
+        <AnimatedBorder radius="1rem" className="mb-8 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 animate-fade-in-up" innerClassName="bg-white dark:bg-gray-800">
           <div className="p-4 pb-3">
             {/* Header */}
             <div className="flex items-start gap-2.5">
@@ -353,8 +353,7 @@ export function ProjectsPage({ onAboutClick }: { onAboutClick?: () => void }) {
               )}
             </div>
           </div>
-          </div>
-        </div>
+        </AnimatedBorder>
       )}
 
       {/* Other projects */}
