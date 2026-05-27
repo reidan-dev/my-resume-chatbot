@@ -1,81 +1,119 @@
 import { Shield, Code2, Brain, Check, Lock, Zap, Server, Globe, Database, Mail } from 'lucide-react'
 
-// ─── SVG flow diagram ────────────────────────────────────────────────────────
+// ─── Flow diagram — vertical step cards ─────────────────────────────────────
 
-const W = 168
-const H = 150
-const GAP = 40
-const N = 4
-const WIDE = N * W + (N - 1) * GAP + 32
-const cols = [0, 1, 2, 3].map(i => 16 + i * (W + GAP))
+type FlowStep = {
+  emoji: string
+  title: string
+  sub: string
+  desc: string
+  highlight?: boolean
+}
 
-type FlowStep = { emoji: string; title: string; sub: string; solid?: boolean }
-
-const humanRow: FlowStep[] = [
-  { emoji: '📄', title: 'My Resume',           sub: 'Experience, skills & projects' },
-  { emoji: '🤖', title: 'Folio Chatbot',       sub: 'Reads your resume & answers',  solid: true },
-  { emoji: '💬', title: 'Your Answer',          sub: 'Natural, grounded in real time' },
-  { emoji: '📌', title: 'Source Citation',     sub: 'Verified & explorable' },
+const humanSteps: FlowStep[] = [
+  {
+    emoji: '📄',
+    title: 'My Resume',
+    sub: 'Experience, skills & projects',
+    desc: "Everything about Dan lives here — experience, skills, education. It's the single source of truth the chatbot draws from.",
+  },
+  {
+    emoji: '🤖',
+    title: 'Folio Chatbot',
+    sub: 'Finds the relevant parts & answers',
+    desc: 'You ask a question. Folio searches the resume, finds the most relevant sections, and crafts a natural answer grounded strictly in the facts.',
+    highlight: true,
+  },
+  {
+    emoji: '💬',
+    title: 'Your Answer',
+    sub: 'Natural language, streamed in real time',
+    desc: 'The answer appears token by token as it generates — not a copy-paste, but a genuine explanation based on what the resume actually says.',
+  },
+  {
+    emoji: '📌',
+    title: 'Source Citation',
+    sub: 'Verified & explorable',
+    desc: 'Every answer includes a badge showing which resume section was used as context. You can verify the answer and explore the original text.',
+  },
 ]
 
-const techRow: FlowStep[] = [
-  { emoji: '📄', title: 'Resume + Q&A Guide', sub: 'Chunks → pgvector index' },
-  { emoji: '🧠', title: 'LangChain Embed',    sub: 'text-embedding-3-small', solid: true },
-  { emoji: '⚡', title: 'LLM Prompt & Stream',sub: 'gpt-4o-mini → SSE' },
-  { emoji: '🔗', title: 'Citations & Links',  sub: 'Context → clickable source' },
+const techSteps: FlowStep[] = [
+  {
+    emoji: '📄',
+    title: 'Embed',
+    sub: 'Resume + Q&A guide → pgvector index',
+    desc: "The resume and Q&A guide are split into chunks and converted to vectors using OpenAI's text-embedding-3-small. These live in pgvector on Supabase — a searchable index of meaning, not just keywords.",
+  },
+  {
+    emoji: '🧠',
+    title: 'Retrieve',
+    sub: 'Semantic search via LangChain',
+    desc: "Your question is embedded the same way, then LangChain queries pgvector for the most semantically similar chunks. It's like a librarian who remembers every line of the resume.",
+    highlight: true,
+  },
+  {
+    emoji: '⚡',
+    title: 'Generate',
+    sub: 'gpt-4o-mini prompt → SSE stream',
+    desc: 'The retrieved chunks and your question form a prompt for gpt-4o-mini. The model streams its response via Server-Sent Events — tokens arrive one by one, not all at once.',
+  },
+  {
+    emoji: '🔗',
+    title: 'Cite',
+    sub: 'Context → clickable source badge',
+    desc: 'Each answer includes source badges showing which resume section was retrieved. You can verify the answer and click through to explore the original text.',
+  },
 ]
 
-function FlowDiagram({ rows, label }: { rows: FlowStep[]; label: string }) {
-  const boxH = H + 18
-  const svgH = boxH + 18
-  const y0 = 18
-
-  function Box({ x, y, title, sub, emoji, solid }: { x: number; y: number; title: string; sub: string; emoji?: string; solid?: boolean }) {
-    const bg      = solid ? 'url(#boxGradSolid)' : 'url(#boxGrad)'
-    const strokeW = solid ? 1.5 : 1.2
-    const txtColor = solid ? '#ffffff' : '#059669'
-    const subColor = solid ? 'rgba(255,255,255,0.7)' : 'rgba(5,150,105,0.5)'
-    return (
-      <g>
-        <rect x={x} y={y} width={W} height={H} rx="14" fill={bg} stroke="#059669" strokeWidth={strokeW} />
-        {emoji ? (
-          <text x={x + W / 2} y={y + 46} textAnchor="middle" fontSize="34" fontFamily="inherit">{emoji}</text>
-        ) : (
-          <text x={x + W / 2} y={y + 50} textAnchor="middle" fill={txtColor} fontSize="13" fontFamily="inherit" fontWeight="600">{title}</text>
-        )}
-        <text x={x + W / 2} y={y + (emoji ? 82 : 70)} textAnchor="middle" fill={txtColor} fontSize="12" fontFamily="inherit" fontWeight="600">{emoji ? title : ''}</text>
-        <text x={x + W / 2} y={y + (emoji ? 100 : 90)} textAnchor="middle" fill={subColor} fontSize="10" fontFamily="inherit">{sub}</text>
-      </g>
-    )
-  }
-
-  function Arrow({ x1, x2, y }: { x1: number; x2: number; y: number }) {
-    return <line x1={x1} y1={y} x2={x2} y2={y} stroke="#059669" strokeWidth="1.8" markerEnd="url(#arr-emerald)" opacity="0.55" />
-  }
-
+function FlowDiagram({ steps }: { steps: FlowStep[] }) {
   return (
-    <svg viewBox={`0 0 ${WIDE} ${svgH}`} className="w-full h-auto" xmlns="http://www.w3.org/2000/svg" aria-label={label}>
-      <defs>
-        <marker id="arr-emerald" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
-          <path d="M0,0 L8,4 L0,8" fill="#059669" />
-        </marker>
-        <linearGradient id="boxGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#ecfdf5" />
-          <stop offset="100%" stopColor="#d1fae5" />
-        </linearGradient>
-        <linearGradient id="boxGradSolid" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#059669" />
-          <stop offset="100%" stopColor="#047857" />
-        </linearGradient>
-      </defs>
-      <text x="16" y="12" fill="#059669" fontSize="9" fontFamily="inherit" fontWeight="600" letterSpacing="1" opacity="0.4">{label}</text>
-      {rows.map((s, i) => (
-        <Box key={i} x={cols[i]} y={y0} title={s.title} sub={s.sub} emoji={s.emoji} solid={s.solid} />
-      ))}
-      {[0, 1, 2].map(i => (
-        <Arrow key={i} x1={cols[i] + W + 4} x2={cols[i + 1] - 4} y={y0 + H / 2} />
-      ))}
-    </svg>
+    <div>
+      {steps.map((step, i) => {
+        const isLast = i === steps.length - 1
+        return (
+          <div key={i} className="flex gap-4">
+            {/* Left column: step number + connector line */}
+            <div className="flex flex-col items-center pt-1 shrink-0">
+              <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                step.highlight
+                  ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-200 dark:shadow-emerald-900/50'
+                  : 'bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500'
+              }`}>
+                {i + 1}
+              </div>
+              {!isLast && (
+                <div className="w-px flex-1 my-2 bg-gradient-to-b from-gray-200 dark:from-gray-700 to-transparent" />
+              )}
+            </div>
+
+            {/* Right column: card */}
+            <div className={`flex-1 mb-3 rounded-xl border p-4 ${
+              step.highlight
+                ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-700/60'
+                : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700'
+            }`}>
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-white dark:bg-gray-700 border border-gray-100 dark:border-gray-600 flex items-center justify-center text-xl shrink-0 shadow-sm">
+                  {step.emoji}
+                </div>
+                <div className="min-w-0">
+                  <p className={`text-sm font-semibold leading-snug ${
+                    step.highlight ? 'text-emerald-900 dark:text-emerald-100' : 'text-gray-900 dark:text-gray-100'
+                  }`}>{step.title}</p>
+                  <p className={`text-[10px] font-medium mt-0.5 leading-snug ${
+                    step.highlight ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-400 dark:text-gray-500'
+                  }`}>{step.sub}</p>
+                </div>
+              </div>
+              <p className={`text-[11px] leading-relaxed ${
+                step.highlight ? 'text-emerald-800 dark:text-emerald-200/80' : 'text-gray-500 dark:text-gray-400'
+              }`}>{step.desc}</p>
+            </div>
+          </div>
+        )
+      })}
+    </div>
   )
 }
 
@@ -167,50 +205,18 @@ export function AboutPage() {
 
           {/* Human Layer */}
           <div className="mb-8">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-500 mb-3">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-500 mb-4">
               Human Layer — what you experience
             </p>
-            <FlowDiagram rows={humanRow} label="HUMAN FLOW" />
-            <div className="mt-4 grid sm:grid-cols-2 gap-2">
-              {[
-                { n: '1', title: 'Your Resume',     desc: "Everything about Dan lives here — experience, skills, education. It's the single source of truth." },
-                { n: '2', title: 'Folio Chatbot',   desc: 'You ask a question. Folio finds the relevant resume sections and crafts a natural answer grounded in the facts.' },
-                { n: '3', title: 'Your Answer',     desc: 'The answer streams back in real time — not a copy-paste, but a genuine explanation based on what it knows.' },
-                { n: '4', title: 'Source Citation', desc: 'Every answer shows which resume section was used. You can verify and explore further.' },
-              ].map(({ n, title, desc }) => (
-                <div key={n} className="flex gap-3 p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60">
-                  <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold flex items-center justify-center mt-0.5">{n}</span>
-                  <div>
-                    <p className="text-xs font-semibold text-gray-900 dark:text-gray-100">{title}</p>
-                    <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed mt-0.5">{desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <FlowDiagram steps={humanSteps} />
           </div>
 
           {/* Tech Layer */}
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-500 mb-3">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-500 mb-4">
               Tech Layer — how Folio actually does it
             </p>
-            <FlowDiagram rows={techRow} label="TECH FLOW" />
-            <div className="mt-4 grid sm:grid-cols-2 gap-2">
-              {[
-                { n: '1', title: 'Embedding',   desc: "Resume and Q&A guide are chunked and vectorized using OpenAI's text-embedding-3-small, stored in pgvector on Supabase." },
-                { n: '2', title: 'Retrieval',   desc: 'Your question is embedded the same way. LangChain searches pgvector for the most semantically similar chunks.' },
-                { n: '3', title: 'Generation',  desc: 'Retrieved context + question form a prompt for gpt-4o-mini. The answer streams back token by token via SSE.' },
-                { n: '4', title: 'Citation',    desc: 'Source badges show which resume section was retrieved, so you can verify the answer and click through to explore.' },
-              ].map(({ n, title, desc }) => (
-                <div key={n} className="flex gap-3 p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60">
-                  <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold flex items-center justify-center mt-0.5">{n}</span>
-                  <div>
-                    <p className="text-xs font-semibold text-gray-900 dark:text-gray-100">{title}</p>
-                    <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed mt-0.5">{desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <FlowDiagram steps={techSteps} />
           </div>
         </section>
 
