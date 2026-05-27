@@ -302,7 +302,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   )
 }
 
-export function ProjectsPage({ onAboutClick }: { onAboutClick?: () => void }) {
+export function ProjectsPage({ onFolioClick }: { onFolioClick?: () => void }) {
   const folio = projects.find(p => p.name === 'My AI-enabled Chatbot Resume Page')
   const others = projects.filter(p => p.name !== 'My AI-enabled Chatbot Resume Page')
 
@@ -344,8 +344,8 @@ export function ProjectsPage({ onAboutClick }: { onAboutClick?: () => void }) {
           <div className="px-4 pb-3.5 flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-700">
             <span className="text-[10px] font-medium text-gray-400 dark:text-gray-500">{folio.period}</span>
             <div className="flex items-center gap-1.5">
-              {onAboutClick && (
-                <button onClick={onAboutClick}
+              {onFolioClick && (
+                <button onClick={onFolioClick}
                   className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded-md bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 font-medium hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors">
                   <ArrowUpRight size={11} />
                   Details
@@ -373,7 +373,7 @@ export function ProjectsPage({ onAboutClick }: { onAboutClick?: () => void }) {
         <div className="text-center">
           <div className="flex items-center justify-center gap-3 flex-wrap">
             <button
-              onClick={onAboutClick}
+              onClick={onFolioClick}
               className="text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors underline underline-offset-2"
             >
               About Folio

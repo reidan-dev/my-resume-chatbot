@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Shield, Code2, Brain, Check, Lock, Zap, Server, Globe, Database, Mail } from 'lucide-react'
+import { Shield, Code2, Brain, Check, Lock, Zap, Server, Globe, Database, Mail, MessageSquare } from 'lucide-react'
 
 // ─── Typewriter hook ─────────────────────────────────────────────────────────
 
@@ -242,7 +242,7 @@ function HeroHeadline() {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-export function AboutPage() {
+export function AboutPage({ onOpenChat }: { onOpenChat?: () => void }) {
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <div className="space-y-14">
@@ -499,6 +499,31 @@ export function AboutPage() {
             ))}
           </div>
         </section>
+
+        {/* ── CTA ──────────────────────────────────────────────────────────── */}
+        {onOpenChat && (
+          <>
+            <Divider />
+            <section className="motion-safe:animate-fade-in-up" style={{ animationDelay: '600ms', animationFillMode: 'both' }}>
+              <div className="rounded-xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-900/40 px-5 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl select-none" aria-hidden>🤖</span>
+                  <div>
+                    <p className="font-semibold text-gray-900 dark:text-gray-100 text-sm">Want to see what Folio can do?</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Ask it anything about Dan's experience, skills, or projects.</p>
+                  </div>
+                </div>
+                <button
+                  onClick={onOpenChat}
+                  className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium transition-colors"
+                >
+                  <MessageSquare size={14} />
+                  Chat with Folio
+                </button>
+              </div>
+            </section>
+          </>
+        )}
 
       </div>
     </div>

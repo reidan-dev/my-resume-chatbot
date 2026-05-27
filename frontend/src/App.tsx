@@ -15,10 +15,16 @@ import { useDarkMode } from './hooks/useDarkMode'
 
 const BOT_NAME = import.meta.env.VITE_BOT_NAME ?? 'Folio'
 
-type Page = 'resume' | 'projects' | 'about'
+type Page = 'folio' | 'about-me' | 'projects'
+
+const PAGE_LABELS: Record<Page, string> = {
+  folio: 'Folio',
+  'about-me': 'About Me',
+  projects: 'Projects',
+}
 
 export default function App() {
-  const [activePage, setActivePage] = useState<Page>('resume')
+  const [activePage, setActivePage] = useState<Page>('folio')
   const [chatOpen, setChatOpen] = useState(false)
   const [contactOpen, setContactOpen] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -26,6 +32,12 @@ export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false)
   const confettiFiredRef = useRef(false)
   const [isFirstVisit] = useState(() => !localStorage.getItem('folio_visited'))
+  const [showNudge, setShowNudge] = useState(true)
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowNudge(false), 15000)
+    return () => clearTimeout(t)
+  }, [])
   const { dark, toggle: toggleDark } = useDarkMode()
   const health = useHealth()
   const limit = health.rateLimit?.limit ?? 5
@@ -92,6 +104,7 @@ export default function App() {
 
   function openChat() {
     if (isFirstVisit) localStorage.setItem('folio_visited', '1')
+    setShowNudge(false)
     setChatOpen(true)
   }
 
@@ -109,17 +122,17 @@ export default function App() {
           <div className="w-px h-5 bg-gray-200 dark:bg-gray-700 shrink-0" />
           {/* Page tabs */}
           <div className="flex items-center gap-0.5">
-            {(['resume', 'projects', 'about'] as Page[]).map((page) => (
+            {(['folio', 'about-me', 'projects'] as Page[]).map((page) => (
               <button
                 key={page}
                 onClick={() => setActivePage(page)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors capitalize ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   activePage === page
                     ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30'
                     : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'
                 }`}
               >
-                {page}
+                {PAGE_LABELS[page]}
               </button>
             ))}
           </div>
@@ -155,9 +168,9 @@ export default function App() {
       </nav>
 
       <div key={activePage} className="animate-fade-in-up">
-        {activePage === 'resume' ? <ResumePage onAboutClick={() => setActivePage('about')} />
-         : activePage === 'projects' ? <ProjectsPage onAboutClick={() => setActivePage('about')} />
-         : <AboutPage />}
+        {activePage === 'folio' ? <AboutPage onOpenChat={() => { setActivePage('about-me'); window.scrollTo({ top: 0, behavior: 'smooth' }); setChatOpen(true) }} />
+         : activePage === 'about-me' ? <ResumePage onAboutClick={() => setActivePage('folio')} />
+         : <ProjectsPage onFolioClick={() => setActivePage('folio')} />}
       </div>
 
       <div className="print:hidden">
@@ -186,23 +199,25 @@ export default function App() {
         </button>
       )}
 
-      {!chatOpen && (
+      {!chatOpen && activePage === 'about-me' && (
         <div className="fixed right-4 sm:right-6 z-30 flex flex-col items-end gap-2 print:hidden" style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>
           {/* Nudge callout */}
-          <div className="bg-white dark:bg-gray-800 rounded-2xl rounded-br-sm shadow-lg border border-emerald-100 dark:border-emerald-900/40 px-3 sm:px-4 py-2.5 sm:py-3 max-w-[180px] sm:max-w-[220px] text-center leading-snug">
-            <span className="block font-medium text-gray-900 dark:text-gray-100 text-xs sm:text-sm mb-0.5">✨ Try the chatbot!</span>
-            <span className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">Ask Folio anything about Dan's experience! 🕶️</span>
-          </div>
+          {showNudge && (
+            <div className="bg-white dark:bg-gray-800 rounded-2xl rounded-br-sm shadow-lg border border-emerald-400 dark:border-emerald-500 px-3 sm:px-4 py-2.5 sm:py-3 max-w-[180px] sm:max-w-[220px] text-center leading-snug animate-fade-in">
+              <span className="block font-medium text-gray-900 dark:text-gray-100 text-xs sm:text-sm mb-0.5">✨ Try the chatbot!</span>
+              <span className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">Ask Folio anything about Dan's experience! 🕶️</span>
+            </div>
+          )}
 
-          <AnimatedBorder radius="1rem" className="shadow-lg hover:shadow-xl active:scale-95 transition-all" innerClassName="bg-white dark:bg-gray-800">
+          <AnimatedBorder radius="1rem" className="shadow-lg hover:shadow-xl active:scale-95 transition-all" innerClassName="bg-emerald-600">
             <button
               onClick={openChat}
               className="flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 w-full"
             >
-              <MessageSquare size={16} className="text-emerald-600 dark:text-emerald-400" />
-              <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Chat with {BOT_NAME}</span>
+              <MessageSquare size={16} className="text-white" />
+              <span className="text-sm font-medium text-white">Chat with {BOT_NAME}</span>
               {rateLimit.remaining < limit && (
-                <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-1.5 py-0.5 rounded-full">
+                <span className="text-xs bg-emerald-500/40 text-white px-1.5 py-0.5 rounded-full">
                   {rateLimit.remaining} left
                 </span>
               )}
