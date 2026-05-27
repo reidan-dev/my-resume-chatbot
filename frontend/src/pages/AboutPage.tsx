@@ -1,10 +1,6 @@
 import { useState } from 'react'
 import { ChevronDown, Shield, Code2, ArrowUpRight, Brain, MessageSquare, Cpu, Sparkles } from 'lucide-react'
 
-interface Props {
-  onChatClick?: () => void
-}
-
 function CollapsibleSection({ title, subtitle, icon: Icon, children }: { title: string; subtitle: string; icon: React.ComponentType<{ className?: string }>; children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
   return (
@@ -51,11 +47,11 @@ const humanRow: { emoji: string; title: string; sub: string; solid?: boolean }[]
   { emoji: '📌', title: 'Source Citation',  sub: 'Verified & explorable' },
 ]
 
-const techRow = [
-  { title: 'Resume + Q&A Guide',  sub: 'Chunks → pgvector index' },
-  { title: 'LangChain Embed',     sub: 'text-embedding-3-small', solid: true },
-  { title: 'LLM Prompt & Stream', sub: 'gpt-4o-mini → SSE' },
-  { title: 'Citations & Links',   sub: 'Context → clickable source' },
+const techRow: typeof humanRow = [
+  { emoji: '📄', title: 'Resume + Q&A Guide',  sub: 'Chunks → pgvector index' },
+  { emoji: '🧠', title: 'LangChain Embed',     sub: 'text-embedding-3-small', solid: true },
+  { emoji: '⚡', title: 'LLM Prompt & Stream', sub: 'gpt-4o-mini → SSE' },
+  { emoji: '🔗', title: 'Citations & Links',   sub: 'Context → clickable source' },
 ]
 
 function FlowDiagram({ rows, label }: { rows: typeof humanRow; label: string }) {
@@ -117,7 +113,7 @@ function FlowDiagram({ rows, label }: { rows: typeof humanRow; label: string }) 
   )
 }
 
-export function AboutPage({ onChatClick }: Props) {
+export function AboutPage() {
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <header className="mb-8">

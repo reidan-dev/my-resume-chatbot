@@ -163,7 +163,7 @@ export default function App() {
       <div key={activePage} className="animate-fade-in-up">
         {activePage === 'resume' ? <ResumePage onAboutClick={() => setActivePage('about')} />
          : activePage === 'projects' ? <ProjectsPage onAboutClick={() => setActivePage('about')} />
-         : <AboutPage onChatClick={openChat} />}
+         : <AboutPage />}
       </div>
 
       {/* Startup gradient highlight — fades with the nudge callout */}

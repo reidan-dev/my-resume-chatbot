@@ -216,7 +216,7 @@ function MentoredProjectsCard() {
       </div>
       <div className="px-4 pb-3.5 pt-2 border-t border-gray-100 dark:border-gray-700">
         <div className="flex items-center gap-3 flex-wrap">
-          {groups.map((g, i) => (
+          {groups.map((g) => (
             <div key={g.num}
               className="shrink-0 flex items-center gap-1 bg-gray-50 dark:bg-gray-700/50 rounded-full pl-3 pr-2 py-1 border border-gray-100 dark:border-gray-600/50">
               <span className="text-xs font-bold text-gray-300 dark:text-gray-600 select-none">{g.num}</span>

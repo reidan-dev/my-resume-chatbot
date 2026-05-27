@@ -156,7 +156,7 @@ export function ResumePage({ onAboutClick }: { onAboutClick?: () => void }) {
   const [collapsed, setCollapsed] = useState<Set<number>>(() => new Set(experience.map((_, i) => i)))
   const [collapsedProjects, setCollapsedProjects] = useState<Set<number>>(() => new Set(projects.items.map((_, i) => i)))
   const [collapsedEdu, setCollapsedEdu] = useState<Set<number>>(() => new Set(education.map((_, i) => i)))
-  const [collapsedSkills, setCollapsedSkills] = useState<Set<number>>(() => new Set(Object.keys(skills)))
+  const [collapsedSkills, setCollapsedSkills] = useState<Set<string>>(() => new Set(Object.keys(skills)))
 
   function toggleJob(i: number) {
     setCollapsed((prev) => {
@@ -245,7 +245,9 @@ export function ResumePage({ onAboutClick }: { onAboutClick?: () => void }) {
       <Section title="Skills" icon={Wrench}>
         <div>
           {Object.entries(skills).map(([category, items]) => {
-            const IconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+            type LucideIcon = React.ComponentType<{ className?: string; size?: number }>
+
+const IconMap: Record<string, LucideIcon> = {
               'Backend Development': Server,
               'Frontend & Web': Globe,
               'Data & Infrastructure': Database,
