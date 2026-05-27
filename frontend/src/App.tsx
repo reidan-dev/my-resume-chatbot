@@ -111,7 +111,6 @@ export default function App() {
             <div className="w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center shadow-sm shrink-0">
               <Glasses size={15} className="text-white" />
             </div>
-            <span className="font-semibold text-sm text-gray-900 dark:text-gray-100 tracking-tight whitespace-nowrap">Dan Pablo</span>
           </div>
           <div className="w-px h-5 bg-gray-200 dark:bg-gray-700 shrink-0" />
           {/* Page tabs */}
