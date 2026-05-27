@@ -316,7 +316,8 @@ export function ProjectsPage({ onAboutClick }: { onAboutClick?: () => void }) {
 
       {/* Hero: Folio — the live demo */}
       {folio && (
-        <div className="mb-8 bg-white dark:bg-gray-800 rounded-2xl border-2 border-emerald-200 dark:border-emerald-800 hover:border-emerald-300 dark:hover:border-emerald-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 animate-fade-in-up">
+        <div className="folio-hero mb-8 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 animate-fade-in-up">
+          <div className="relative z-10 bg-white dark:bg-gray-800 rounded-[14px]">
           <div className="p-4 pb-3">
             {/* Header */}
             <div className="flex items-start gap-2.5">
@@ -351,6 +352,7 @@ export function ProjectsPage({ onAboutClick }: { onAboutClick?: () => void }) {
                 </button>
               )}
             </div>
+          </div>
           </div>
         </div>
       )}

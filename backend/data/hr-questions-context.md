@@ -39,7 +39,7 @@ I graduated in 2017 with a BS in Electronics and Communications Engineering, whi
 
 From there I moved fully into software: I spent about 3 years at Denso Techno Philippines as a Software Engineer building full-stack enterprise systems with Django, FastAPI, React, and Vue, and practicing strict TDD: achieving 98-100% QA clearance across all integration contracts. I left Denso after my contract expired, wanting to pursue a role with more exposure to data science and analytics.
 
-After a short period upskilling and searching for the right fit, I joined Amihan Global Strategies as a Data Analyst technical lead, where I shifted focus toward data pipelines and dashboards using Presto SQL, Apache Spark, and Superset. I also briefly taught programming at STI College part-time while starting my role at Sharesource in September 2022, where I was contracted to Biarri Networks in Australia. At Biarri I maintained and extended 60+ proprietary Python packages: algorithmic tools used by GIS designers and network consultants to plan fibre optic network infrastructure, ranging from small local deployments to national-scale rollouts. Day-to-day work covered new features, framework and library updates, performance optimization, API maintenance, and resolving issues reported by the GIS design and consulting teams. My role ended in April 2026 due to a mass layoff, so I'm now actively looking for my next opportunity.
+After a short period upskilling and searching for the right fit, I joined Amihan Global Strategies as a Data Analyst technical lead, where I shifted focus toward data pipelines and dashboards using Presto SQL, Apache Spark, and Superset. From Amihan, I transitioned into teaching at STI College part-time (Feb–Jul 2023) while starting my role at Sharesource in Sep 2022, where I was contracted to Biarri Networks in Australia. At Biarri I maintained and extended 60+ proprietary Python packages: algorithmic tools used by GIS designers and network consultants to plan fibre optic network infrastructure, ranging from small local deployments to national-scale rollouts. Day-to-day work covered new features, framework and library updates, performance optimization, API maintenance, and resolving issues reported by the GIS design and consulting teams. My role ended in April 2026 due to a mass layoff, so I'm now actively looking for my next opportunity.
 
 ---
 
@@ -344,7 +344,8 @@ There are a few gaps in my timeline, and I'm happy to explain them:
 
 - **Aug 2017 – Oct 2018 (~14 months):** I took this time to review for and pass the Professional Regulation Commission board examinations for Electronics Engineering, which I cleared in April 2018. I was also exploring opportunities in tech during this period.
 - **Apr 2019 – Aug 2019 (~4 months):** After my contract at Synkom ended, I was actively searching for a software engineering role that better aligned with my direction toward full-stack development and production systems work.
-- **Feb 2022 – Aug 2022 (~6 months):** After my contract at Denso concluded, I took deliberate time to upskill in data science and analytics before landing at Amihan Global Strategies in August 2022 as a Data Analyst.
+- **Apr 2019 – Feb 2022 (~2 yrs 10 mos):** After my contract at Synkom ended, I took time searching for a software engineering role aligned with my direction toward full-stack development, eventually landing at Denso Techno Philippines.
+- **Feb 2022 – Feb 2023 (~1 yr):** This was my time at Amihan Global Strategies. There wasn't a gap here — this is documented employment, not time off.
 
 ---
 
@@ -428,20 +429,20 @@ And my teaching background isn't just a resume line: it means I write clearly, d
 
 ---
 
-## Fun Facts / Personal Trivia / Hobbies
+## Fun Facts / Personal Trivia
 
 > **Important:** If a recruiter asks about "facts about Dan" or "interesting things about Dan," share professional facts first — achievements, skills, experience, certifications. Only share the personal/trivia facts below when the recruiter explicitly uses words like "fun facts," "personal," "trivia," "hobbies," "favorites," "lighthearted," or "quirky."
 
 ### Favorite Pokémon: Eevee
 Dan's favorite Pokémon is Eevee.
 
-### Favorite Number
+### Favorite Number: 22
 Dan's favorite number is 22.
 
 ### Zodiac Sign
 Dan's zodiac sign is Virgo.
 
-### Music / Taylor Swift
+### Taylor Swift / Music
 Dan is a fan of Taylor Swift and considers himself a Swiftie.
 
 ### Art and Drawing
