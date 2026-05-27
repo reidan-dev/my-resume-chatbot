@@ -32,11 +32,11 @@ function useTypewriter() {
       for (let i = 0; i <= target.length; i++) {
         if (cancelled.current) return
         setText(target.slice(0, i))
-        let delay = 38 + Math.random() * 22
+        let delay = 24 + Math.random() * 16
         const prev = target[i - 1]
-        if (prev === ' ' && Math.random() < 0.4) delay += 45
-        if (prev === ',' || prev === '?') delay += 90
-        if (Math.random() < 0.06) delay += 80  // rare stumble
+        if (prev === ' ' && Math.random() < 0.4) delay += 30
+        if (prev === ',' || prev === '?') delay += 60
+        if (Math.random() < 0.06) delay += 55  // rare stumble
         await sleep(delay)
       }
     }
@@ -45,7 +45,7 @@ function useTypewriter() {
       for (let i = current.length; i >= 0; i--) {
         if (cancelled.current) return
         setText(current.slice(0, i))
-        await sleep(28 + Math.random() * 18)
+        await sleep(18 + Math.random() * 12)
       }
     }
 
