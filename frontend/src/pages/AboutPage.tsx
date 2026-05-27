@@ -8,17 +8,29 @@ interface Props {
 function CollapsibleSection({ title, subtitle, icon: Icon, children }: { title: string; subtitle: string; icon: React.ComponentType<{ className?: string }>; children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
   return (
-    <section className="mt-8 first:mt-0">
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between text-xs font-semibold uppercase tracking-widest text-emerald-600 pb-3 border-b border-gray-200 dark:border-gray-700 mb-0 hover:text-emerald-500 transition-colors"
-      >
-        <span className="flex items-center gap-2"><Icon className="w-4 h-4 shrink-0" />{title} <span className="text-[10px] font-normal text-gray-400 dark:text-gray-500 tracking-normal ml-0.5">{subtitle}</span></span>
-        <ChevronDown size={12} className={`transition-transform duration-200 shrink-0 ${open ? 'rotate-180' : ''}`} />
-      </button>
+    <section className="pb-6 last:pb-0">
+      <div>
+        <button
+          onClick={() => setOpen((v) => !v)}
+          title={open ? 'Collapse' : 'Expand'}
+          className="flex items-start gap-1.5 text-left group"
+        >
+          <ChevronDown
+            size={13}
+            className={`mt-0.5 shrink-0 text-emerald-500 dark:text-emerald-400 transition-transform duration-200 ${open ? 'rotate-180' : '-rotate-90'}`}
+          />
+          <div>
+            <div className="flex items-center gap-1.5">
+              <Icon className="w-[13px] h-[13px] shrink-0 text-emerald-500 dark:text-emerald-400" />
+              <div className="font-semibold text-gray-900 dark:text-gray-100 text-sm group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">{title}</div>
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{subtitle}</div>
+          </div>
+        </button>
+      </div>
       <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
         <div className="overflow-hidden">
-          <div className="pt-4">{children}</div>
+          <div className="pt-2">{children}</div>
         </div>
       </div>
     </section>
@@ -132,16 +144,7 @@ export function AboutPage({ onChatClick }: Props) {
       <header className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">About Folio</h1>
         <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-          A full-stack AI project — not just a static resume.{' '}
-          <strong className="text-gray-700 dark:text-gray-200">Try it now</strong>{' '}
-          {onChatClick && (
-            <button
-              onClick={onChatClick}
-              className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors underline underline-offset-2"
-            >
-              <MessageSquare size={12} /> Chat with Folio
-            </button>
-          )}
+          A full-stack AI project — not just a static resume.
         </p>
       </header>
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { deviconClass } from '../utils/deviconMap'
-import { Mail, MapPin, Phone, ChevronDown, Wrench, Briefcase, GraduationCap, FileText } from 'lucide-react'
+import { Mail, MapPin, Phone, ChevronDown, Wrench, Briefcase, GraduationCap, FileText, Server, Globe, Database, Settings } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
 import resumeData from '../data/resume.json'
 
@@ -156,6 +156,7 @@ export function ResumePage({ onAboutClick }: { onAboutClick?: () => void }) {
   const [collapsed, setCollapsed] = useState<Set<number>>(() => new Set(experience.map((_, i) => i)))
   const [collapsedProjects, setCollapsedProjects] = useState<Set<number>>(() => new Set(projects.items.map((_, i) => i)))
   const [collapsedEdu, setCollapsedEdu] = useState<Set<number>>(() => new Set(education.map((_, i) => i)))
+  const [collapsedSkills, setCollapsedSkills] = useState<Set<number>>(() => new Set(Object.keys(skills)))
 
   function toggleJob(i: number) {
     setCollapsed((prev) => {
@@ -242,26 +243,62 @@ export function ResumePage({ onAboutClick }: { onAboutClick?: () => void }) {
 
       {/* Skills */}
       <Section title="Skills" icon={Wrench}>
-        <div className="space-y-3">
-          {Object.entries(skills).map(([category, items]) => (
-            <div key={category}>
-              <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">{category}</span>
-              <div className="mt-1.5 flex flex-wrap gap-1.5">
-                {items.map((skill) => {
-                  const icon = deviconClass(skill)
-                  return (
-                    <span
-                      key={skill}
-                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:border-emerald-200 dark:hover:border-emerald-700 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors cursor-default"
-                    >
-                      {icon && <i className={`${icon} text-[13px] leading-none`} />}
-                      {skill}
-                    </span>
-                  )
-                })}
+        <div>
+          {Object.entries(skills).map(([category, items]) => {
+            const IconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+              'Backend Development': Server,
+              'Frontend & Web': Globe,
+              'Data & Infrastructure': Database,
+              'Tools & Methods': Settings,
+            }
+            const SkillIcon = IconMap[category]
+            const isCollapsed = collapsedSkills.has(category)
+            return (
+              <div key={category} className="pb-6 last:pb-0">
+                <div>
+                  <button
+                    onClick={() => setCollapsedSkills((prev) => {
+                      const next = new Set(prev)
+                      if (next.has(category)) next.delete(category)
+                      else next.add(category)
+                      return next
+                    })}
+                    title={isCollapsed ? 'Expand' : 'Collapse'}
+                    className="flex items-start gap-1.5 text-left group"
+                  >
+                    <ChevronDown
+                      size={13}
+                      className={`mt-0.5 shrink-0 text-emerald-500 dark:text-emerald-400 transition-transform duration-200 print:hidden ${isCollapsed ? '-rotate-90' : ''}`}
+                    />
+                    <div>
+                      <div className="flex items-center gap-1.5">
+                        {SkillIcon && <SkillIcon size={13} className="text-emerald-500 dark:text-emerald-400 shrink-0" />}
+                        <div className="font-semibold text-gray-900 dark:text-gray-100 text-sm group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">{category}</div>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+                <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${isCollapsed ? 'grid-rows-[0fr]' : 'grid-rows-[1fr]'}`}>
+                  <div className="overflow-hidden">
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      {items.map((skill) => {
+                        const icon = deviconClass(skill)
+                        return (
+                          <span
+                            key={skill}
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:border-emerald-200 dark:hover:border-emerald-700 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors cursor-default"
+                          >
+                            {icon && <i className={`${icon} text-[13px] leading-none`} />}
+                            {skill}
+                          </span>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </Section>
 
