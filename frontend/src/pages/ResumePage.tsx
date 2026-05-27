@@ -406,14 +406,33 @@ export function ResumePage({ onAboutClick }: { onAboutClick?: () => void }) {
         })}
       </Section>
 
-      <div className="text-center mt-2 pb-2 print:hidden space-y-1">
-        <p className="text-xs text-gray-400 dark:text-gray-600">Last updated {meta.lastUpdated}</p>
-        <button
-          onClick={onAboutClick}
-          className="text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors underline underline-offset-2"
-        >
-          About Folio
-        </button>
+      <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 print:hidden">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="text-center sm:text-left">
+            <p className="text-xs text-gray-400 dark:text-gray-500">Last updated {meta.lastUpdated}</p>
+          </div>
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <button
+              onClick={onAboutClick}
+              className="text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors underline underline-offset-2"
+            >
+              About Folio
+            </button>
+            <div className="hidden sm:block w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
+            <a
+              href="https://simple.danpablo.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors"
+            >
+              <span>View Simple Version</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="17 17 17 7 7 7"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   )
