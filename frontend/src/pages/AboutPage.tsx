@@ -32,10 +32,11 @@ function useTypewriter() {
       for (let i = 0; i <= target.length; i++) {
         if (cancelled.current) return
         setText(target.slice(0, i))
-        let delay = 60 + Math.random() * 20
+        let delay = 38 + Math.random() * 22
         const prev = target[i - 1]
-        if (prev === ' ' && Math.random() < 0.35) delay += 55
-        if (prev === ',' || prev === '?') delay += 120
+        if (prev === ' ' && Math.random() < 0.4) delay += 45
+        if (prev === ',' || prev === '?') delay += 90
+        if (Math.random() < 0.06) delay += 80  // rare stumble
         await sleep(delay)
       }
     }
@@ -44,7 +45,7 @@ function useTypewriter() {
       for (let i = current.length; i >= 0; i--) {
         if (cancelled.current) return
         setText(current.slice(0, i))
-        await sleep(40 + Math.random() * 20)
+        await sleep(28 + Math.random() * 18)
       }
     }
 
@@ -232,7 +233,7 @@ function HeroHeadline() {
       {animated && (
         <span
           aria-hidden
-          className="inline-block w-[2px] h-[0.85em] bg-gray-700 dark:bg-gray-300 align-text-bottom ml-[2px] animate-blink"
+          className="inline-block w-[2px] h-[1.15em] bg-gray-700 dark:bg-gray-300 align-middle ml-[2px] animate-blink"
         />
       )}
     </h1>
