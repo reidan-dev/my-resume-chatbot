@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, type KeyboardEvent } from 'react'
-import { X, Send, RotateCcw, Minus, Glasses } from 'lucide-react'
+import { X, Send, RotateCcw, Minus } from 'lucide-react'
 import { useChat } from '../hooks/useChat'
 import type { useRateLimit } from '../hooks/useRateLimit'
 import type { HealthResult } from '../hooks/useHealth'
@@ -112,7 +112,7 @@ export function ChatWidget({ isOpen, onClose, rateLimit, health, limit, onDanCli
         {/* Header */}
         <div className="flex items-center justify-between px-3 py-2.5 border-b border-gray-100 dark:border-gray-800 shrink-0 rounded-t-2xl">
           <div className="flex items-center gap-1.5">
-            <Glasses size={16} className="text-emerald-500 shrink-0" />
+            <span className="text-base leading-none select-none shrink-0">🤖</span>
             <span className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{BOT_NAME}</span>
             <div className={`w-1.5 h-1.5 rounded-full ${
               health.status === 'online' ? 'bg-emerald-500' :
@@ -153,7 +153,7 @@ export function ChatWidget({ isOpen, onClose, rateLimit, health, limit, onDanCli
           {/* Static intro message */}
           <div className="flex justify-start gap-1.5 items-start">
             <div className="w-6 h-6 rounded-full bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center shrink-0 mt-0.5">
-              <Glasses size={13} className="text-emerald-500" />
+              <span className="text-sm leading-none select-none">🤖</span>
             </div>
             <div className="max-w-[85%] px-3 py-2 rounded-2xl rounded-tl-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100 text-xs">
               {renderIntro(BOT_INTRO)}

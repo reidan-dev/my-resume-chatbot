@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { MessageSquare, Share2, Check, ArrowUp, Moon, Sun, Glasses } from 'lucide-react'
+import { MessageSquare, Share2, Check, ArrowUp, Moon, Sun } from 'lucide-react'
 import confetti from 'canvas-confetti'
 import { AnimatedBorder } from './components/AnimatedBorder'
 
@@ -120,9 +120,9 @@ export default function App() {
         <div className="max-w-2xl mx-auto px-3 sm:px-6 py-3 flex items-center gap-2 sm:gap-3 min-w-0">
           {/* Brand */}
           <div className="flex items-center gap-1.5 shrink-0">
-            <div className="w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center shadow-sm shrink-0">
-              <Glasses size={15} className="text-white" />
-            </div>
+            <AnimatedBorder radius="9999px" className="shrink-0" innerClassName="w-7 h-7 flex items-center justify-center bg-white dark:bg-gray-900">
+              <span className="text-base leading-none select-none">🤖</span>
+            </AnimatedBorder>
           </div>
           <div className="w-px h-5 bg-gray-200 dark:bg-gray-700 shrink-0" />
           {/* Page tabs */}
@@ -210,7 +210,7 @@ export default function App() {
           {showNudge && (
             <div className="bg-white dark:bg-gray-800 rounded-2xl rounded-br-sm shadow-lg border border-emerald-400 dark:border-emerald-500 px-3 sm:px-4 py-2.5 sm:py-3 max-w-[180px] sm:max-w-[220px] text-center leading-snug animate-fade-in">
               <span className="block font-medium text-gray-900 dark:text-gray-100 text-xs sm:text-sm mb-0.5">✨ Try the chatbot!</span>
-              <span className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">Ask Folio anything about Dan's experience! 🕶️</span>
+              <span className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">Ask Folio anything about Dan's experience! 🤖</span>
             </div>
           )}
 
