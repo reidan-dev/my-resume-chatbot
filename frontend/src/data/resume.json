@@ -271,6 +271,68 @@
       "emoji": "\ud83d\uddfa\ufe0f"
     }
   ],
+  "mentored_projects": [
+    {
+      "name": "Web System — Group 1",
+      "tagline": "Team portfolio & project hub",
+      "description": "Student-built team portfolio with individual profiles, browser game integration, and project documentation. Built during STI web development course under Dan's mentorship.",
+      "period": "2023",
+      "status": "live",
+      "tags": ["HTML", "CSS", "JavaScript", "PDF Integration"],
+      "github": null,
+      "live": "https://web-system-g1.vercel.app",
+      "image": null,
+      "emoji": "👥"
+    },
+    {
+      "name": "Web System — Group 2",
+      "tagline": "Assignment hub with game & portfolios",
+      "description": "Course deliverable hub featuring an interactive browser game, individual developer portfolios, and project document linking. Built by a 3-member student team.",
+      "period": "2023",
+      "status": "live",
+      "tags": ["HTML", "CSS", "JavaScript", "Game Development"],
+      "github": null,
+      "live": "https://web-system-g2.vercel.app",
+      "image": null,
+      "emoji": "🎮"
+    },
+    {
+      "name": "Web System — Group 3",
+      "tagline": "Team portfolio & deliverables",
+      "description": "Team portfolio with individual member profiles, project documentation, and interactive course deliverables. Showcased individual design abilities as a collective portfolio.",
+      "period": "2023",
+      "status": "live",
+      "tags": ["HTML", "CSS", "JavaScript", "Portfolio"],
+      "github": null,
+      "live": "https://web-system-g3.vercel.app",
+      "image": null,
+      "emoji": "🌐"
+    },
+    {
+      "name": "Web System — Group 4",
+      "tagline": "Project management deliverables",
+      "description": "Project management deliverable hub with team portfolios, project charter documentation, and course submission tracking. Built to demonstrate structured project lifecycle management.",
+      "period": "2023",
+      "status": "live",
+      "tags": ["HTML", "CSS", "JavaScript", "Project Management"],
+      "github": null,
+      "live": "https://web-system-g4.vercel.app",
+      "image": null,
+      "emoji": "📋"
+    },
+    {
+      "name": "Web System — Group 5",
+      "tagline": "Collective developer portfolio",
+      "description": "A collective professional portfolio introducing team members and their design abilities as a collective. Includes a prototype Wordle game, individual developer portfolio links, and specializations across web development, software engineering, databases, and back-end systems.",
+      "period": "2023",
+      "status": "live",
+      "tags": ["HTML", "CSS", "JavaScript", "Web Dev", "Software Engineering", "Databases", "Backend"],
+      "github": null,
+      "live": "https://web-system-g5.vercel.app",
+      "image": null,
+      "emoji": "💻"
+    }
+  ],
   "education": [
     {
       "degree": "BS Electronics and Communications Engineering",

@@ -22,6 +22,7 @@ type Project = {
 }
 
 const projects = resumeData.personal_projects as Project[]
+const mentoredProjects = (resumeData as Record<string, unknown>).mentored_projects as Project[] | undefined
 
 const statusConfig = {
   live:      { label: 'Live',        dot: 'bg-emerald-500', className: 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-700' },
@@ -299,6 +300,23 @@ export function ProjectsPage({ onAboutClick }: { onAboutClick?: () => void }) {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Mentored Projects */}
+      {mentoredProjects && mentoredProjects.length > 0 && (
+        <>
+          <div className="mt-10 mb-5">
+            <h3 className="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-1">Mentored Projects</h3>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              Full-stack web projects built by student teams under Dan's mentorship during his tenure as a part-time college instructor at STI College.
+            </p>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 mb-8">
+            {mentoredProjects.map((project, i) => (
+              <ProjectCard key={project.name} project={project} index={i} />
+            ))}
+          </div>
+        </>
       )}
 
       {/* Other projects */}

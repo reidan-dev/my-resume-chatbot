@@ -81,6 +81,17 @@ def _json_to_markdown(data: dict) -> str:
             lines.append(f"- {b}")
         lines.append("")
 
+    if data.get("mentored_projects"):
+        lines.append("## Mentored Projects\n")
+        lines.append("Dan mentored student teams in full-stack web development while teaching at STI College – Angeles City (2023). Teams independently designed, built, and deployed their own web applications.\n")
+        for p in data["mentored_projects"]:
+            lines.append(f"### {p['name']}")
+            lines.append(f"{p['period']}\n")
+            if p.get("live"):
+                lines.append(f"- Live: {p['live']}")
+            lines.append(f"- {p.get('description', '')}")
+            lines.append("")
+
     lines.append("## Education\n")
     for edu in data["education"]:
         lines.append(f"### {edu['degree']}")

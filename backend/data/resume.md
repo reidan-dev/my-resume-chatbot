@@ -162,6 +162,34 @@ Dan has worked with teammates and clients across the following countries during 
 
 ---
 
-## Fun Facts
+## Mentored Projects
 
-- Favorite Pokémon is Eevee.
+While teaching full-stack web development at STI College – Angeles City (2023), Dan mentored multiple student teams who independently designed, built, and deployed their own web applications. The teams worked through the full project lifecycle: requirements, design, implementation, testing, and deployment.
+
+### Web System – Group 1
+**STI College Angeles City | BSIT 3A | 2023**
+- Team portfolio and project hub with individual student profile links, browser game integration, and project documentation (PDF).
+- Team members: Aezil Dale M. Maglaqui, Adrian M. Parado, Jeremi Franco D. Valenzuela
+- Live: https://web-system-g1.vercel.app
+
+### Web System – Group 2
+**STI College Angeles City | BSIT 3A | 2023**
+- Course deliverable hub featuring an interactive browser game, individual developer portfolios, and project document linking.
+- Team members: 3 developers
+- Live: https://web-system-g2.vercel.app
+
+### Web System – Group 3
+**STI College Angeles City | 2023**
+- Team portfolio with individual member profiles, project documentation, and interactive course deliverables.
+- Live: https://web-system-g3.vercel.app
+
+### Web System – Group 4
+**STI College Angeles City | 2023**
+- Project management deliverable hub with team portfolios and project charter documentation.
+- Live: https://web-system-g4.vercel.app
+
+### Web System – Group 5
+**STI College Angeles City | 2023**
+- Collective professional portfolio showcasing team members' design abilities as a group. Includes a prototype Wordle game, individual developer portfolio links, and specializations across web development, software engineering, databases, and back-end systems.
+- Live: https://web-system-g5.vercel.app
+
