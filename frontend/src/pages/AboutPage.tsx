@@ -37,33 +37,31 @@ function CollapsibleSection({ title, subtitle, icon: Icon, children }: { title: 
   )
 }
 
-// Pipeline diagram — uniform blocks, two parallel flows
-function PipelineDiagram() {
-  const W = 168
-  const H = 150
-  const GAP = 40
-  const N = 4
-  const WIDE = N * W + (N - 1) * GAP + 32
-  const r1y = 26
-  const r2y = r1y + H + 44
+const W = 168
+const H = 150
+const GAP = 40
+const N = 4
+const WIDE = N * W + (N - 1) * GAP + 32
+const cols = [0, 1, 2, 3].map(i => 16 + i * (W + GAP))
 
-  // Shared layout config — every column has matching position/size
-  const cols = [0, 1, 2, 3].map(i => 16 + i * (W + GAP))
+const humanRow: { emoji: string; title: string; sub: string; solid?: boolean }[] = [
+  { emoji: '📄', title: 'My Resume',        sub: 'Experience, skills & projects' },
+  { emoji: '🤖', title: 'Folio Chatbot',    sub: 'Reads your resume & answers',  solid: true },
+  { emoji: '💬', title: 'Your Answer',       sub: 'Natural, grounded in real time' },
+  { emoji: '📌', title: 'Source Citation',  sub: 'Verified & explorable' },
+]
 
-  // Each row: { emoji, title, sub, solid? }
-  const row1: { emoji: string; title: string; sub: string; solid?: boolean }[] = [
-    { emoji: '📄', title: 'My Resume',        sub: 'Experience, skills & projects' },
-    { emoji: '🤖', title: 'Folio Chatbot',    sub: 'Reads your resume & answers',  solid: true },
-    { emoji: '💬', title: 'Your Answer',       sub: 'Natural, grounded in real time' },
-    { emoji: '📌', title: 'Source Citation',  sub: 'Verified & explorable' },
-  ]
+const techRow = [
+  { title: 'Resume + Q&A Guide',  sub: 'Chunks → pgvector index' },
+  { title: 'LangChain Embed',     sub: 'text-embedding-3-small', solid: true },
+  { title: 'LLM Prompt & Stream', sub: 'gpt-4o-mini → SSE' },
+  { title: 'Citations & Links',   sub: 'Context → clickable source' },
+]
 
-  const row2 = [
-    { title: 'Resume + Q&A Guide',  sub: 'Chunks → pgvector index' },
-    { title: 'LangChain Embed',     sub: 'text-embedding-3-small', solid: true },
-    { title: 'LLM Prompt & Stream', sub: 'gpt-4o-mini → SSE' },
-    { title: 'Citations & Links',   sub: 'Context → clickable source' },
-  ]
+function FlowDiagram({ rows, label }: { rows: typeof humanRow; label: string }) {
+  const boxH = H + 18
+  const svgH = boxH + 18
+  const y0 = 18
 
   function Box({ x, y, title, sub, emoji, solid }: { x: number; y: number; title: string; sub: string; emoji?: string; solid?: boolean }) {
     const bg = solid ? 'url(#boxGradSolid)' : 'url(#boxGrad)'
@@ -74,15 +72,12 @@ function PipelineDiagram() {
     return (
       <g>
         <rect x={x} y={y} width={W} height={H} rx="14" fill={bg} stroke="#059669" strokeWidth={strokeW} />
-        {/* Icon row */}
         {emoji ? (
           <text x={x + W / 2} y={y + 46} textAnchor="middle" fontSize="34" fontFamily="inherit">{emoji}</text>
         ) : (
           <text x={x + W / 2} y={y + 50} textAnchor="middle" fill={txtColor} fontSize="13" fontFamily="inherit" fontWeight="600">{title}</text>
         )}
-        {/* Title row */}
         <text x={x + W / 2} y={y + (emoji ? 82 : 70)} textAnchor="middle" fill={txtColor} fontSize="12" fontFamily="inherit" fontWeight="600">{emoji ? title : ''}</text>
-        {/* Sub row */}
         <text x={x + W / 2} y={y + (emoji ? 100 : 90)} textAnchor="middle" fill={subColor} fontSize="10" fontFamily="inherit">{sub}</text>
       </g>
     )
@@ -95,7 +90,7 @@ function PipelineDiagram() {
   }
 
   return (
-    <svg viewBox={`0 0 ${WIDE} ${r2y + H + 18}`} className="w-full h-auto my-8" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox={`0 0 ${WIDE} ${svgH}`} className="w-full h-auto mt-6" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <marker id="arr-emerald" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
           <path d="M0,0 L8,4 L0,8" fill="#059669" />
@@ -110,29 +105,13 @@ function PipelineDiagram() {
         </linearGradient>
       </defs>
 
-      {/* Row labels */}
-      <text x="16" y="14" fill="#059669" fontSize="9" fontFamily="inherit" fontWeight="600" letterSpacing="1" opacity="0.4">HUMAN FLOW</text>
-      <text x="16" y={r2y - 10} fill="#059669" fontSize="9" fontFamily="inherit" fontWeight="600" letterSpacing="1" opacity="0.4">TECH FLOW</text>
+      <text x="16" y="12" fill="#059669" fontSize="9" fontFamily="inherit" fontWeight="600" letterSpacing="1" opacity="0.4">{label}</text>
 
-      {/* Divider */}
-      <line x1="16" y1={r1y + H + 16} x2={WIDE - 16} y2={r1y + H + 16} stroke="#059669" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.2" />
-
-      {/* Row 1 blocks */}
-      {row1.map((s, i) => (
-        <Box key={i} x={cols[i]} y={r1y} title={s.title} sub={s.sub} emoji={s.emoji} solid={s.solid} />
+      {rows.map((s, i) => (
+        <Box key={i} x={cols[i]} y={y0} title={s.title} sub={s.sub} emoji={s.emoji} solid={s.solid} />
       ))}
-      {/* Row 1 arrows */}
       {[0, 1, 2].map(i => (
-        <Arrow key={i} x1={cols[i] + W + 4} x2={cols[i + 1] - 4} y={r1y + H / 2} />
-      ))}
-
-      {/* Row 2 blocks */}
-      {row2.map((s, i) => (
-        <Box key={i} x={cols[i]} y={r2y} title={s.title} sub={s.sub} solid={s.solid} />
-      ))}
-      {/* Row 2 arrows */}
-      {[0, 1, 2].map(i => (
-        <Arrow key={i} x1={cols[i] + W + 4} x2={cols[i + 1] - 4} y={r2y + H / 2} />
+        <Arrow key={i} x1={cols[i] + W + 4} x2={cols[i + 1] - 4} y={y0 + H / 2} />
       ))}
     </svg>
   )
@@ -253,54 +232,53 @@ export function AboutPage({ onChatClick }: Props) {
       </CollapsibleSection>
 
       <CollapsibleSection title="How It Works" subtitle="The flow, in two layers" icon={Cpu}>
-        <PipelineDiagram />
-      </CollapsibleSection>
-
-      <CollapsibleSection title="Human Layer" subtitle="What happens in plain English" icon={MessageSquare}>
-        <div className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed space-y-3">
-          <p className="text-gray-600 dark:text-gray-400">
-            <strong className="text-gray-900 dark:text-gray-100">1. Your Resume</strong> — Everything about me lives here:
-            my experience, skills, education. It's the single source of truth.
-          </p>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
-            <strong className="text-gray-900 dark:text-gray-100">2. Folio Chatbot</strong> — When you ask a question, Folio
-            reads your resume, finds the relevant parts, and uses an AI model to craft a natural answer — not a copy-paste,
-            but a genuine explanation based on the facts it knows.
-          </p>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
-            <strong className="text-gray-900 dark:text-gray-100">3. Your Answer</strong> — The answer streams back to you in
-            real time, with source citations showing exactly which part of my resume was used as the basis. You always know
-            where the information comes from.
-          </p>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
-            <strong className="text-gray-900 dark:text-gray-100">4. Source Citation</strong> — Every answer includes a link to
-            the original resume section so you can verify and explore further.
-          </p>
-        </div>
-      </CollapsibleSection>
-
-      <CollapsibleSection title="Tech Layer" subtitle="How Folio actually does it" icon={Cpu}>
-        <div className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed space-y-3">
-          <p className="text-gray-600 dark:text-gray-400">
-            <strong className="text-gray-900 dark:text-gray-100">1. Embedding.</strong> My resume and Q&A guide are split into
-            chunks and converted into numerical vectors using OpenAI's <strong>text-embedding-3-small</strong>. These vectors
-            live in <strong>pgvector</strong> on Supabase — a searchable index of meaning, not just keywords.
-          </p>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
-            <strong className="text-gray-900 dark:text-gray-100">2. Retrieval.</strong> When you ask a question, it's embedded the
-            same way, then <strong>LangChain</strong> searches pgvector for the most similar resume chunks. It's like a
-            librarian who remembers every page of the resume.
-          </p>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
-            <strong className="text-gray-900 dark:text-gray-100">3. Generation.</strong> The retrieved context + your question form
-            a prompt for <strong>gpt-4o-mini</strong>. The answer streams back via <strong>SSE</strong> (Server-Sent Events) —
-            tokens appear one by one, not all at once.
-          </p>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
-            <strong className="text-gray-900 dark:text-gray-100">4. Citation.</strong> Each answer includes source badges showing
-            which resume section was retrieved, so you can verify the answer and click through to explore the original text.
-          </p>
-        </div>
+        <CollapsibleSection title="Human Layer" subtitle="What happens in plain English" icon={MessageSquare}>
+          <FlowDiagram rows={humanRow} label="HUMAN FLOW" />
+          <div className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed space-y-3">
+            <p className="text-gray-600 dark:text-gray-400">
+              <strong className="text-gray-900 dark:text-gray-100">1. Your Resume</strong> — Everything about me lives here:
+              my experience, skills, education. It's the single source of truth.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <strong className="text-gray-900 dark:text-gray-100">2. Folio Chatbot</strong> — When you ask a question, Folio
+              reads your resume, finds the relevant parts, and uses an AI model to craft a natural answer — not a copy-paste,
+              but a genuine explanation based on the facts it knows.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <strong className="text-gray-900 dark:text-gray-100">3. Your Answer</strong> — The answer streams back to you in
+              real time, with source citations showing exactly which part of my resume was used as the basis. You always know
+              where the information comes from.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <strong className="text-gray-900 dark:text-gray-100">4. Source Citation</strong> — Every answer includes a link to
+              the original resume section so you can verify and explore further.
+            </p>
+          </div>
+        </CollapsibleSection>
+        <CollapsibleSection title="Tech Layer" subtitle="How Folio actually does it" icon={Cpu}>
+          <FlowDiagram rows={techRow} label="TECH FLOW" />
+          <div className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed space-y-3">
+            <p className="text-gray-600 dark:text-gray-400">
+              <strong className="text-gray-900 dark:text-gray-100">1. Embedding.</strong> My resume and Q&A guide are split into
+              chunks and converted into numerical vectors using OpenAI's <strong>text-embedding-3-small</strong>. These vectors
+              live in <strong>pgvector</strong> on Supabase — a searchable index of meaning, not just keywords.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <strong className="text-gray-900 dark:text-gray-100">2. Retrieval.</strong> When you ask a question, it's embedded the
+              same way, then <strong>LangChain</strong> searches pgvector for the most similar resume chunks. It's like a
+              librarian who remembers every page of the resume.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <strong className="text-gray-900 dark:text-gray-100">3. Generation.</strong> The retrieved context + your question form
+              a prompt for <strong>gpt-4o-mini</strong>. The answer streams back via <strong>SSE</strong> (Server-Sent Events) —
+              tokens appear one by one, not all at once.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <strong className="text-gray-900 dark:text-gray-100">4. Citation.</strong> Each answer includes source badges showing
+              which resume section was retrieved, so you can verify the answer and click through to explore the original text.
+            </p>
+          </div>
+        </CollapsibleSection>
       </CollapsibleSection>
 
       <CollapsibleSection title="Built With" subtitle="Tech stack, security, and features" icon={Code2}>
