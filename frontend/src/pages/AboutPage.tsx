@@ -93,6 +93,16 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">{children}</h2>
 }
 
+function Divider() {
+  return (
+    <div className="flex items-center gap-3" role="separator">
+      <div className="flex-1 h-px bg-gradient-to-r from-transparent to-gray-200 dark:to-gray-700" />
+      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 dark:bg-emerald-600" />
+      <div className="flex-1 h-px bg-gradient-to-l from-transparent to-gray-200 dark:to-gray-700" />
+    </div>
+  )
+}
+
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export function AboutPage() {
@@ -125,6 +135,8 @@ export function AboutPage() {
           </div>
         </section>
 
+        <Divider />
+
         {/* ── Problem → Solution ───────────────────────────────────────────── */}
         <section className="motion-safe:animate-fade-in-up" style={{ animationDelay: '60ms', animationFillMode: 'both' }}>
           <blockquote className="border-l-[3px] border-emerald-400 pl-4 text-base font-medium text-gray-700 dark:text-gray-200 italic leading-relaxed mb-5">
@@ -145,6 +157,8 @@ export function AboutPage() {
             </div>
           </div>
         </section>
+
+        <Divider />
 
         {/* ── How It Works ─────────────────────────────────────────────────── */}
         <section className="motion-safe:animate-fade-in-up" style={{ animationDelay: '120ms', animationFillMode: 'both' }}>
@@ -200,6 +214,8 @@ export function AboutPage() {
           </div>
         </section>
 
+        <Divider />
+
         {/* ── Architecture ─────────────────────────────────────────────────── */}
         <section className="motion-safe:animate-fade-in-up" style={{ animationDelay: '180ms', animationFillMode: 'both' }}>
           <Chip>Architecture</Chip>
@@ -247,6 +263,8 @@ export function AboutPage() {
           </div>
         </section>
 
+        <Divider />
+
         {/* ── Tech Stack ───────────────────────────────────────────────────── */}
         <section className="motion-safe:animate-fade-in-up" style={{ animationDelay: '240ms', animationFillMode: 'both' }}>
           <Chip>Built With</Chip>
@@ -258,6 +276,8 @@ export function AboutPage() {
             ))}
           </div>
         </section>
+
+        <Divider />
 
         {/* ── Security ─────────────────────────────────────────────────────── */}
         <section className="motion-safe:animate-fade-in-up" style={{ animationDelay: '300ms', animationFillMode: 'both' }}>
@@ -283,6 +303,8 @@ export function AboutPage() {
           </div>
         </section>
 
+        <Divider />
+
         {/* ── Features ─────────────────────────────────────────────────────── */}
         <section className="motion-safe:animate-fade-in-up" style={{ animationDelay: '360ms', animationFillMode: 'both' }}>
           <Chip>Features</Chip>
@@ -307,6 +329,8 @@ export function AboutPage() {
           </div>
         </section>
 
+        <Divider />
+
         {/* ── The Result ───────────────────────────────────────────────────── */}
         <section className="motion-safe:animate-fade-in-up" style={{ animationDelay: '420ms', animationFillMode: 'both' }}>
           <Chip>The Result</Chip>
@@ -323,6 +347,8 @@ export function AboutPage() {
             </p>
           </div>
         </section>
+
+        <Divider />
 
         {/* ── Future Use ───────────────────────────────────────────────────── */}
         <section className="motion-safe:animate-fade-in-up" style={{ animationDelay: '480ms', animationFillMode: 'both' }}>
@@ -345,6 +371,8 @@ export function AboutPage() {
             ))}
           </div>
         </section>
+
+        <Divider />
 
         {/* ── Lessons Learned ──────────────────────────────────────────────── */}
         <section className="motion-safe:animate-fade-in-up" style={{ animationDelay: '540ms', animationFillMode: 'both' }}>
