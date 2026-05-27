@@ -444,18 +444,15 @@ export function ResumePage({ onAboutClick }: { onAboutClick?: () => void }) {
       </Section>
 
       <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 print:hidden">
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="text-center sm:text-left">
-            <p className="text-xs text-gray-400 dark:text-gray-500">Last updated {meta.lastUpdated}</p>
-          </div>
-          <div className="flex flex-col sm:flex-row items-center gap-3">
+        <div className="text-center">
+          <div className="flex items-center justify-center gap-3 flex-wrap">
             <button
               onClick={onAboutClick}
               className="text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors underline underline-offset-2"
             >
               About Folio
             </button>
-            <div className="hidden sm:block w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
+            <span className="text-gray-300 dark:text-gray-600">|</span>
             <a
               href="https://simple.danpablo.dev"
               target="_blank"
@@ -469,6 +466,7 @@ export function ResumePage({ onAboutClick }: { onAboutClick?: () => void }) {
               </svg>
             </a>
           </div>
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Last updated {meta.lastUpdated}</p>
         </div>
       </div>
     </div>

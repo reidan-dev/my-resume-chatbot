@@ -78,7 +78,7 @@ Dan has worked with teammates and clients across the following countries during 
 
 ### Data Visualization Consultant / Data Analyst | Amihan Global Strategies
 
-**August 2022 – February 2023 | 6 months | Metro Manila, PH**
+**February 2022 – February 2023 | 1 year | Metro Manila, PH**
 
 - Served as the Data Analyst technical lead on a national-scale data project processing 100k+ rows of real-time data daily from one of the Philippines' national services actively used by millions of citizens.
 - Ingested, cleaned, and aggregated raw JSON/XML telemetry streams using Python, Presto SQL, PostgreSQL, Apache Zeppelin, and Apache Spark: transforming high-volume operational data into reliable, usable metrics.

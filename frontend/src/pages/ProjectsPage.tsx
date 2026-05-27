@@ -186,23 +186,23 @@ function FooterLinks({ project }: { project: Project }) {
 
 function MentoredProjectsCard() {
   const groups = [
-    { name: 'Group 1', site: 'https://web-system-g1.vercel.app', doc: 'https://web-system-g1.vercel.app/source/files/Project%20Document.pdf' },
-    { name: 'Group 2', site: 'https://web-system-g2.vercel.app', doc: 'https://web-system-g2.vercel.app/files/Project%20Document.pdf' },
-    { name: 'Group 3', site: 'https://web-system-g3.vercel.app', doc: 'https://web-system-g3.vercel.app/assets/files/Project%20Document.pdf' },
-    { name: 'Group 4', site: 'https://web-system-g4.vercel.app', doc: 'https://web-system-g4.vercel.app/files/Project_Management-Deliverable.pdf' },
-    { name: 'Group 5', site: 'https://web-system-g5.vercel.app', doc: 'https://web-system-g5.vercel.app/src/files/Project%20Charter1.pdf' },
+    { num: 'I',  site: 'https://web-system-g1.vercel.app', doc: 'https://web-system-g1.vercel.app/source/files/Project%20Document.pdf' },
+    { num: 'II', site: 'https://web-system-g2.vercel.app', doc: 'https://web-system-g2.vercel.app/files/Project%20Document.pdf' },
+    { num: 'III',site: 'https://web-system-g3.vercel.app', doc: 'https://web-system-g3.vercel.app/assets/files/Project%20Document.pdf' },
+    { num: 'IV', site: 'https://web-system-g4.vercel.app', doc: 'https://web-system-g4.vercel.app/files/Project_Management-Deliverable.pdf' },
+    { num: 'V',  site: 'https://web-system-g5.vercel.app', doc: 'https://web-system-g5.vercel.app/src/files/Project%20Charter1.pdf' },
   ]
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 animate-fade-in-up mb-8">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 animate-fade-in-up">
       <div className="p-4 pb-3">
         <div className="flex items-start gap-2.5">
           <EmojiBadge emoji="🎓" />
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
               <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm leading-snug">Mentored Projects</h3>
-              <span className="shrink-0 inline-flex items-center gap-1.5 text-[10px] font-semibold px-2 py-0.5 rounded-lg border bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700">
-                <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-                Archived
+              <span className={`shrink-0 inline-flex items-center gap-1.5 text-[10px] font-semibold px-2 py-0.5 rounded-lg border ${statusConfig.live.className}`}>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Live
               </span>
             </div>
             <p className="text-xs font-medium text-gray-700 dark:text-gray-200 mt-1 leading-snug">
@@ -215,26 +215,27 @@ function MentoredProjectsCard() {
         </p>
       </div>
       <div className="px-4 pb-3.5 pt-2 border-t border-gray-100 dark:border-gray-700">
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-1.5 flex-wrap">
-            {groups.map((g) => (
-              <a key={g.name} href={g.site} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded-md bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 font-medium hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors">
-                <ExternalLink size={11} />
-                {g.name}
+        <div className="flex items-center gap-3 flex-wrap">
+          {groups.map((g, i) => (
+            <div key={g.num}
+              className="shrink-0 flex items-center gap-1 bg-gray-50 dark:bg-gray-700/50 rounded-full pl-3 pr-2 py-1 border border-gray-100 dark:border-gray-600/50">
+              <span className="text-xs font-bold text-gray-300 dark:text-gray-600 select-none">{g.num}</span>
+              <a href={g.site} target="_blank" rel="noopener noreferrer"
+                className="text-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                <ExternalLink size={13} />
               </a>
-            ))}
-          </div>
-          <div className="flex items-center gap-1.5 flex-wrap">
-            {groups.map((g) => (
-              <a key={g.name + '-doc'} href={g.doc} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded-md bg-violet-50 dark:bg-violet-900/20 text-violet-600 dark:text-violet-400 font-medium hover:bg-violet-100 dark:hover:bg-violet-900/30 transition-colors">
-                <FileText size={11} />
-                {g.name} Doc
+              <a href={g.doc} target="_blank" rel="noopener noreferrer"
+                className="text-violet-500 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                <FileText size={13} />
               </a>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
+      </div>
+
+      {/* Footer */}
+      <div className="px-4 pb-3.5 flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-700">
+        <span className="text-[10px] font-medium text-gray-400 dark:text-gray-500">2023</span>
       </div>
     </div>
   )
@@ -357,27 +358,26 @@ export function ProjectsPage({ onAboutClick }: { onAboutClick?: () => void }) {
       {/* Other projects */}
       <div>
         <h3 className="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3">Other Projects</h3>
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-2">
           {others.map((project, i) => (
             <ProjectCard key={project.name} project={project} index={i} />
           ))}
         </div>
-        <MentoredProjectsCard />
+        <div className="mt-6">
+          <MentoredProjectsCard />
+        </div>
       </div>
 
       <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 print:hidden">
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="text-center sm:text-left">
-            <p className="text-xs text-gray-400 dark:text-gray-500">Last updated {resumeData.meta.lastUpdated}</p>
-          </div>
-          <div className="flex flex-col sm:flex-row items-center gap-3">
+        <div className="text-center">
+          <div className="flex items-center justify-center gap-3 flex-wrap">
             <button
               onClick={onAboutClick}
               className="text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors underline underline-offset-2"
             >
               About Folio
             </button>
-            <div className="hidden sm:block w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
+            <span className="text-gray-300 dark:text-gray-600">|</span>
             <a
               href="https://simple.danpablo.dev"
               target="_blank"
@@ -391,6 +391,7 @@ export function ProjectsPage({ onAboutClick }: { onAboutClick?: () => void }) {
               </svg>
             </a>
           </div>
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Last updated {resumeData.meta.lastUpdated}</p>
         </div>
       </div>
     </div>

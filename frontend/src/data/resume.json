@@ -75,11 +75,23 @@
       ]
     },
     {
+      "title": "Part-Time College Instructor",
+      "company": "STI College \u2013 Angeles City",
+      "countries": ["PH"],
+      "period": "Feb 2023 \u2013 Jul 2023",
+      "duration": "5 mos",
+      "bullets": [
+        "Taught IT students full-stack web development (backend to frontend) with the goal of each student shipping a personal website by end of semester \u2014 achieved.",
+        "Taught project management to Business Administration students; cross-pollinated both courses by having biz ad students manage IT students' capstone projects \u2014 simulating real product owner / developer dynamics.",
+        "Both class goals met: IT students shipped, biz ad students completed full project documentation hitting all milestones as if submitting to a real product owner."
+      ]
+    },
+    {
       "title": "Data Visualization Consultant / Data Analyst",
       "company": "Amihan Global Strategies",
       "countries": ["PH"],
-      "period": "Aug 2022 \u2013 Feb 2023",
-      "duration": "6 mos",
+      "period": "Feb 2022 \u2013 Feb 2023",
+      "duration": "1 yr",
       "bullets": [
         "Technical lead for a national-scale data project ingesting **100k+** real-time rows daily from a national service actively used by millions of Filipinos.",
         "Cleaned, aggregated, and surfaced actionable metrics from raw JSON/XML telemetry using **Python**, **Presto SQL**, **PostgreSQL**, **Apache Zeppelin**, and **Apache Spark**.",
@@ -102,23 +114,11 @@
       ]
     },
     {
-      "title": "Part-Time College Instructor",
-      "company": "STI College \u2013 Angeles City",
-      "countries": ["PH"],
-      "period": "Feb 2023 \u2013 Jul 2023",
-      "duration": "5 mos",
-      "bullets": [
-        "Taught IT students full-stack web development (backend to frontend) with the goal of each student shipping a personal website by end of semester \u2014 achieved.",
-        "Taught project management to Business Administration students; cross-pollinated both courses by having biz ad students manage IT students' capstone projects \u2014 simulating real product owner / developer dynamics.",
-        "Both class goals met: IT students shipped, biz ad students completed full project documentation hitting all milestones as if submitting to a real product owner."
-      ]
-    },
-    {
       "title": "IC Design Engineer",
       "company": "Synkom IC Technology Inc.",
       "countries": ["PH", "JP"],
       "period": "Oct 2018 \u2013 Apr 2019",
-      "duration": "6 mos",
+      "duration": "1 yr",
       "bullets": [
         "Wrote automated data parsing scripts in **Python**, **TCL**, and **Bash** to clean hardware verification logs.",
         "Designed hardware layout specifications and schematics based on circuit theory."
