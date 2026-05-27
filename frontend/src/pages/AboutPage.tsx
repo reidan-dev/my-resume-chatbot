@@ -1,4 +1,87 @@
+import { useState, useEffect, useRef } from 'react'
 import { Shield, Code2, Brain, Check, Lock, Zap, Server, Globe, Database, Mail } from 'lucide-react'
+
+// ─── Typewriter hook ─────────────────────────────────────────────────────────
+
+const BASE_TEXT = 'Ask my resume anything.'
+
+const QUESTIONS = [
+  'What kind of backend projects has Dan worked on?',
+  'Does Dan have experience with cloud platforms?',
+  'Has Dan built any AI-powered applications?',
+  'Does Dan have experience with hardware or IoT systems?',
+  'Can Dan work with frontend frameworks?',
+  'Has Dan done any data analysis or reporting work?',
+  'Does Dan have experience mentoring or teaching?',
+  'Does Dan have experience with automated deployments?',
+]
+
+function useTypewriter() {
+  const reduced = useRef(
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  )
+  const [text, setText] = useState(BASE_TEXT)
+
+  useEffect(() => {
+    if (reduced.current) return
+
+    const cancelled = { current: false }
+    const sleep = (ms: number) => new Promise<void>(r => setTimeout(r, ms))
+
+    const typeOut = async (target: string) => {
+      for (let i = 0; i <= target.length; i++) {
+        if (cancelled.current) return
+        setText(target.slice(0, i))
+        let delay = 60 + Math.random() * 20
+        const prev = target[i - 1]
+        if (prev === ' ' && Math.random() < 0.35) delay += 55
+        if (prev === ',' || prev === '?') delay += 120
+        await sleep(delay)
+      }
+    }
+
+    const eraseBack = async (current: string) => {
+      for (let i = current.length; i >= 0; i--) {
+        if (cancelled.current) return
+        setText(current.slice(0, i))
+        await sleep(40 + Math.random() * 20)
+      }
+    }
+
+    async function loop() {
+      await sleep(6000 + Math.random() * 3000)   // initial static hold
+      let lastIdx = -1
+
+      while (!cancelled.current) {
+        let idx: number
+        do { idx = Math.floor(Math.random() * QUESTIONS.length) } while (idx === lastIdx)
+        lastIdx = idx
+        const q = QUESTIONS[idx]
+
+        await eraseBack(BASE_TEXT)
+        if (cancelled.current) return
+        await sleep(180)
+
+        await typeOut(q)
+        if (cancelled.current) return
+        await sleep(3000 + Math.random() * 2000)  // hold question
+
+        await eraseBack(q)
+        if (cancelled.current) return
+        await sleep(180)
+
+        await typeOut(BASE_TEXT)
+        if (cancelled.current) return
+        await sleep(5000 + Math.random() * 3000)  // hold base text
+      }
+    }
+
+    loop()
+    return () => { cancelled.current = true }
+  }, [])
+
+  return { text, animated: !reduced.current }
+}
 
 // ─── Flow diagram — vertical step cards ─────────────────────────────────────
 
@@ -141,6 +224,21 @@ function Divider() {
   )
 }
 
+function HeroHeadline() {
+  const { text, animated } = useTypewriter()
+  return (
+    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 tracking-tight leading-tight min-h-[2.25em]">
+      {text}
+      {animated && (
+        <span
+          aria-hidden
+          className="inline-block w-[2px] h-[0.85em] bg-gray-700 dark:bg-gray-300 align-text-bottom ml-[2px] animate-blink"
+        />
+      )}
+    </h1>
+  )
+}
+
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export function AboutPage() {
@@ -151,9 +249,7 @@ export function AboutPage() {
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <section className="motion-safe:animate-fade-in-up">
           <div className="text-5xl mb-4 select-none" aria-hidden>🤖</div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 tracking-tight leading-tight">
-            Ask my resume<br className="hidden sm:block" /> anything.
-          </h1>
+          <HeroHeadline />
           <p className="mt-3 text-sm sm:text-base text-gray-500 dark:text-gray-400 leading-relaxed max-w-lg">
             Folio is a full-stack RAG chatbot grounded strictly in Dan's real experience — not a toy demo, a deployed production product used by actual visitors.
           </p>
