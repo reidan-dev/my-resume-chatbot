@@ -160,6 +160,58 @@ export function AboutPage() {
         </div>
       </CollapsibleSection>
 
+      <CollapsibleSection title="How It Works" subtitle="The flow, in two layers" icon={Cpu}>
+        <div className="pl-6 border-l-2 border-emerald-100 dark:border-emerald-900/40">
+          <CollapsibleSection title="Human Layer" subtitle="What happens in plain English" icon={MessageSquare}>
+            <FlowDiagram rows={humanRow} label="HUMAN FLOW" />
+            <div className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed space-y-3">
+            <p className="text-gray-600 dark:text-gray-400">
+              <strong className="text-gray-900 dark:text-gray-100">1. Your Resume</strong> — Everything about me lives here:
+              my experience, skills, education. It's the single source of truth.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <strong className="text-gray-900 dark:text-gray-100">2. Folio Chatbot</strong> — When you ask a question, Folio
+              reads your resume, finds the relevant parts, and uses an AI model to craft a natural answer — not a copy-paste,
+              but a genuine explanation based on the facts it knows.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <strong className="text-gray-900 dark:text-gray-100">3. Your Answer</strong> — The answer streams back to you in
+              real time, with source citations showing exactly which part of my resume was used as the basis. You always know
+              where the information comes from.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <strong className="text-gray-900 dark:text-gray-100">4. Source Citation</strong> — Every answer includes a link to
+              the original resume section so you can verify and explore further.
+            </p>
+            </div>
+          </CollapsibleSection>
+          <CollapsibleSection title="Tech Layer" subtitle="How Folio actually does it" icon={Cpu}>
+            <FlowDiagram rows={techRow} label="TECH FLOW" />
+            <div className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed space-y-3">
+            <p className="text-gray-600 dark:text-gray-400">
+              <strong className="text-gray-900 dark:text-gray-100">1. Embedding.</strong> My resume and Q&A guide are split into
+              chunks and converted into numerical vectors using OpenAI's <strong>text-embedding-3-small</strong>. These vectors
+              live in <strong>pgvector</strong> on Supabase — a searchable index of meaning, not just keywords.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <strong className="text-gray-900 dark:text-gray-100">2. Retrieval.</strong> When you ask a question, it's embedded the
+              same way, then <strong>LangChain</strong> searches pgvector for the most similar resume chunks. It's like a
+              librarian who remembers every page of the resume.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <strong className="text-gray-900 dark:text-gray-100">3. Generation.</strong> The retrieved context + your question form
+              a prompt for <strong>gpt-4o-mini</strong>. The answer streams back via <strong>SSE</strong> (Server-Sent Events) —
+              tokens appear one by one, not all at once.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <strong className="text-gray-900 dark:text-gray-100">4. Citation.</strong> Each answer includes source badges showing
+              which resume section was retrieved, so you can verify the answer and click through to explore the original text.
+            </p>
+            </div>
+          </CollapsibleSection>
+          </div>
+        </CollapsibleSection>
+
       <CollapsibleSection title="The Result" subtitle="What's actually working today" icon={ArrowUpRight}>
         <div className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed space-y-3">
           <p>
@@ -226,58 +278,6 @@ export function AboutPage() {
           </p>
         </div>
       </CollapsibleSection>
-
-      <CollapsibleSection title="How It Works" subtitle="The flow, in two layers" icon={Cpu}>
-        <div className="pl-6 border-l-2 border-emerald-100 dark:border-emerald-900/40">
-          <CollapsibleSection title="Human Layer" subtitle="What happens in plain English" icon={MessageSquare}>
-            <FlowDiagram rows={humanRow} label="HUMAN FLOW" />
-            <div className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed space-y-3">
-            <p className="text-gray-600 dark:text-gray-400">
-              <strong className="text-gray-900 dark:text-gray-100">1. Your Resume</strong> — Everything about me lives here:
-              my experience, skills, education. It's the single source of truth.
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              <strong className="text-gray-900 dark:text-gray-100">2. Folio Chatbot</strong> — When you ask a question, Folio
-              reads your resume, finds the relevant parts, and uses an AI model to craft a natural answer — not a copy-paste,
-              but a genuine explanation based on the facts it knows.
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              <strong className="text-gray-900 dark:text-gray-100">3. Your Answer</strong> — The answer streams back to you in
-              real time, with source citations showing exactly which part of my resume was used as the basis. You always know
-              where the information comes from.
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              <strong className="text-gray-900 dark:text-gray-100">4. Source Citation</strong> — Every answer includes a link to
-              the original resume section so you can verify and explore further.
-            </p>
-            </div>
-          </CollapsibleSection>
-          <CollapsibleSection title="Tech Layer" subtitle="How Folio actually does it" icon={Cpu}>
-            <FlowDiagram rows={techRow} label="TECH FLOW" />
-            <div className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed space-y-3">
-            <p className="text-gray-600 dark:text-gray-400">
-              <strong className="text-gray-900 dark:text-gray-100">1. Embedding.</strong> My resume and Q&A guide are split into
-              chunks and converted into numerical vectors using OpenAI's <strong>text-embedding-3-small</strong>. These vectors
-              live in <strong>pgvector</strong> on Supabase — a searchable index of meaning, not just keywords.
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              <strong className="text-gray-900 dark:text-gray-100">2. Retrieval.</strong> When you ask a question, it's embedded the
-              same way, then <strong>LangChain</strong> searches pgvector for the most similar resume chunks. It's like a
-              librarian who remembers every page of the resume.
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              <strong className="text-gray-900 dark:text-gray-100">3. Generation.</strong> The retrieved context + your question form
-              a prompt for <strong>gpt-4o-mini</strong>. The answer streams back via <strong>SSE</strong> (Server-Sent Events) —
-              tokens appear one by one, not all at once.
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              <strong className="text-gray-900 dark:text-gray-100">4. Citation.</strong> Each answer includes source badges showing
-              which resume section was retrieved, so you can verify the answer and click through to explore the original text.
-            </p>
-            </div>
-          </CollapsibleSection>
-          </div>
-        </CollapsibleSection>
 
       <CollapsibleSection title="Built With" subtitle="Tech stack, security, and features" icon={Code2}>
         <div className="space-y-6">
