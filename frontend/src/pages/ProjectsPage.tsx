@@ -122,10 +122,10 @@ function PdfModal({ url, title, onClose }: { url: string; title: string; onClose
   )
 }
 
-function EmojiCircle({ emoji }: { emoji: string | null }) {
+function EmojiBadge({ emoji }: { emoji: string | null }) {
   return (
-    <div className="shrink-0 w-8 h-8 rounded-full border-2 border-emerald-500 dark:border-emerald-500 bg-white dark:bg-gray-800 flex items-center justify-center">
-      <span className="text-lg leading-none">{emoji}</span>
+    <div className="shrink-0 flex items-center justify-center w-9 h-9 bg-gray-50 dark:bg-gray-700/50 rounded-xl text-xl">
+      {emoji || '📦'}
     </div>
   )
 }
@@ -138,37 +138,82 @@ const nameEmoji: Record<string, string | null> = {
   'PH 2022 Election Map': '🗺️',
 }
 
+function StatusBadge({ status }: { status: Project['status'] }) {
+  const cfg = statusConfig[status] ?? statusConfig.archived
+  return (
+    <span className={`shrink-0 inline-flex items-center gap-1.5 text-[10px] font-semibold px-2 py-0.5 rounded-lg border ${cfg.className}`}>
+      <span className={`w-1.5 h-1.5 rounded-full ${cfg.dot} ${status === 'live' ? 'animate-pulse' : ''}`} />
+      {cfg.label}
+    </span>
+  )
+}
+
+function TagPill({ tag }: { tag: string }) {
+  const icon = deviconClass(tag)
+  return (
+    <span className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-gray-50 dark:bg-gray-700/60 text-gray-600 dark:text-gray-400 border border-gray-100 dark:border-gray-600/50">
+      {icon && <i className={`${icon} text-[12px] leading-none`} />}
+      {tag}
+    </span>
+  )
+}
+
+function FooterLinks({ project }: { project: Project }) {
+  return (
+    <div className="flex items-center gap-1.5">
+      {project.pdf && (
+        <span className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded-md bg-violet-50 dark:bg-violet-900/20 text-violet-600 dark:text-violet-400 font-medium hover:bg-violet-100 dark:hover:bg-violet-900/30 cursor-pointer transition-colors">
+          <FileText size={11} />
+          Deck
+        </span>
+      )}
+      {project.github && (
+        <a href={project.github} target="_blank" rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded-md bg-gray-50 dark:bg-gray-700/50 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+          <GitFork size={11} />
+          Code
+        </a>
+      )}
+      {project.live && (
+        <a href={project.live} target="_blank" rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded-md bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 font-medium hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors">
+          <ExternalLink size={11} />
+          Live
+        </a>
+      )}
+    </div>
+  )
+}
+
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const [expanded, setExpanded] = useState(false)
   const [pdfOpen, setPdfOpen] = useState(false)
-  const status = statusConfig[project.status] ?? statusConfig.archived
   const emoji = nameEmoji[project.name]
 
   return (
     <>
       <div
-        className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 flex flex-col overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 animate-fade-in-up"
+        className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 flex flex-col overflow-hidden hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 animate-fade-in-up"
         style={{ animationDelay: `${index * 60}ms`, animationFillMode: 'both' }}
       >
-        <div className="p-4 pb-2">
-          <div className="flex items-start gap-3">
-            {emoji && <EmojiCircle emoji={emoji} />}
-            <div className="flex items-start justify-between gap-3 flex-1 min-w-0">
-              <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm leading-snug pt-0.5">{project.name}</h3>
-              <span className={`shrink-0 flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full border ${status.className}`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${status.dot} ${project.status === 'live' ? 'animate-pulse' : ''}`} />
-                {status.label}
-              </span>
+        <div className="p-4 pb-3">
+          {/* Header */}
+          <div className="flex items-start gap-2.5">
+            <EmojiBadge emoji={emoji} />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start justify-between gap-2">
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm leading-snug">{project.name}</h3>
+                <StatusBadge status={project.status} />
+              </div>
+              <p className="text-xs font-medium text-gray-700 dark:text-gray-200 mt-1 leading-snug">{project.tagline}</p>
             </div>
           </div>
 
-          <p className="text-xs font-medium text-gray-700 dark:text-gray-200 mt-2 leading-snug">{project.tagline}</p>
-
-          {/* Expandable description */}
-          <div className="mt-1">
+          {/* Description */}
+          <div className="mt-2.5">
             <button
               onClick={() => setExpanded((v) => !v)}
-              className="flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors"
+              className="flex items-center gap-1 text-[10px] font-medium text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors"
             >
               <ChevronDown size={12} className={`transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`} />
               {expanded ? 'Less' : 'More'}
@@ -181,47 +226,15 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           </div>
 
           {/* Tags */}
-          <div className="flex flex-wrap gap-1.5 mt-2">
-            {project.tags.map((tag) => {
-              const icon = deviconClass(tag)
-              return (
-                <span key={tag} className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
-                  {icon && <i className={`${icon} text-[11px] leading-none`} />}
-                  {tag}
-                </span>
-              )
-            })}
+          <div className="flex flex-wrap gap-1 mt-2.5">
+            {project.tags.map((tag) => <TagPill key={tag} tag={tag} />)}
           </div>
+        </div>
 
-          {/* Footer */}
-          <div className="flex items-center justify-between pt-2 mt-2 border-t border-gray-100 dark:border-gray-700 mt-auto">
-            <span className="text-[10px] text-gray-400 dark:text-gray-500">{project.period}</span>
-            <div className="flex items-center gap-3">
-              {project.pdf && (
-                <button
-                  onClick={() => setPdfOpen(true)}
-                  className="flex items-center gap-1 text-[10px] text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 transition-colors font-medium"
-                >
-                  <FileText size={12} />
-                  <span>Deck</span>
-                </button>
-              )}
-              {project.github && (
-                <a href={project.github} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">
-                  <GitFork size={12} />
-                  <span>GitHub</span>
-                </a>
-              )}
-              {project.live && (
-                <a href={project.live} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors font-medium">
-                  <ExternalLink size={12} />
-                  <span>Live</span>
-                </a>
-              )}
-            </div>
-          </div>
+        {/* Footer */}
+        <div className="px-4 pb-3.5 flex items-center justify-between pt-2 mt-auto border-t border-gray-100 dark:border-gray-700">
+          <span className="text-[10px] font-medium text-gray-400 dark:text-gray-500">{project.period}</span>
+          <FooterLinks project={project} />
         </div>
       </div>
 
@@ -247,54 +260,38 @@ export function ProjectsPage({ onAboutClick }: { onAboutClick?: () => void }) {
 
       {/* Hero: Folio — the live demo */}
       {folio && (
-        <div
-          className="mb-8 bg-white dark:bg-gray-800 rounded-2xl border border-emerald-200 dark:border-emerald-800 p-4"
-        >
-          <div className="flex items-start gap-3">
-            <EmojiCircle emoji={nameEmoji[folio.name]} />
-            <div className="flex items-start justify-between gap-3 flex-1 min-w-0">
-              <div className="min-w-0">
-                <h3 className="font-bold text-gray-900 dark:text-gray-100 text-sm truncate">{folio.name}</h3>
-                <p className="text-xs text-gray-600 dark:text-gray-300 mt-0.5">{folio.tagline}</p>
+        <div className="mb-8 bg-white dark:bg-gray-800 rounded-2xl border-2 border-emerald-200 dark:border-emerald-800 hover:border-emerald-300 dark:hover:border-emerald-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 animate-fade-in-up">
+          <div className="p-4 pb-3">
+            {/* Header */}
+            <div className="flex items-start gap-2.5">
+              <EmojiBadge emoji={nameEmoji[folio.name]} />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-2">
+                  <h3 className="font-bold text-gray-900 dark:text-gray-100 text-sm leading-snug">{folio.name}</h3>
+                  <StatusBadge status="live" />
+                </div>
+                <p className="text-xs font-medium text-gray-700 dark:text-gray-200 mt-1 leading-snug">{folio.tagline}</p>
               </div>
-              <span className={`shrink-0 flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full border ${statusConfig.live.className}`}>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                {statusConfig.live.label}
-              </span>
+            </div>
+
+            {/* Description (always expanded) */}
+            <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed mt-2.5">{folio.description}</p>
+
+            {/* Tags */}
+            <div className="flex flex-wrap gap-1 mt-2.5">
+              {folio.tags.map((tag) => <TagPill key={tag} tag={tag} />)}
             </div>
           </div>
 
-          <p className="text-xs text-gray-600 dark:text-gray-400 mt-3">{folio.description}</p>
-
-          {/* Tags */}
-          <div className="flex flex-wrap gap-1 mt-2.5">
-            {folio.tags.map((tag) => {
-              const icon = deviconClass(tag)
-              return (
-                <span key={tag} className="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400">
-                  {icon && <i className={`${icon} text-[11px] leading-none`} />}
-                  {tag}
-                </span>
-              )
-            })}
-          </div>
-
-          {/* Footer — same as regular card */}
-          <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
-            <span className="text-[10px] text-gray-400 dark:text-gray-500">{folio.period}</span>
-            <div className="flex items-center gap-3">
-              {folio.github && (
-                <a href={folio.github} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-[10px] text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
-                  <GitFork size={12} />
-                  <span>GitHub</span>
-                </a>
-              )}
+          {/* Footer */}
+          <div className="px-4 pb-3.5 flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-700">
+            <span className="text-[10px] font-medium text-gray-400 dark:text-gray-500">{folio.period}</span>
+            <div className="flex items-center gap-1.5">
               {onAboutClick && (
                 <button onClick={onAboutClick}
-                  className="inline-flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors font-medium">
-                  <span>Read more about it</span>
-                  <ArrowUpRight size={12} />
+                  className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded-md bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 font-medium hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors">
+                  <ArrowUpRight size={11} />
+                  Details
                 </button>
               )}
             </div>
