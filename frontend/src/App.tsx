@@ -56,6 +56,11 @@ export default function App() {
   }
 
   useEffect(() => {
+    if (activePage !== 'about-me') setChatOpen(false)
+    if (activePage === 'about-me') window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
+  }, [activePage])
+
+  useEffect(() => {
     function onScroll() {
       const scrolled = window.scrollY
       const total = document.body.scrollHeight - window.innerHeight
@@ -168,7 +173,7 @@ export default function App() {
       </nav>
 
       <div key={activePage} className="animate-fade-in-up">
-        {activePage === 'folio' ? <AboutPage onOpenChat={() => { setActivePage('about-me'); window.scrollTo({ top: 0, behavior: 'smooth' }); setChatOpen(true) }} />
+        {activePage === 'folio' ? <AboutPage onOpenChat={() => { setActivePage('about-me'); setChatOpen(true) }} />
          : activePage === 'about-me' ? <ResumePage onAboutClick={() => setActivePage('folio')} />
          : <ProjectsPage onFolioClick={() => setActivePage('folio')} />}
       </div>

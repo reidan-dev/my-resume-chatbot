@@ -249,7 +249,10 @@ export function AboutPage({ onOpenChat }: { onOpenChat?: () => void }) {
 
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <section className="motion-safe:animate-fade-in-up">
-          <div className="text-5xl mb-4 select-none" aria-hidden>🤖</div>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="text-5xl select-none leading-none" aria-hidden>🤖</div>
+            <h1 className="text-5xl font-bold text-emerald-600 dark:text-emerald-400 leading-none">Meet Folio</h1>
+          </div>
           <HeroHeadline />
           <p className="mt-3 text-sm sm:text-base text-gray-500 dark:text-gray-400 leading-relaxed max-w-lg">
             Folio is a full-stack RAG chatbot grounded strictly in Dan's real experience — not a toy demo, a deployed production product used by actual visitors.
