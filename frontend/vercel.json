@@ -1,5 +1,13 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "framework": "vite"
+  "framework": "vite",
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "danpablo.dev" }],
+      "destination": "https://resume.danpablo.dev/$1",
+      "permanent": true
+    }
+  ]
 }

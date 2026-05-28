@@ -32,8 +32,15 @@ const PAGE_ICONS: Record<Page, IconComponent> = {
   projects: Code2,
 }
 
+function getInitialPage(): Page {
+  const host = window.location.hostname
+  if (host.startsWith('resume.')) return 'about-me'
+  if (host.startsWith('projects.')) return 'projects'
+  return 'folio'
+}
+
 export default function App() {
-  const [activePage, setActivePage] = useState<Page>('folio')
+  const [activePage, setActivePage] = useState<Page>(getInitialPage)
   const [chatOpen, setChatOpen] = useState(false)
   const [contactOpen, setContactOpen] = useState(false)
   const [copied, setCopied] = useState(false)
