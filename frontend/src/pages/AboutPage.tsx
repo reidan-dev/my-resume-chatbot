@@ -337,7 +337,7 @@ export function AboutPage({ onOpenChat }: { onOpenChat?: () => void }) {
               },
               {
                 step: '02',
-                emoji: '🔍',
+                emoji: '🤖',
                 title: 'Folio searches',
                 desc: "Behind the scenes, Folio finds the most relevant parts of my resume using semantic search: not just keyword matching, but understanding what you mean.",
                 highlight: true,
