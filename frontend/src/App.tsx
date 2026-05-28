@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { MessageSquare, Share2, Check, ArrowUp, Moon, Sun, Sparkles, User, Code2 } from 'lucide-react'
+import { MessageSquare, Share2, Check, ArrowUp, Moon, Sun, Sparkles, User, Code2, type LucideIcon } from 'lucide-react'
 import confetti from 'canvas-confetti'
 import { AnimatedBorder } from './components/AnimatedBorder'
 
@@ -24,9 +24,7 @@ const PAGE_LABELS: Record<Page, string> = {
   projects: 'Projects',
 }
 
-type IconComponent = (props: { size?: number; className?: string }) => JSX.Element
-
-const PAGE_ICONS: Record<Page, IconComponent> = {
+const PAGE_ICONS: Record<Page, LucideIcon> = {
   folio: Sparkles,
   'about-me': User,
   projects: Code2,
