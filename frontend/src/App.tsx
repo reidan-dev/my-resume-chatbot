@@ -4,6 +4,7 @@ import confetti from 'canvas-confetti'
 import { AnimatedBorder } from './components/AnimatedBorder'
 
 const OPEN_TO_WORK = import.meta.env.VITE_OPEN_TO_WORK === 'true'
+const CALENDLY    = import.meta.env.VITE_CONTACT_CALENDLY ?? 'https://calendly.com/reinieldan'
 import { ResumePage } from './pages/ResumePage'
 import { ProjectsPage } from './pages/ProjectsPage'
 import { AboutPage } from './pages/AboutPage'
@@ -41,9 +42,23 @@ export default function App() {
   const confettiFiredRef = useRef(false)
   const [isFirstVisit] = useState(() => !localStorage.getItem('folio_visited'))
   const [showNudge, setShowNudge] = useState(true)
+  const [pillPhase, setPillPhase] = useState<'work' | 'book'>('work')
 
   useEffect(() => {
     const t = setTimeout(() => setShowNudge(false), 15000)
+    return () => clearTimeout(t)
+  }, [])
+
+  useEffect(() => {
+    if (!OPEN_TO_WORK) return
+    let t: ReturnType<typeof setTimeout>
+    function schedule() {
+      t = setTimeout(() => {
+        setPillPhase(p => p === 'work' ? 'book' : 'work')
+        schedule()
+      }, 3500 + Math.random() * 1500)
+    }
+    schedule()
     return () => clearTimeout(t)
   }, [])
   const { dark, toggle: toggleDark } = useDarkMode()
@@ -156,10 +171,19 @@ export default function App() {
           <div className="flex-1" />
           <div className="flex items-center gap-1 shrink-0">
             {OPEN_TO_WORK && (
-              <AnimatedBorder radius="9999px" className="shrink-0" innerClassName="flex items-center gap-1.5 px-2 sm:px-2.5 py-1 bg-white dark:bg-gray-900">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                <span className="hidden sm:inline text-emerald-700 dark:text-emerald-400 text-xs font-medium">Open to work</span>
-              </AnimatedBorder>
+              <a href={CALENDLY} target="_blank" rel="noreferrer" className="shrink-0">
+                <AnimatedBorder radius="9999px" innerClassName="flex items-center gap-1.5 px-2 sm:px-2.5 py-1 bg-white dark:bg-gray-900">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                  <span className="hidden sm:block relative overflow-hidden" style={{ height: '16px', minWidth: '76px' }}>
+                    <span className={`absolute inset-0 flex items-center text-emerald-700 dark:text-emerald-400 text-xs font-medium whitespace-nowrap transition-all duration-500 ease-in-out ${pillPhase === 'work' ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'}`}>
+                      Open to work
+                    </span>
+                    <span className={`absolute inset-0 flex items-center text-emerald-700 dark:text-emerald-400 text-xs font-medium whitespace-nowrap transition-all duration-500 ease-in-out ${pillPhase === 'book' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}>
+                      Book a call
+                    </span>
+                  </span>
+                </AnimatedBorder>
+              </a>
             )}
             <button
               onClick={handleShare}

@@ -230,14 +230,6 @@ export function ResumePage({ onAboutClick }: { onAboutClick?: () => void }) {
             >
               <GitHubIcon /> GitHub
             </a>
-            <a
-              href={CALENDLY}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-700 text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 hover:border-emerald-300 dark:hover:border-emerald-600 transition-all shadow-sm print:hidden"
-            >
-              <CalendarDays size={12} /> Book a call
-            </a>
           </div>
           <div className="flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs font-medium text-gray-500 dark:text-gray-400 shadow-sm print:shadow-none">
@@ -456,18 +448,18 @@ const IconMap: Record<string, LucideIcon> = {
 
       {/* Book a call CTA */}
       <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 print:hidden">
-        <div className="rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="rounded-2xl bg-emerald-600 px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">Want to connect?</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Book a 30-minute intro call — no back-and-forth needed.</p>
+            <p className="font-bold text-white text-base">Want to connect?</p>
+            <p className="text-emerald-100 text-sm mt-0.5">Book a 30-minute intro call — no back-and-forth needed.</p>
           </div>
           <a
             href={CALENDLY}
             target="_blank"
             rel="noreferrer"
-            className="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition-colors"
+            className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-emerald-50 text-emerald-700 text-sm font-bold transition-colors"
           >
-            <CalendarDays size={13} />
+            <CalendarDays size={15} />
             Book a call
           </a>
         </div>
