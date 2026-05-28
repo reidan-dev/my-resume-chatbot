@@ -172,7 +172,7 @@ export default function App() {
           <div className="flex items-center gap-1 shrink-0">
             {OPEN_TO_WORK && (
               <a href={CALENDLY} target="_blank" rel="noreferrer" className="shrink-0">
-                <AnimatedBorder radius="9999px" innerClassName="flex items-center gap-1.5 px-2 sm:px-2.5 py-1 bg-white dark:bg-gray-900">
+                <AnimatedBorder radius="9999px" innerClassName={`flex items-center gap-1.5 px-2 sm:px-2.5 py-1 transition-colors duration-500 ${pillPhase === 'book' ? 'bg-emerald-50 dark:bg-emerald-900/40' : 'bg-white dark:bg-gray-900'}`}>
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
                   <span className="hidden sm:block relative overflow-hidden" style={{ height: '16px', minWidth: '76px' }}>
                     <span className={`absolute inset-0 flex items-center text-emerald-700 dark:text-emerald-400 text-xs font-medium whitespace-nowrap transition-all duration-500 ease-in-out ${pillPhase === 'work' ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'}`}>
