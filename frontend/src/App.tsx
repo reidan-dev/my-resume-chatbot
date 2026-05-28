@@ -263,7 +263,7 @@ export default function App() {
         </button>
       )}
 
-      {!chatOpen && activePage === 'about-me' && (
+      {!chatOpen && (activePage === 'about-me' || activePage === 'projects') && (
         <div className="fixed right-4 sm:right-6 z-30 flex flex-col items-end gap-2 print:hidden folio-fab-bottom">
           {/* Nudge callout */}
           {showNudge && (
