@@ -72,6 +72,30 @@
   }
 }
 
+/* ── Folio page: full-screen snap slides ─────────────────────────────────── */
+html.folio-snap {
+  scroll-behavior: smooth;
+  overscroll-behavior-y: none;
+}
+
+/* Desktop only: proximity snap (JS wheel handler drives actual navigation) */
+@media (min-width: 640px) {
+  html.folio-snap {
+    scroll-snap-type: y proximity;
+  }
+}
+
+/* ── FAB positioning: above mobile bottom nav ───────────────────────────── */
+.folio-fab-bottom {
+  bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+}
+
+@media (max-width: 639px) {
+  .folio-fab-bottom {
+    bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
 @media print {
   body {
     background: white;

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { MessageSquare, Share2, Check, ArrowUp, Moon, Sun } from 'lucide-react'
+import { MessageSquare, Share2, Check, ArrowUp, Moon, Sun, Sparkles, User, Code2 } from 'lucide-react'
 import confetti from 'canvas-confetti'
 import { AnimatedBorder } from './components/AnimatedBorder'
 
@@ -21,6 +21,14 @@ const PAGE_LABELS: Record<Page, string> = {
   folio: 'Folio',
   'about-me': 'About Me',
   projects: 'Projects',
+}
+
+type IconComponent = (props: { size?: number; className?: string }) => JSX.Element
+
+const PAGE_ICONS: Record<Page, IconComponent> = {
+  folio: Sparkles,
+  'about-me': User,
+  projects: Code2,
 }
 
 export default function App() {
@@ -125,8 +133,8 @@ export default function App() {
             </AnimatedBorder>
           </div>
           <div className="w-px h-5 bg-gray-200 dark:bg-gray-700 shrink-0" />
-          {/* Page tabs */}
-          <div className="flex items-center gap-0.5">
+          {/* Page tabs — desktop only */}
+          <div className="hidden sm:flex items-center gap-0.5">
             {(['folio', 'about-me', 'projects'] as Page[]).map((page) => (
               <button
                 key={page}
@@ -141,6 +149,10 @@ export default function App() {
               </button>
             ))}
           </div>
+          {/* Active page label — mobile only */}
+          <span className="sm:hidden text-xs font-semibold text-gray-700 dark:text-gray-200">
+            {PAGE_LABELS[activePage]}
+          </span>
           <div className="flex-1" />
           <div className="flex items-center gap-1 shrink-0">
             {OPEN_TO_WORK && (
@@ -172,7 +184,7 @@ export default function App() {
         />
       </nav>
 
-      <div key={activePage} className="animate-fade-in-up">
+      <div key={activePage} className="animate-fade-in-up pb-16 sm:pb-0">
         {activePage === 'folio' ? <AboutPage onOpenChat={() => { setActivePage('about-me'); setChatOpen(true) }} />
          : activePage === 'about-me' ? <ResumePage onAboutClick={() => setActivePage('folio')} />
          : <ProjectsPage onFolioClick={() => setActivePage('folio')} />}
@@ -192,20 +204,43 @@ export default function App() {
 
       {contactOpen && <ContactModal onClose={() => setContactOpen(false)} />}
 
+      {/* Mobile bottom nav */}
+      <nav className="fixed bottom-0 inset-x-0 z-20 sm:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-700 print:hidden"
+           style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+        <div className="flex items-stretch">
+          {(['folio', 'about-me', 'projects'] as Page[]).map((page) => {
+            const Icon = PAGE_ICONS[page]
+            return (
+              <button
+                key={page}
+                onClick={() => setActivePage(page)}
+                className={`flex-1 flex flex-col items-center gap-0.5 pt-2 pb-2 text-[10px] font-semibold transition-colors ${
+                  activePage === page
+                    ? 'text-emerald-600 dark:text-emerald-400'
+                    : 'text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300'
+                }`}
+              >
+                <Icon size={17} />
+                {PAGE_LABELS[page]}
+              </button>
+            )
+          })}
+        </div>
+      </nav>
+
       {/* Scroll to top button */}
       {showScrollTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           title="Back to top"
-          className="fixed left-3 sm:left-4 z-30 w-9 h-9 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:shadow-lg transition-all animate-fade-in print:hidden"
-          style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}
+          className="fixed left-3 sm:left-4 z-30 w-9 h-9 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:shadow-lg transition-all animate-fade-in print:hidden folio-fab-bottom"
         >
           <ArrowUp size={15} />
         </button>
       )}
 
       {!chatOpen && activePage === 'about-me' && (
-        <div className="fixed right-4 sm:right-6 z-30 flex flex-col items-end gap-2 print:hidden" style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>
+        <div className="fixed right-4 sm:right-6 z-30 flex flex-col items-end gap-2 print:hidden folio-fab-bottom">
           {/* Nudge callout */}
           {showNudge && (
             <div className="bg-white dark:bg-gray-800 rounded-2xl rounded-br-sm shadow-lg border border-emerald-400 dark:border-emerald-500 px-3 sm:px-4 py-2.5 sm:py-3 max-w-[180px] sm:max-w-[220px] text-center leading-snug animate-fade-in">

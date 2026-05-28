@@ -359,7 +359,7 @@ export function ProjectsPage({ onFolioClick }: { onFolioClick?: () => void }) {
       {/* Other projects */}
       <div>
         <h3 className="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3">Other Projects</h3>
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-4 sm:gap-6 sm:grid-cols-2">
           {others.map((project, i) => (
             <ProjectCard key={project.name} project={project} index={i} />
           ))}
