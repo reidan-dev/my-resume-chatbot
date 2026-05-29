@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { deviconClass } from '../utils/deviconMap'
-import { Mail, MapPin, Phone, ChevronDown, Wrench, Briefcase, GraduationCap, FileText, Server, Globe, Database, Settings, CalendarDays } from 'lucide-react'
+import { Mail, MapPin, Phone, ChevronDown, Wrench, Briefcase, GraduationCap, FileText, Server, Globe, Database, Settings, CalendarDays, Play } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
 import resumeData from '../data/resume.json'
 
@@ -43,7 +44,7 @@ function RichText({ text }: { text: string }) {
 const GITHUB    = import.meta.env.VITE_CONTACT_GITHUB    ?? 'https://github.com/reidan-dev'
 const EMAIL     = import.meta.env.VITE_CONTACT_EMAIL     ?? 'reinieldan@gmail.com'
 const LINKEDIN  = import.meta.env.VITE_CONTACT_LINKEDIN  ?? 'https://www.linkedin.com/in/reiniel-dan-pablo'
-const CALENDLY  = import.meta.env.VITE_CONTACT_CALENDLY  ?? 'https://calendly.com/reinieldan'
+const CALENDLY    = import.meta.env.VITE_CONTACT_CALENDLY  ?? 'https://calendly.com/reinieldan'
 
 const QUOTE = "it's me, hi, i'm the developer, it's me..."
 
@@ -158,6 +159,7 @@ export function ResumePage({ onAboutClick }: { onAboutClick?: () => void }) {
   const [collapsedProjects, setCollapsedProjects] = useState<Set<number>>(() => new Set(projects.items.map((_, i) => i)))
   const [collapsedEdu, setCollapsedEdu] = useState<Set<number>>(() => new Set(education.map((_, i) => i)))
   const [collapsedSkills, setCollapsedSkills] = useState<Set<string>>(() => new Set(Object.keys(skills)))
+  const [videoOpen, setVideoOpen] = useState(false)
 
   function toggleJob(i: number) {
     setCollapsed((prev) => {
@@ -230,6 +232,12 @@ export function ResumePage({ onAboutClick }: { onAboutClick?: () => void }) {
             >
               <GitHubIcon /> GitHub
             </a>
+            <button
+              onClick={() => setVideoOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs font-medium text-gray-600 dark:text-gray-300 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all shadow-sm print:shadow-none"
+            >
+              <Play size={12} /> Meet Dan
+            </button>
           </div>
           <div className="flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs font-medium text-gray-500 dark:text-gray-400 shadow-sm print:shadow-none">
@@ -491,6 +499,35 @@ const IconMap: Record<string, LucideIcon> = {
           <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Last updated {meta.lastUpdated}</p>
         </div>
       </div>
+
+      {/* Meet Dan — Loom video modal (portal to escape transformed ancestors) */}
+      {videoOpen && createPortal(
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          onClick={() => setVideoOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-3xl rounded-2xl overflow-hidden shadow-2xl bg-black"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="aspect-video">
+              <iframe
+                src="https://www.loom.com/embed/82ebdb1ec3494b8db713580e302ce6b1?autoplay=1"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
+            <button
+              onClick={() => setVideoOpen(false)}
+              className="absolute top-3 right-3 p-1.5 rounded-full bg-black/50 hover:bg-black/70 text-white transition-colors"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   )
 }

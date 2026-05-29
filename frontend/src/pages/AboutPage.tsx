@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { Shield, Code2, Brain, Check, Lock, Zap, Server, Globe, Database, Mail, MessageSquare, Sparkles } from 'lucide-react'
+import { createPortal } from 'react-dom'
+import { Shield, Code2, Brain, Check, Lock, Zap, Server, Globe, Database, Mail, MessageSquare, Sparkles, CalendarCheck, Play } from 'lucide-react'
 import wallEve from '../../assets/walle_and_eve.png'
+
+const CALENDLY = import.meta.env.VITE_CONTACT_CALENDLY ?? 'https://calendly.com/reinieldan'
 
 // ─── Typewriter hook ──────────────────────────────────────────────────────────
 
@@ -133,6 +136,7 @@ const TOTAL_SLIDES = 10
 export function AboutPage({ onOpenChat }: { onOpenChat?: () => void }) {
   const lockedRef = useRef(false)
   const [activeSlide, setActiveSlide] = useState(0)
+  const [videoOpen, setVideoOpen] = useState(false)
 
   const navigateSlide = useCallback((direction: 1 | -1, fromIndex?: number) => {
     if (lockedRef.current) return
@@ -265,15 +269,33 @@ export function AboutPage({ onOpenChat }: { onOpenChat?: () => void }) {
               </span>
             ))}
           </div>
-          {onOpenChat && (
-            <button
-              onClick={onOpenChat}
-              className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition-colors shadow-sm"
+          <div className="mt-6 flex flex-wrap gap-3">
+            {onOpenChat && (
+              <button
+                onClick={onOpenChat}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition-colors shadow-sm"
+              >
+                <MessageSquare size={15} />
+                Try Folio
+              </button>
+            )}
+            <a
+              href={CALENDLY}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-200 text-sm font-semibold transition-colors shadow-sm"
             >
-              <MessageSquare size={15} />
-              Try Folio now
+              <CalendarCheck size={15} className="text-emerald-500" />
+              Book a Call
+            </a>
+            <button
+              onClick={() => setVideoOpen(true)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-200 text-sm font-semibold transition-colors shadow-sm"
+            >
+              <Play size={15} className="text-emerald-500" />
+              Meet Dan
             </button>
-          )}
+          </div>
         </section>
       </Slide>
 
@@ -689,6 +711,34 @@ export function AboutPage({ onOpenChat }: { onOpenChat?: () => void }) {
         ))}
       </div>
 
+      {/* Meet Dan — Loom video modal (portal to escape transformed ancestors) */}
+      {videoOpen && createPortal(
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          onClick={() => setVideoOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-3xl rounded-2xl overflow-hidden shadow-2xl bg-black"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="aspect-video">
+              <iframe
+                src="https://www.loom.com/embed/82ebdb1ec3494b8db713580e302ce6b1?autoplay=1"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
+            <button
+              onClick={() => setVideoOpen(false)}
+              className="absolute top-3 right-3 p-1.5 rounded-full bg-black/50 hover:bg-black/70 text-white transition-colors"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   )
 }
