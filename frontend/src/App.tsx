@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { MessageSquare, Share2, Check, ArrowUp, Moon, Sun, Sparkles, User, Code2, type LucideIcon } from 'lucide-react'
 import confetti from 'canvas-confetti'
 import { AnimatedBorder } from './components/AnimatedBorder'
@@ -48,6 +49,7 @@ export default function App() {
   const [isFirstVisit] = useState(() => !localStorage.getItem('folio_visited'))
   const [showNudge, setShowNudge] = useState(true)
   const [pillPhase, setPillPhase] = useState<'work' | 'book'>('work')
+  const [calOpen, setCalOpen] = useState(false)
 
   useEffect(() => {
     const t = setTimeout(() => setShowNudge(false), 15000)
@@ -176,7 +178,7 @@ export default function App() {
           <div className="flex-1" />
           <div className="flex items-center gap-1 shrink-0">
             {OPEN_TO_WORK && (
-              <a href={CALENDLY} target="_blank" rel="noreferrer" className="shrink-0">
+              <button onClick={() => setCalOpen(true)} className="shrink-0">
                 <AnimatedBorder radius="9999px" innerClassName={`flex items-center gap-1.5 px-2 sm:px-2.5 py-1 transition-colors duration-500 ${pillPhase === 'book' ? 'bg-emerald-50 dark:bg-emerald-900/40' : 'bg-white dark:bg-gray-900'}`}>
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
                   <span className="hidden sm:block relative overflow-hidden" style={{ height: '16px', minWidth: '76px' }}>
@@ -188,7 +190,7 @@ export default function App() {
                     </span>
                   </span>
                 </AnimatedBorder>
-              </a>
+              </button>
             )}
             <button
               onClick={handleShare}
@@ -293,6 +295,32 @@ export default function App() {
             </button>
           </AnimatedBorder>
         </div>
+      )}
+
+      {/* Book a Call — Calendly modal */}
+      {calOpen && createPortal(
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          onClick={() => setCalOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-2xl h-[600px] rounded-2xl overflow-hidden shadow-2xl bg-white dark:bg-gray-900"
+            onClick={e => e.stopPropagation()}
+          >
+            <iframe
+              src={`${CALENDLY}?embed_domain=danpablo.dev&embed_type=Inline`}
+              className="w-full h-full"
+            />
+            <button
+              onClick={() => setCalOpen(false)}
+              className="absolute top-3 right-3 p-1.5 rounded-full bg-black/20 hover:bg-black/40 text-gray-700 dark:text-white transition-colors"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
+        </div>,
+        document.body
       )}
     </div>
   )

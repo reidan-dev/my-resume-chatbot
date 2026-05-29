@@ -137,6 +137,7 @@ export function AboutPage({ onOpenChat }: { onOpenChat?: () => void }) {
   const lockedRef = useRef(false)
   const [activeSlide, setActiveSlide] = useState(0)
   const [videoOpen, setVideoOpen] = useState(false)
+  const [calOpen, setCalOpen] = useState(false)
 
   const navigateSlide = useCallback((direction: 1 | -1, fromIndex?: number) => {
     if (lockedRef.current) return
@@ -279,15 +280,13 @@ export function AboutPage({ onOpenChat }: { onOpenChat?: () => void }) {
                 Try Folio
               </button>
             )}
-            <a
-              href={CALENDLY}
-              target="_blank"
-              rel="noreferrer"
+            <button
+              onClick={() => setCalOpen(true)}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-200 text-sm font-semibold transition-colors shadow-sm"
             >
               <CalendarCheck size={15} className="text-emerald-500" />
               Book a Call
-            </a>
+            </button>
             <button
               onClick={() => setVideoOpen(true)}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-200 text-sm font-semibold transition-colors shadow-sm"
@@ -710,6 +709,32 @@ export function AboutPage({ onOpenChat }: { onOpenChat?: () => void }) {
           />
         ))}
       </div>
+
+      {/* Book a Call — Calendly modal */}
+      {calOpen && createPortal(
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          onClick={() => setCalOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-2xl h-[600px] rounded-2xl overflow-hidden shadow-2xl bg-white dark:bg-gray-900"
+            onClick={e => e.stopPropagation()}
+          >
+            <iframe
+              src={`${CALENDLY}?embed_domain=danpablo.dev&embed_type=Inline`}
+              className="w-full h-full"
+            />
+            <button
+              onClick={() => setCalOpen(false)}
+              className="absolute top-3 right-3 p-1.5 rounded-full bg-black/20 hover:bg-black/40 text-gray-700 dark:text-white transition-colors"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
+        </div>,
+        document.body
+      )}
 
       {/* Meet Dan — Loom video modal (portal to escape transformed ancestors) */}
       {videoOpen && createPortal(

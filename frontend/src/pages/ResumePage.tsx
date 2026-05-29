@@ -160,6 +160,7 @@ export function ResumePage({ onAboutClick }: { onAboutClick?: () => void }) {
   const [collapsedEdu, setCollapsedEdu] = useState<Set<number>>(() => new Set(education.map((_, i) => i)))
   const [collapsedSkills, setCollapsedSkills] = useState<Set<string>>(() => new Set(Object.keys(skills)))
   const [videoOpen, setVideoOpen] = useState(false)
+  const [calOpen, setCalOpen] = useState(false)
 
   function toggleJob(i: number) {
     setCollapsed((prev) => {
@@ -461,15 +462,13 @@ const IconMap: Record<string, LucideIcon> = {
             <p className="font-bold text-white text-base">Want to connect?</p>
             <p className="text-emerald-100 text-sm mt-0.5">Book a 30-minute intro call — no back-and-forth needed.</p>
           </div>
-          <a
-            href={CALENDLY}
-            target="_blank"
-            rel="noreferrer"
+          <button
+            onClick={() => setCalOpen(true)}
             className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-emerald-50 text-emerald-700 text-sm font-bold transition-colors"
           >
             <CalendarDays size={15} />
             Book a call
-          </a>
+          </button>
         </div>
       </div>
 
@@ -499,6 +498,32 @@ const IconMap: Record<string, LucideIcon> = {
           <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Last updated {meta.lastUpdated}</p>
         </div>
       </div>
+
+      {/* Book a Call — Calendly modal */}
+      {calOpen && createPortal(
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          onClick={() => setCalOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-2xl h-[600px] rounded-2xl overflow-hidden shadow-2xl bg-white dark:bg-gray-900"
+            onClick={e => e.stopPropagation()}
+          >
+            <iframe
+              src={`${CALENDLY}?embed_domain=danpablo.dev&embed_type=Inline`}
+              className="w-full h-full"
+            />
+            <button
+              onClick={() => setCalOpen(false)}
+              className="absolute top-3 right-3 p-1.5 rounded-full bg-black/20 hover:bg-black/40 text-gray-700 dark:text-white transition-colors"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
+        </div>,
+        document.body
+      )}
 
       {/* Meet Dan — Loom video modal (portal to escape transformed ancestors) */}
       {videoOpen && createPortal(
